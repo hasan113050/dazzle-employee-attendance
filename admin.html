@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dazzle Admin Panel</title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="admin-header">
+
+        <div class="brand-name">
+            DAZZLE
+        </div>
+
+        <div class="header-title">
+            Admin Panel
+        </div>
+
+        <button
+            id="adminLogoutBtn"
+            type="button"
+        >
+            Logout
+        </button>
+
+    </header>
+
+
+    <!-- LAYOUT -->
+    <div class="admin-layout">
+
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <button
+                class="nav-item active"
+                id="homeBtn"
+                type="button"
+            >
+                <span>⌂</span>
+                Home
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="createEmployeeBtn"
+                type="button"
+            >
+                <span>＋</span>
+                Create New Employee
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="employeesBtn"
+                type="button"
+            >
+                <span>👥</span>
+                Employees
+            </button>
+
+        </aside>
+
+
+        <!-- MAIN -->
+        <main class="admin-main">
+
+
+            <!-- HOME -->
+            <section
+                id="homePage"
+                class="page-section active-page"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <h1>Attendance</h1>
+
+                        <p>
+                            Monitor employee attendance
+                        </p>
+                    </div>
+
+                    <div
+                        id="adminDate"
+                        class="admin-date"
+                    ></div>
+
+                </div>
+
+
+                <div class="summary-grid">
+
+                    <div class="summary-card">
+                        <span>Total Employees</span>
+
+                        <strong id="totalEmployees">
+                            0
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span>Present</span>
+
+                        <strong id="presentEmployees">
+                            0
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span>Checked In</span>
+
+                        <strong id="checkedInEmployees">
+                            0
+                        </strong>
+                    </div>
+
+
+                    <div class="summary-card">
+                        <span>Checked Out</span>
+
+                        <strong id="checkedOutEmployees">
+                            0
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <!-- FILTER -->
+                <div class="admin-card filter-card">
+
+                    <div class="filter-grid">
+
+                        <div>
+
+                            <label>Date</label>
+
+                            <input
+                                type="date"
+                                id="filterDate"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label>Employee</label>
+
+                            <input
+                                type="text"
+                                id="filterEmployee"
+                                placeholder="Name or ID"
+                            >
+
+                        </div>
+
+
+                        <div>
+
+                            <label>Status</label>
+
+                            <select id="filterStatus">
+
+                                <option value="all">
+                                    All
+                                </option>
+
+                                <option value="checked-in">
+                                    Checked In
+                                </option>
+
+                                <option value="checked-out">
+                                    Checked Out
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="filter-actions">
+
+                            <button
+                                id="filterBtn"
+                                class="primary-btn"
+                                type="button"
+                            >
+                                Filter
+                            </button>
+
+                            <button
+                                id="resetBtn"
+                                class="secondary-btn"
+                                type="button"
+                            >
+                                Reset
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ATTENDANCE -->
+                <div class="admin-card">
+
+                    <div class="section-title">
+
+                        <h2>
+                            Attendance Records
+                        </h2>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Check In</th>
+                                    <th>Check Out</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody id="attendanceTableBody"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- CREATE EMPLOYEE -->
+            <section
+                id="createEmployeePage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <h1>
+                            Create New Employee
+                        </h1>
+
+                        <p>
+                            Add a new employee to the Dazzle attendance system
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-card create-employee-card">
+
+                    <div class="section-title">
+
+                        <h2>
+                            Employee Information
+                        </h2>
+
+                        <p>
+                            Enter the employee's basic information below.
+                        </p>
+
+                    </div>
+
+
+                    <form id="employeeForm">
+
+                        <div class="form-section-title">
+                            Basic Information
+                        </div>
+
+
+                        <div class="employee-form-grid">
+
+
+                            <div class="form-group">
+
+                                <label for="employeeNameInput">
+                                    Employee Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="employeeNameInput"
+                                    placeholder="Enter employee name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="employeeIdInput">
+                                    Employee ID
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="employeeIdInput"
+                                    placeholder="e.g. D1002"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="employeeEmailInput">
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="employeeEmailInput"
+                                    placeholder="employee@example.com"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="employeePasswordInput">
+                                    Temporary Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="employeePasswordInput"
+                                    placeholder="Enter temporary password"
+                                    
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-section-title">
+                            Job Information
+                        </div>
+
+
+                        <div class="employee-form-grid">
+
+
+                            <div class="form-group">
+
+                                <label for="departmentInput">
+                                    Department
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="departmentInput"
+                                    placeholder="e.g. Sales, HR, Marketing"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="designationInput">
+                                    Designation
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="designationInput"
+                                    placeholder="e.g. Sales Executive"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="officeInput">
+                                    Office / Branch
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="officeInput"
+                                    placeholder="e.g. Corporate Head Office"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="joiningDateInput">
+                                    Joining Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="joiningDateInput"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-section-title">
+                            Employee Status
+                        </div>
+
+
+                        <div class="status-selection">
+
+                            <label class="status-option">
+
+                                <input
+                                    type="radio"
+                                    name="employeeStatus"
+                                    value="active"
+                                    checked
+                                >
+
+                                <span>
+                                    Active
+                                </span>
+
+                            </label>
+
+
+                            <label class="status-option">
+
+                                <input
+                                    type="radio"
+                                    name="employeeStatus"
+                                    value="inactive"
+                                >
+
+                                <span>
+                                    Inactive
+                                </span>
+
+                            </label>
+
+                        </div>
+
+
+                        <div class="form-actions">
+
+                            <button
+                                type="reset"
+                                class="secondary-btn"
+                                id="clearEmployeeBtn"
+                            >
+                                Clear
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                class="primary-btn create-btn"
+                            >
+                                Create Employee
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            id="employeeFormStatus"
+                            class="employee-form-status"
+                        ></div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+            <!-- EMPLOYEES -->
+            <section
+                id="employeesPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <h1>
+                            Employees
+                        </h1>
+
+                        <p>
+                            Manage Dazzle employees
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-card">
+
+                    <div class="section-title">
+
+                        <h2>
+                            Employee List
+                        </h2>
+
+                        <p>
+                            View all employees registered in the attendance system.
+                        </p>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                    <tr>
+    <th>Employee</th>
+    <th>ID</th>
+    <th>Department</th>
+    <th>Designation</th>
+    <th>Office / Branch</th>
+    <th>Joining Date</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+
+                            </thead>
+
+
+                            <tbody id="employeesTableBody"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+<!-- EMPLOYEE MODAL -->
+
+<div
+    id="employeeModal"
+    class="employee-modal"
+>
+
+    <div class="employee-modal-content">
+
+        <div class="employee-modal-header">
+
+            <div>
+                <h2 id="modalEmployeeName">
+                    Employee
+                </h2>
+
+                <p id="modalEmployeeId">
+                    -
+                </p>
+            </div>
+
+            <button
+                type="button"
+                id="closeEmployeeModal"
+                class="modal-close-btn"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="employee-modal-body">
+
+            <div class="employee-detail-grid">
+
+                <div class="employee-detail-item">
+                    <span>Employee Name</span>
+                    <strong id="modalName">-</strong>
+                </div>
+
+                <div class="employee-detail-item">
+                    <span>Employee ID</span>
+                    <strong id="modalId">-</strong>
+                </div>
+
+                <div class="employee-detail-item">
+                    <span>Email</span>
+                    <strong id="modalEmail">-</strong>
+                </div>
+
+                <div class="employee-detail-item">
+                    <span>Department</span>
+                    <strong id="modalDepartment">-</strong>
+                </div>
+
+                <div class="employee-detail-item">
+                    <span>Designation</span>
+                    <strong id="modalDesignation">-</strong>
+                </div>
+
+                <div class="employee-detail-item">
+                    <span>Office / Branch</span>
+                    <strong id="modalOffice">-</strong>
+                </div>
+
+                <div class="employee-detail-item">
+                    <span>Joining Date</span>
+                    <strong id="modalJoiningDate">-</strong>
+                </div>
+
+                <div class="employee-detail-item">
+                    <span>Status</span>
+                    <strong id="modalStatus">-</strong>
+                </div>
+
+            </div>
+
+
+            <!-- EDIT FORM -->
+
+            <div
+                id="employeeEditForm"
+                class="employee-edit-form"
+            >
+
+                <div class="form-section-title">
+                    Edit Employee
+                </div>
+
+
+                <div class="employee-form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Employee Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editEmployeeName"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Employee ID
+                        </label>
+
+                      <input
+    type="text"
+    id="editEmployeeId"
+>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="editEmployeeEmail"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Department
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editDepartment"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Designation
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editDesignation"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Office / Branch
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editOffice"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Joining Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="editJoiningDate"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <select id="editStatus">
+
+                            <option value="active">
+                                Active
+                            </option>
+
+                            <option value="inactive">
+                                Inactive
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="employee-modal-footer">
+
+            <button
+                type="button"
+                id="deleteEmployeeBtn"
+                class="danger-btn"
+            >
+                Delete Employee
+            </button>
+
+
+            <div class="modal-footer-right">
+
+                <button
+                    type="button"
+                    id="cancelEditBtn"
+                    class="secondary-btn"
+                >
+                    Close
+                </button>
+
+                <button
+                    type="button"
+                    id="saveEmployeeBtn"
+                    class="primary-btn"
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        </main>
+
+    </div>
+
+
+    <!-- FIREBASE + ADMIN JS -->
+
+    <script type="module">
+
+        import {
+            initializeApp
+        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+     import {
+    getAuth,
+    signOut,
+    onAuthStateChanged,
+    createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    doc,
+    updateDoc,
+    deleteDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+        const firebaseConfig = {
+
+            apiKey:
+    "AIzaSyAYFW7n7vcHTi0E08caYbW7Iaizt1_VfKc",
+
+            authDomain:
+                "dazzle-employee-attendance.firebaseapp.com",
+
+            projectId:
+                "dazzle-employee-attendance",
+
+            storageBucket:
+                "dazzle-employee-attendance.firebasestorage.app",
+
+            messagingSenderId:
+                "13538104957",
+
+            appId:
+                "1:13538104957:web:b12222473a56da04f24314",
+
+            measurementId:
+                "G-YVVG9EGEHN"
+
+        };
+
+
+        const app =
+            initializeApp(firebaseConfig);
+
+        const auth =
+            getAuth(app);
+
+        const db =
+            getFirestore(app);
+
+// Secondary Firebase App
+// Used for creating employee accounts
+// without logging out the admin
+
+const employeeApp =
+    initializeApp(
+        firebaseConfig,
+        "employeeApp"
+    );
+
+const employeeAuth =
+    getAuth(employeeApp);
+
+        /*
+         * These are available to admin.js
+         */
+
+        window.adminAuth = auth;
+        window.adminDB = db;
+        window.adminSignOut = signOut;
+        window.adminOnAuthStateChanged =
+    onAuthStateChanged;
+        window.employeeAuth =
+    employeeAuth;
+
+window.adminCreateUser =
+    createUserWithEmailAndPassword;
+        window.adminCollection = collection;
+        window.adminGetDocs = getDocs;
+        window.adminAddDoc = addDoc;
+        window.adminDoc = doc;
+        window.adminUpdateDoc = updateDoc;
+        window.adminDeleteDoc = deleteDoc;
+
+        /*
+         * Load admin.js
+         */
+
+        const adminScript =
+            document.createElement("script");
+
+        adminScript.src = "./admin.js";
+        adminScript.type = "module";
+
+        document.body.appendChild(adminScript);
+
+    </script>
+
+</body>
+
+</html>

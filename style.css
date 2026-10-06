@@ -1,0 +1,554 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f5f5f5;
+
+    color: #111;
+
+}
+
+
+/* ========================= */
+/* HEADER */
+/* ========================= */
+
+.top-header {
+
+    height: 70px;
+
+    background: #111;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 30px;
+
+}
+
+
+.brand {
+
+    font-size: 22px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+}
+
+
+.logout-btn {
+
+    background: transparent;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    padding: 9px 16px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+}
+
+
+/* ========================= */
+/* LOGIN */
+/* ========================= */
+
+.login-page {
+
+    min-height:
+        calc(100vh - 70px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+}
+
+
+.login-card {
+
+    width: 100%;
+
+    max-width: 420px;
+
+    background: white;
+
+    padding: 35px;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,0.08);
+
+}
+
+
+.login-card h1 {
+
+    margin-bottom: 8px;
+
+}
+
+
+.login-card p {
+
+    color: #777;
+
+    margin-bottom: 25px;
+
+}
+
+
+/* ========================= */
+/* INPUT */
+/* ========================= */
+
+.input-group {
+
+    margin-bottom: 18px;
+
+}
+
+
+.input-group label {
+
+    display: block;
+
+    font-size: 13px;
+
+    margin-bottom: 7px;
+
+    color: #555;
+
+}
+
+
+.input-group input {
+
+    width: 100%;
+
+    height: 45px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    padding: 0 13px;
+
+    font-size: 14px;
+
+    outline: none;
+
+}
+
+
+.input-group input:focus {
+
+    border-color: #111;
+
+}
+
+
+/* ========================= */
+/* BUTTON */
+/* ========================= */
+
+.primary-btn {
+
+    width: 100%;
+
+    height: 45px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #111;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+.secondary-btn {
+
+    height: 45px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #111;
+
+    padding: 0 20px;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+}
+
+
+.primary-btn:hover {
+
+    opacity: .9;
+
+}
+
+
+/* ========================= */
+/* DASHBOARD */
+/* ========================= */
+
+.dashboard-page {
+
+    display: none;
+
+    padding: 35px 20px;
+
+}
+
+
+.dashboard-page.active {
+
+    display: block;
+
+}
+
+
+.dashboard-container {
+
+    max-width: 1000px;
+
+    margin: auto;
+
+}
+
+
+/* ========================= */
+/* CARDS */
+/* ========================= */
+
+.welcome-card,
+.attendance-card,
+.history-card {
+
+    background: white;
+
+    border-radius: 14px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 6px 25px
+        rgba(0,0,0,0.05);
+
+}
+
+
+.small-text {
+
+    color: #888;
+
+    font-size: 13px;
+
+    margin-bottom: 6px;
+
+}
+
+
+/* ========================= */
+/* CARD HEADER */
+/* ========================= */
+
+.card-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+.attendance-status {
+
+    padding: 8px 13px;
+
+    background: #f2f2f2;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+}
+
+
+/* ========================= */
+/* TIME */
+/* ========================= */
+
+.time-section {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+
+    margin: 25px 0;
+
+}
+
+
+.time-box {
+
+    border: 1px solid #eee;
+
+    border-radius: 10px;
+
+    padding: 20px;
+
+}
+
+
+.time-box span {
+
+    display: block;
+
+    font-size: 13px;
+
+    color: #888;
+
+    margin-bottom: 8px;
+
+}
+
+
+.time-box strong {
+
+    font-size: 25px;
+
+}
+
+
+/* ========================= */
+/* ACTIONS */
+/* ========================= */
+
+.attendance-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+
+}
+
+
+/* ========================= */
+/* TABLE */
+/* ========================= */
+
+.table-wrapper {
+
+    overflow-x: auto;
+
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+}
+
+
+th,
+td {
+
+    padding: 14px;
+
+    border-bottom:
+        1px solid #eee;
+
+    text-align: left;
+
+    font-size: 13px;
+
+}
+
+
+th {
+
+    color: #777;
+
+    font-weight: 600;
+
+}
+
+
+/* ========================= */
+/* MESSAGE */
+/* ========================= */
+
+.message {
+
+    margin-top: 15px;
+
+    font-size: 13px;
+
+    color: #555;
+
+}
+
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media (max-width: 650px) {
+
+    .top-header {
+
+        padding:
+            0 18px;
+
+    }
+
+
+    .dashboard-page {
+
+        padding:
+            20px 12px;
+
+    }
+
+
+    .time-section {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .attendance-actions {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .card-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+}
+
+/* ========================= */
+/* ADMIN DASHBOARD BUTTON */
+/* ========================= */
+
+.welcome-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+
+.admin-access {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+
+.admin-dashboard-btn {
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #111827;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.admin-dashboard-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+.admin-dashboard-btn:active {
+    transform: translateY(0);
+}

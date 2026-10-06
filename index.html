@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dazzle Employee Attendance</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================= -->
+    <!-- HEADER -->
+    <!-- ========================= -->
+
+    <header class="top-header">
+
+        <div class="brand">
+            DAZZLE
+        </div>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+        >
+            Logout
+        </button>
+
+    </header>
+
+
+    <!-- ========================= -->
+    <!-- LOGIN PAGE -->
+    <!-- ========================= -->
+
+    <section
+        id="loginPage"
+        class="login-page"
+    >
+
+        <div class="login-card">
+
+            <h1>
+                DAZZLE Login
+            </h1>
+
+            <p>
+                Login to access your account
+            </p>
+
+
+            <form id="loginForm">
+
+                <div class="input-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Login
+                </button>
+
+            </form>
+
+
+            <div
+                id="loginMessage"
+                class="message"
+            ></div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- EMPLOYEE DASHBOARD -->
+    <!-- ========================= -->
+
+    <main
+        id="dashboardPage"
+        class="dashboard-page"
+    >
+
+        <div class="dashboard-container">
+
+
+            <!-- PROFILE -->
+
+          <div class="welcome-card">
+
+    <div>
+
+        <p class="small-text">
+            Welcome back
+        </p>
+
+        <h2 id="employeeName">
+            Employee
+        </h2>
+
+        <p id="employeeId">
+            Employee ID
+        </p>
+
+    </div>
+
+
+    <div
+        id="adminAccess"
+        class="admin-access"
+        style="display: none;"
+    >
+
+        <button
+            id="adminDashboardBtn"
+            class="admin-dashboard-btn"
+            type="button"
+        >
+            Admin Dashboard
+        </button>
+
+    </div>
+
+</div>
+
+
+            <!-- TODAY -->
+
+            <div class="attendance-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <p class="small-text">
+                            Today
+                        </p>
+
+                        <h2 id="todayDate">
+                            -
+                        </h2>
+
+                    </div>
+
+                    <div
+                        id="attendanceStatus"
+                        class="attendance-status"
+                    >
+                        Not Checked In
+                    </div>
+
+                </div>
+
+
+                <div class="time-section">
+
+                    <div class="time-box">
+
+                        <span>
+                            Check In
+                        </span>
+
+                        <strong id="checkInTime">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="time-box">
+
+                        <span>
+                            Check Out
+                        </span>
+
+                        <strong id="checkOutTime">
+                            --
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="attendance-actions">
+
+                    <button
+                        id="checkInBtn"
+                        class="primary-btn"
+                    >
+                        Check In
+                    </button>
+
+                    <button
+                        id="checkOutBtn"
+                        class="secondary-btn"
+                    >
+                        Check Out
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="attendanceMessage"
+                    class="message"
+                ></div>
+
+            </div>
+
+
+            <!-- HISTORY -->
+
+            <div class="history-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <p class="small-text">
+                            Attendance
+                        </p>
+
+                        <h2>
+                            History
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Check In
+                                </th>
+
+                                <th>
+                                    Check Out
+                                </th>
+
+                                <th>
+                                    Location
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="attendanceHistory">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- ========================= -->
+    <!-- FIREBASE -->
+    <!-- ========================= -->
+
+    <script type="module">
+
+        import {
+            initializeApp
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            collection,
+            addDoc,
+            getDocs,
+            query,
+            where
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+        const firebaseConfig = {
+
+          apiKey:
+    "AIzaSyAYFW7n7vcHTi0E08caYbW7Iaizt1_VfKc",
+
+            authDomain:
+                "dazzle-employee-attendance.firebaseapp.com",
+
+            projectId:
+                "dazzle-employee-attendance",
+
+            storageBucket:
+                "dazzle-employee-attendance.firebasestorage.app",
+
+            messagingSenderId:
+                "13538104957",
+
+            appId:
+                "1:13538104957:web:b12222473a56da04f24314",
+
+            measurementId:
+                "G-YVVG9EGEHN"
+
+        };
+
+
+        const app =
+            initializeApp(firebaseConfig);
+
+
+        const auth =
+            getAuth(app);
+
+
+        const db =
+            getFirestore(app);
+
+
+        window.firebaseAuth =
+            auth;
+
+        window.firebaseDB =
+            db;
+
+        window.firebaseSignIn =
+            signInWithEmailAndPassword;
+
+        window.firebaseSignOut =
+            signOut;
+
+        window.firebaseOnAuthStateChanged =
+            onAuthStateChanged;
+
+        window.firebaseCollection =
+            collection;
+
+        window.firebaseAddDoc =
+            addDoc;
+
+        window.firebaseGetDocs =
+            getDocs;
+
+        window.firebaseQuery =
+            query;
+
+        window.firebaseWhere =
+            where;
+
+
+        const script =
+            document.createElement("script");
+
+        script.src =
+            "script.js";
+
+        script.type =
+            "module";
+
+        document.body.appendChild(script);
+
+    </script>
+
+
+</body>
+
+</html>
