@@ -198,19 +198,52 @@ function formatDate(dateString) {
         return "-";
     }
 
-    const date =
-        new Date(
-            dateString + "T00:00:00"
-        );
+    // YYYY-MM-DD format
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
 
-    return date.toLocaleDateString(
-        "en-GB",
-        {
-            day: "2-digit",
-            month: "short",
-            year: "numeric"
-        }
-    );
+        const date =
+            new Date(
+                dateString + "T00:00:00"
+            );
+
+        return date.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+    }
+
+
+    // DD/MM/YYYY format
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateString)) {
+
+        const parts =
+            dateString.split("/");
+
+        const day = parts[0];
+        const month = parts[1];
+        const year = parts[2];
+
+        const date =
+            new Date(
+                `${year}-${month}-${day}T00:00:00`
+            );
+
+        return date.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+    }
+
+
+    return dateString;
 }
 
 
@@ -1373,10 +1406,30 @@ function renderAttendance(
                 "-";
 
 
-            const location =
-                record.locationStatus ||
-                record.location ||
-                "-";
+    const checkInDistance =
+    record.checkInDistance !== undefined
+        ? `${record.checkInDistance}m`
+        : "-";
+
+const checkOutDistance =
+    record.checkOutDistance !== undefined
+        ? `${record.checkOutDistance}m`
+        : "-";
+
+const checkInAccuracy =
+    record.checkInAccuracy !== undefined
+        ? `${Math.round(record.checkInAccuracy)}m`
+        : "-";
+
+const checkOutAccuracy =
+    record.checkOutAccuracy !== undefined
+        ? `${Math.round(record.checkOutAccuracy)}m`
+        : "-";
+
+const location =
+    `Check In: ${checkInDistance}<br>
+     Check Out: ${checkOutDistance}<br>
+     Accuracy: ${checkInAccuracy} / ${checkOutAccuracy}`;
 
 
             const status =
@@ -1665,13 +1718,11 @@ employeeForm.addEventListener(
 
         event.preventDefault();
 
-
         const name =
             document
                 .getElementById("employeeNameInput")
                 .value
                 .trim();
-
 
         const employeeId =
             document
@@ -1679,13 +1730,16 @@ employeeForm.addEventListener(
                 .value
                 .trim();
 
-
         const email =
             document
                 .getElementById("employeeEmailInput")
                 .value
                 .trim();
 
+        const password =
+            document
+                .getElementById("employeePasswordInput")
+                .value;
 
         const department =
             document
@@ -1693,13 +1747,11 @@ employeeForm.addEventListener(
                 .value
                 .trim();
 
-
         const designation =
             document
                 .getElementById("designationInput")
                 .value
                 .trim();
-
 
         const office =
             document
@@ -1707,28 +1759,56 @@ employeeForm.addEventListener(
                 .value
                 .trim();
 
-
         const joiningDate =
             document
                 .getElementById("joiningDateInput")
                 .value;
-
 
         const statusElement =
             document.querySelector(
                 'input[name="employeeStatus"]:checked'
             );
 
-
         const status =
             statusElement
                 ? statusElement.value
                 : "active";
 
+        // ========================================
+        // VALIDATION
+        // ========================================
+
+        if (
+            !name ||
+            !employeeId ||
+            !email ||
+            !password ||
+            !department ||
+            !designation ||
+            !office ||
+            !joiningDate
+        ) {
+
+            alert(
+                "Please fill in all required employee information."
+            );
+
+            return;
+        }
+
+        if (password.length < 6) {
+
+            alert(
+                "Employee password must be at least 6 characters."
+            );
+
+            return;
+        }
 
         employeeFormStatus.textContent =
             "Creating employee...";
 
+        employeeFormStatus.style.color = "";
 
         try {
 
@@ -1744,7 +1824,6 @@ employeeForm.addEventListener(
             const getDocs =
                 window.adminGetDocs;
 
-
             // ========================================
             // CHECK DUPLICATE EMPLOYEE ID
             // ========================================
@@ -1757,7 +1836,6 @@ employeeForm.addEventListener(
                     )
                 );
 
-
             const duplicateEmployee =
                 employeeSnapshot.docs.find(
                     function (employeeDoc) {
@@ -1769,7 +1847,6 @@ employeeForm.addEventListener(
 
                     }
                 );
-
 
             if (duplicateEmployee) {
 
@@ -1784,13 +1861,37 @@ employeeForm.addEventListener(
                 );
 
                 return;
-
             }
 
+            // ========================================
+            // CREATE FIREBASE AUTH ACCOUNT
+            // ========================================
+
+            employeeFormStatus.textContent =
+                "Creating employee login account...";
+
+            const employeeAuth =
+                window.employeeAuth;
+
+            const createUser =
+                window.adminCreateUser;
+
+            const userCredential =
+                await createUser(
+                    employeeAuth,
+                    email,
+                    password
+                );
+
+            const user =
+                userCredential.user;
 
             // ========================================
             // CREATE FIRESTORE EMPLOYEE PROFILE
             // ========================================
+
+            employeeFormStatus.textContent =
+                "Saving employee profile...";
 
             await addDoc(
                 collection(
@@ -1798,6 +1899,9 @@ employeeForm.addEventListener(
                     "employees"
                 ),
                 {
+                    uid:
+                        user.uid,
+
                     name:
                         name,
 
@@ -1822,32 +1926,34 @@ employeeForm.addEventListener(
                     status:
                         status,
 
+                    roles:
+                        ["employee"],
+
                     createdAt:
                         new Date().toISOString()
                 }
             );
 
+            // ========================================
+            // SUCCESS
+            // ========================================
 
             employeeFormStatus.textContent =
-                "Employee profile created successfully.";
+                "Employee created successfully.";
 
             employeeFormStatus.style.color =
                 "green";
 
-
             alert(
-                "Employee profile created successfully."
+                "Employee account and profile created successfully."
             );
 
-
             employeeForm.reset();
-
 
             const activeRadio =
                 document.querySelector(
                     'input[name="employeeStatus"][value="active"]'
                 );
-
 
             if (activeRadio) {
 
@@ -1856,24 +1962,56 @@ employeeForm.addEventListener(
 
             }
 
-
         } catch (error) {
 
-            console.error(error);
+            console.error(
+                "CREATE EMPLOYEE ERROR:",
+                error
+            );
 
+            let message =
+                error.message;
+
+            if (
+                error.code ===
+                "auth/email-already-in-use"
+            ) {
+
+                message =
+                    "This email address is already registered in Firebase Authentication.";
+
+            }
+
+            if (
+                error.code ===
+                "auth/invalid-email"
+            ) {
+
+                message =
+                    "Please enter a valid email address.";
+
+            }
+
+            if (
+                error.code ===
+                "auth/weak-password"
+            ) {
+
+                message =
+                    "Password must be at least 6 characters.";
+
+            }
 
             employeeFormStatus.textContent =
                 "Failed to create employee: " +
-                error.message;
-
+                message;
 
             employeeFormStatus.style.color =
                 "red";
 
-
             alert(
-                "Failed to create employee profile.\n\n" +
-                error.message
+                "Failed to create employee.\n\n" +
+                message
             );
 
         }
