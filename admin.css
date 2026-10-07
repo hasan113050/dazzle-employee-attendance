@@ -1560,3 +1560,19 @@ tbody tr:last-child td {
     }
 
 }
+
+.admin-header button {
+    background: #ffffff;
+    color: #111827;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
+.admin-header button:hover {
+    opacity: 0.9;
+}
