@@ -281,25 +281,13 @@
 
                         <thead>
 
-                            <tr>
-
-                                <th>
-                                    Date
-                                </th>
-
-                                <th>
-                                    Check In
-                                </th>
-
-                                <th>
-                                    Check Out
-                                </th>
-
-                                <th>
-                                    Location
-                                </th>
-
-                            </tr>
+                           <tr>
+    <th>Date</th>
+    <th>Check In</th>
+    <th>Check Out</th>
+    <th>Location</th>
+    <th>Status</th>
+</tr>
 
                         </thead>
 
@@ -344,15 +332,15 @@
 
 
         import {
-            getFirestore,
-            collection,
-            addDoc,
-            getDocs,
-            query,
-            where
-        }
-        from
-        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
         const firebaseConfig = {
@@ -422,7 +410,8 @@
 
         window.firebaseWhere =
             where;
-
+window.firebaseDoc = doc;
+window.firebaseUpdateDoc = updateDoc;
 
         const script =
             document.createElement("script");
