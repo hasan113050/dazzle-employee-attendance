@@ -552,3 +552,49 @@ th {
 .admin-dashboard-btn:active {
     transform: translateY(0);
 }
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+#checkOutBtn {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+}
+
+#checkOutBtn:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+/* Completed Button State */
+
+#checkInBtn:disabled,
+#checkOutBtn:disabled {
+    background: #e5e7eb;
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+#checkInBtn:disabled:hover,
+#checkOutBtn:disabled:hover {
+    background: #e5e7eb;
+    color: #6b7280;
+    transform: none;
+    box-shadow: none;
+}
+
+#attendanceMessage {
+    display: block;
+    margin-top: 12px;
+    min-height: 20px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+}
