@@ -10,11 +10,8 @@ let employee = null;
 /* OFFICE LOCATION */
 /* ========================= */
 
-const OFFICE_LAT =
-    22.36887332674252;
-
-const OFFICE_LNG =
-    91.83160766263178;
+const OFFICE_LAT = 22.369146;
+const OFFICE_LNG = 91.832031;
 
 const ALLOWED_RADIUS =
     50;
@@ -519,14 +516,97 @@ checkInBtn.addEventListener(
     "click",
     async () => {
 
-        checkInBtn.disabled =
-            true;
+        checkInBtn.disabled = true;
 
         attendanceMessage.textContent =
-            "Checking your location...";
-
+            "Checking today's attendance...";
 
         try {
+
+            const attendanceRef =
+                window.firebaseCollection(
+                    window.firebaseDB,
+                    "attendance"
+                );
+
+            /* ========================= */
+            /* CHECK EXISTING ATTENDANCE */
+            /* ========================= */
+
+            const q =
+                window.firebaseQuery(
+                    attendanceRef,
+
+                    window.firebaseWhere(
+                        "employeeId",
+                        "==",
+                        employee.employeeId
+                    )
+                );
+
+            const snapshot =
+                await window.firebaseGetDocs(q);
+
+            const todayKey =
+                getTodayKey();
+
+            let todayAttendance = null;
+
+            snapshot.forEach(
+                doc => {
+
+                    const record =
+                        doc.data();
+
+                    if (
+                        record.dateKey === todayKey
+                    ) {
+
+                        todayAttendance = {
+                            id: doc.id,
+                            ...record
+                        };
+
+                    }
+
+                }
+            );
+
+
+            /* ========================= */
+            /* ALREADY CHECKED IN / COMPLETED */
+            /* ========================= */
+
+            if (todayAttendance) {
+
+                if (
+                    todayAttendance.status === "completed"
+                ) {
+
+                    attendanceMessage.textContent =
+                        "You have already completed today's attendance.";
+
+                } else {
+
+                    attendanceMessage.textContent =
+                        "You are already checked in today.";
+
+                }
+
+                checkInBtn.disabled = true;
+
+                return;
+
+            }
+
+
+            /* ========================= */
+            /* VERIFY OFFICE LOCATION */
+            /* ========================= */
+
+            attendanceMessage.textContent =
+                "Checking your location...";
+
 
             const location =
                 await verifyOfficeLocation();
@@ -537,13 +617,16 @@ checkInBtn.addEventListener(
                 attendanceMessage.textContent =
                     `You are ${Math.round(location.distance)}m away from the office.`;
 
-                checkInBtn.disabled =
-                    false;
+                checkInBtn.disabled = false;
 
                 return;
 
             }
 
+
+            /* ========================= */
+            /* TIME */
+            /* ========================= */
 
             const now =
                 new Date();
@@ -563,27 +646,16 @@ checkInBtn.addEventListener(
                 now.toLocaleTimeString(
                     "en-US",
                     {
-                        hour:
-                            "2-digit",
-
-                        minute:
-                            "2-digit",
-
-                        second:
-                            "2-digit"
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit"
                     }
                 );
 
 
-            const attendanceRef =
-                window.firebaseCollection(
-
-                    window.firebaseDB,
-
-                    "attendance"
-
-                );
-
+            /* ========================= */
+            /* SAVE ATTENDANCE */
+            /* ========================= */
 
             await window.firebaseAddDoc(
 
@@ -634,6 +706,10 @@ checkInBtn.addEventListener(
             );
 
 
+            /* ========================= */
+            /* UPDATE UI */
+            /* ========================= */
+
             attendanceMessage.textContent =
                 "Check In successful.";
 
@@ -645,24 +721,29 @@ checkInBtn.addEventListener(
 
             checkInBtn.disabled =
                 true;
-
+checkOutBtn.disabled =
+    false;
 
             loadAttendanceHistory();
 
-        } 
+
+        }
+
         catch (error) {
 
-    console.error(error);
+            console.error(error);
 
-    attendanceMessage.textContent =
-        "Check In failed: " +
-        (error.message || error);
+            attendanceMessage.textContent =
+                "Check In failed: " +
+                (error.message || error);
 
-    checkInBtn.disabled =
-        false;
+            checkInBtn.disabled =
+                false;
 
-}});
+        }
 
+    }
+);
 
 /* ========================= */
 /* CHECK OUT */
@@ -672,45 +753,26 @@ checkOutBtn.addEventListener(
     "click",
     async () => {
 
-        checkOutBtn.disabled =
-            true;
+        checkOutBtn.disabled = true;
 
         attendanceMessage.textContent =
-            "Checking your location...";
-
+            "Checking today's attendance...";
 
         try {
-
-            const location =
-                await verifyOfficeLocation();
-
-
-            if (!location.withinOffice) {
-
-                attendanceMessage.textContent =
-                    `You are ${Math.round(location.distance)}m away from the office.`;
-
-                checkOutBtn.disabled =
-                    false;
-
-                return;
-
-            }
-
 
             const todayKey =
                 getTodayKey();
 
-
             const attendanceRef =
                 window.firebaseCollection(
-
                     window.firebaseDB,
-
                     "attendance"
-
                 );
 
+
+            /* ========================= */
+            /* FIND TODAY'S ATTENDANCE */
+            /* ========================= */
 
             const q =
                 window.firebaseQuery(
@@ -738,20 +800,87 @@ checkOutBtn.addEventListener(
 
             if (snapshot.empty) {
 
-                attendanceMessage.textContent =
-                    "No Check In record found.";
+    attendanceMessage.textContent =
+        "You should Check In first.";
 
-                checkOutBtn.disabled =
-                    false;
+    checkOutBtn.disabled = false;
+
+    return;
+
+}
+
+
+            /* ========================= */
+            /* FIND ACTIVE CHECK-IN */
+            /* ========================= */
+
+            let activeRecord = null;
+
+            snapshot.forEach(
+                doc => {
+
+                    const record =
+                        doc.data();
+
+                    if (
+                        record.status === "checked-in" &&
+                        !record.checkOutTime
+                    ) {
+
+                        activeRecord = {
+                            id: doc.id,
+                            ...record
+                        };
+
+                    }
+
+                }
+            );
+
+
+            /* ========================= */
+            /* ALREADY COMPLETED */
+            /* ========================= */
+
+            if (!activeRecord) {
+
+                attendanceMessage.textContent =
+                    "Today's Check In & Check Out are already completed.";
+
+                checkOutBtn.disabled = true;
 
                 return;
 
             }
 
 
-            const record =
-                snapshot.docs[0];
+            /* ========================= */
+            /* VERIFY OFFICE LOCATION */
+            /* ========================= */
 
+            attendanceMessage.textContent =
+                "Checking your location...";
+
+
+            const location =
+                await verifyOfficeLocation();
+
+
+            if (!location.withinOffice) {
+
+                attendanceMessage.textContent =
+                    `You are ${Math.round(location.distance)}m away from the office.`;
+
+                checkOutBtn.disabled = false;
+
+                return;
+
+            }
+
+
+            /* ========================= */
+            /* TIME */
+            /* ========================= */
 
             const now =
                 new Date();
@@ -761,34 +890,49 @@ checkOutBtn.addEventListener(
                 now.toLocaleTimeString(
                     "en-US",
                     {
-                        hour:
-                            "2-digit",
-
-                        minute:
-                            "2-digit",
-
-                        second:
-                            "2-digit"
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit"
                     }
                 );
 
 
-            /*
+            /* ========================= */
+            /* UPDATE FIRESTORE */
+            /* ========================= */
 
-            NOTE:
+            const attendanceDoc =
+                window.firebaseDoc(
+                    window.firebaseDB,
+                    "attendance",
+                    activeRecord.id
+                );
 
-            Firestore update functionality
-            will be added in the next stage.
 
-            */
+            await window.firebaseUpdateDoc(
+                attendanceDoc,
+                {
+                    checkOutTime: time,
+                    checkOutLatitude: location.latitude,
+                    checkOutLongitude: location.longitude,
+                    checkOutAccuracy: location.accuracy,
+                    checkOutDistance: Math.round(
+                        location.distance
+                    ),
+                    status: "completed"
+                }
+            );
 
+
+            /* ========================= */
+            /* UPDATE UI */
+            /* ========================= */
 
             checkOutTime.textContent =
                 time;
 
             attendanceStatus.textContent =
                 "Completed";
-
 
             attendanceMessage.textContent =
                 "Check Out successful.";
@@ -797,13 +941,17 @@ checkOutBtn.addEventListener(
                 true;
 
 
+            loadTodayAttendance();
+            loadAttendanceHistory();
+
+
         } catch (error) {
 
             console.error(error);
 
-
             attendanceMessage.textContent =
-                "Unable to check out.";
+                "Check Out failed: " +
+                (error.message || error);
 
             checkOutBtn.disabled =
                 false;
@@ -813,10 +961,9 @@ checkOutBtn.addEventListener(
     }
 );
 
-
-/* ========================= */
-/* TODAY ATTENDANCE */
-/* ========================= */
+ /* ========================= */
+ /* TODAY ATTENDANCE */
+ /* ========================= */
 
 async function loadTodayAttendance() {
 
@@ -824,11 +971,8 @@ async function loadTodayAttendance() {
 
         const attendanceRef =
             window.firebaseCollection(
-
                 window.firebaseDB,
-
                 "attendance"
-
             );
 
 
@@ -856,6 +1000,10 @@ async function loadTodayAttendance() {
             await window.firebaseGetDocs(q);
 
 
+        /* ========================= */
+        /* NO ATTENDANCE */
+        /* ========================= */
+
         if (snapshot.empty) {
 
             checkInTime.textContent =
@@ -867,33 +1015,104 @@ async function loadTodayAttendance() {
             attendanceStatus.textContent =
                 "Not Checked In";
 
+            checkInBtn.disabled =
+                false;
+
+            checkOutBtn.disabled =
+                true;
+
             return;
 
         }
 
 
-        const record =
-            snapshot.docs[0].data();
+        /* ========================= */
+        /* FIND TODAY'S RECORD */
+        /* ========================= */
+
+        let record = null;
+
+        snapshot.forEach(
+            doc => {
+
+                const data =
+                    doc.data();
+
+                if (
+                    data.status === "checked-in" &&
+                    !data.checkOutTime
+                ) {
+
+                    record = data;
+
+                }
+
+            }
+        );
 
 
-        checkInTime.textContent =
-            record.checkInTime || "--";
+        /* ========================= */
+        /* ACTIVE CHECK-IN */
+        /* ========================= */
 
-        checkOutTime.textContent =
-            record.checkOutTime || "--";
+        if (record) {
 
+            checkInTime.textContent =
+                record.checkInTime || "--";
 
-        if (record.checkOutTime) {
-
-            attendanceStatus.textContent =
-                "Completed";
-
-        } else {
+            checkOutTime.textContent =
+                "--";
 
             attendanceStatus.textContent =
                 "Working";
 
+            checkInBtn.disabled =
+                true;
+
+            checkOutBtn.disabled =
+                false;
+
+            return;
+
         }
+
+
+        /* ========================= */
+        /* COMPLETED */
+        /* ========================= */
+
+        const completedRecord =
+            snapshot.docs
+                .map(doc => doc.data())
+                .find(
+                    data =>
+                        data.status === "completed"
+                );
+
+
+        if (completedRecord) {
+
+            checkInTime.textContent =
+                completedRecord.checkInTime || "--";
+
+            checkOutTime.textContent =
+                completedRecord.checkOutTime || "--";
+
+            attendanceStatus.textContent =
+                "Completed";
+
+            checkInBtn.disabled =
+                true;
+
+            checkOutBtn.disabled =
+                true;
+                 attendanceMessage.textContent =
+        "Today's Check In & Check Out are already completed.";
+
+            return;
+
+        }
+
 
     } catch (error) {
 
@@ -916,31 +1135,22 @@ async function loadAttendanceHistory() {
 
         const attendanceRef =
             window.firebaseCollection(
-
                 window.firebaseDB,
-
                 "attendance"
-
             );
-
 
         const q =
             window.firebaseQuery(
-
                 attendanceRef,
-
                 window.firebaseWhere(
                     "employeeId",
                     "==",
                     employee.employeeId
                 )
-
             );
-
 
         const snapshot =
             await window.firebaseGetDocs(q);
-
 
         if (snapshot.empty) {
 
@@ -948,7 +1158,7 @@ async function loadAttendanceHistory() {
 
                 <tr>
 
-                    <td colspan="4">
+                    <td colspan="5">
                         No attendance found.
                     </td>
 
@@ -960,13 +1170,32 @@ async function loadAttendanceHistory() {
 
         }
 
-
         snapshot.forEach(
             doc => {
 
                 const record =
                     doc.data();
 
+                const checkInDistance =
+                    record.checkInDistance !== undefined
+                        ? record.checkInDistance + " m"
+                        : "-";
+
+                const checkOutDistance =
+                    record.checkOutDistance !== undefined
+                        ? record.checkOutDistance + " m"
+                        : "-";
+
+                const location =
+                    `Check In: ${checkInDistance}<br>
+                     Check Out: ${checkOutDistance}`;
+
+                const status =
+                    record.status === "completed"
+                        ? "Completed"
+                        : record.status === "checked-in"
+                            ? "Checked In"
+                            : record.status || "-";
 
                 attendanceHistory.innerHTML += `
 
@@ -985,11 +1214,11 @@ async function loadAttendanceHistory() {
                         </td>
 
                         <td>
-                            ${
-                                record.checkInDistance !== undefined
-                                ? record.checkInDistance + " m"
-                                : "-"
-                            }
+                            ${location}
+                        </td>
+
+                        <td>
+                            ${status}
                         </td>
 
                     </tr>
@@ -998,7 +1227,6 @@ async function loadAttendanceHistory() {
 
             }
         );
-
 
     } catch (error) {
 
