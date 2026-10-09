@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Dazzle Admin Panel</title>
+    <title>Dazzle HRM Admin Panel</title>
 
     <link
         rel="stylesheet"
@@ -17,37 +17,114 @@
     >
 </head>
 
-<body>
 
+<body style="visibility: hidden;">
+
+
+    <!-- ================================================== -->
     <!-- HEADER -->
+    <!-- ================================================== -->
+
     <header class="admin-header">
 
-        <div class="brand-name">
-            DAZZLE
+        <div class="admin-header-left">
+
+            <div class="brand-name">
+                DAZZLE
+            </div>
+
+            <div class="header-title">
+                HRM Admin Panel
+            </div>
+
         </div>
 
-        <div class="header-title">
-            Admin Panel
+
+        <div class="admin-profile-wrapper">
+
+            <button
+                id="adminProfileMenuBtn"
+                class="admin-profile-menu-btn"
+                type="button"
+            >
+
+                <div class="admin-profile-avatar">
+                    👤
+                </div>
+
+                <div class="admin-profile-info">
+
+                    <span id="adminHeaderName">
+                        Admin
+                    </span>
+
+                    <small id="adminHeaderDesignation">
+                        Administrator
+                    </small>
+
+                </div>
+
+                <span class="admin-profile-arrow">
+                    ▾
+                </span>
+
+            </button>
+
+
+            <div
+                id="adminProfileDropdown"
+                class="admin-profile-dropdown"
+            >
+
+                <button
+                    id="adminMyProfileBtn"
+                    type="button"
+                >
+                    👤 My Profile
+                </button>
+
+                <button
+                    id="goEmployeePanelBtn"
+                    type="button"
+                    onclick="window.location.href='index.html'"
+                >
+                    👥 Employee Panel
+                </button>
+
+                <div class="admin-profile-divider"></div>
+
+                <button
+                    id="adminLogoutBtn"
+                    type="button"
+                    class="admin-profile-logout"
+                >
+                    ↪ Logout
+                </button>
+
+            </div>
+
         </div>
 
-        <button
-            id="adminLogoutBtn"
-            type="button"
-        >
-            Logout
-        </button>
-<button onclick="window.location.href='index.html'">
-    Employee Panel
-</button>
     </header>
 
 
+
+    <!-- ================================================== -->
     <!-- LAYOUT -->
+    <!-- ================================================== -->
+
     <div class="admin-layout">
 
 
+        <!-- ================================================== -->
         <!-- SIDEBAR -->
+        <!-- ================================================== -->
+
         <aside class="sidebar">
+
+            <div class="sidebar-label">
+                OVERVIEW
+            </div>
 
             <button
                 class="nav-item active"
@@ -55,18 +132,23 @@
                 type="button"
             >
                 <span>⌂</span>
-                Home
+                Dashboard
             </button>
 
 
             <button
                 class="nav-item"
-                id="createEmployeeBtn"
+                id="attendanceManagementBtn"
                 type="button"
             >
-                <span>＋</span>
-                Create New Employee
+                <span>◷</span>
+                Attendance
             </button>
+
+
+            <div class="sidebar-label sidebar-section-label">
+                PEOPLE
+            </div>
 
 
             <button
@@ -78,14 +160,166 @@
                 Employees
             </button>
 
+
+            <button
+                class="nav-item nav-sub-item"
+                id="createEmployeeBtn"
+                type="button"
+            >
+                <span>＋</span>
+                Create New Employee
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="departmentsBranchesBtn"
+                type="button"
+            >
+                <span>⌂</span>
+                Departments & Branches
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="shiftWeeklyOffBtn"
+                type="button"
+            >
+                <span>⏱</span>
+                Shift & Weekly Off
+            </button>
+
+
+            <div class="sidebar-label sidebar-section-label">
+                HR OPERATIONS
+            </div>
+
+
+            <button
+                class="nav-item"
+                id="leaveManagementBtn"
+                type="button"
+            >
+                <span>📅</span>
+                Leave Management
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="probationBtn"
+                type="button"
+            >
+                <span>✓</span>
+                Probation & Confirmation
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="performanceBtn"
+                type="button"
+            >
+                <span>◎</span>
+                Performance / KPI
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="payrollBtn"
+                type="button"
+            >
+                <span>৳</span>
+                Payroll
+            </button>
+
+
+            <div class="sidebar-label sidebar-section-label">
+                EMPLOYEE LIFECYCLE
+            </div>
+
+
+            <button
+                class="nav-item"
+                id="recruitmentBtn"
+                type="button"
+            >
+                <span>✦</span>
+                Recruitment & Joining
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="documentsBtn"
+                type="button"
+            >
+                <span>▤</span>
+                Documents
+            </button>
+
+
+            <button
+                class="nav-item"
+                id="exitManagementBtn"
+                type="button"
+            >
+                <span>↪</span>
+                Exit Management
+            </button>
+
+
+            <div class="sidebar-label sidebar-section-label">
+                INSIGHTS
+            </div>
+
+
+            <button
+                class="nav-item"
+                id="reportsBtn"
+                type="button"
+            >
+                <span>▥</span>
+                Reports
+            </button>
+
+
+            <div class="sidebar-label sidebar-section-label">
+                SYSTEM
+            </div>
+
+
+            <button
+                class="nav-item"
+                id="settingsBtn"
+                type="button"
+            >
+                <span>⚙</span>
+                Settings
+            </button>
+
+
+            <div class="sidebar-bottom-note">
+                DAZZLE HRM
+            </div>
+
         </aside>
 
 
+
+        <!-- ================================================== -->
         <!-- MAIN -->
+        <!-- ================================================== -->
+
         <main class="admin-main">
 
 
-            <!-- HOME -->
+            <!-- ================================================== -->
+            <!-- DASHBOARD -->
+            <!-- ================================================== -->
+
             <section
                 id="homePage"
                 class="page-section active-page"
@@ -94,12 +328,21 @@
                 <div class="page-heading">
 
                     <div>
-                        <h1>Attendance</h1>
+
+                        <p class="page-eyebrow">
+                            HRM Overview
+                        </p>
+
+                        <h1>
+                            Dashboard
+                        </h1>
 
                         <p>
-                            Monitor employee attendance
+                            Monitor employees and daily attendance
                         </p>
+
                     </div>
+
 
                     <div
                         id="adminDate"
@@ -109,54 +352,317 @@
                 </div>
 
 
+
+                <!-- SUMMARY -->
+
                 <div class="summary-grid">
 
-                    <div class="summary-card">
-                        <span>Total Employees</span>
 
-                        <strong id="totalEmployees">
-                            0
-                        </strong>
+                    <div class="summary-card">
+
+                        <div class="summary-card-icon">
+                            👥
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Total Employees
+                            </span>
+
+                            <strong id="totalEmployees">
+                                0
+                            </strong>
+
+                        </div>
+
                     </div>
 
 
                     <div class="summary-card">
-                        <span>Present</span>
 
-                        <strong id="presentEmployees">
-                            0
-                        </strong>
+                        <div class="summary-card-icon">
+                            ✓
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Present
+                            </span>
+
+                            <strong id="presentEmployees">
+                                0
+                            </strong>
+
+                        </div>
+
                     </div>
 
 
                     <div class="summary-card">
-                        <span>Checked In</span>
 
-                        <strong id="checkedInEmployees">
-                            0
-                        </strong>
+                        <div class="summary-card-icon">
+                            →
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Checked In
+                            </span>
+
+                            <strong id="checkedInEmployees">
+                                0
+                            </strong>
+
+                        </div>
+
                     </div>
 
 
                     <div class="summary-card">
-                        <span>Checked Out</span>
 
-                        <strong id="checkedOutEmployees">
-                            0
-                        </strong>
+                        <div class="summary-card-icon">
+                            ←
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Checked Out
+                            </span>
+
+                            <strong id="checkedOutEmployees">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <div class="summary-card-icon">
+                            ○
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Absent Today
+                            </span>
+
+                            <strong id="absentEmployees">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <div class="summary-card-icon">
+                            ⏳
+                        </div>
+
+                        <div>
+
+                            <span>
+                                On Leave
+                            </span>
+
+                            <strong id="onLeaveEmployees">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <div class="summary-card-icon">
+                            ◌
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Inactive
+                            </span>
+
+                            <strong id="inactiveEmployees">
+                                0
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-card">
+
+                        <div class="summary-card-icon">
+                            !
+                        </div>
+
+                        <div>
+
+                            <span>
+                                Probation Ending Soon
+                            </span>
+
+                            <strong id="probationEndingSoon">
+                                0
+                            </strong>
+
+                        </div>
+
                     </div>
 
                 </div>
 
 
-                <!-- FILTER -->
-                <div class="admin-card filter-card">
 
-                    <div class="filter-grid">
+                <!-- QUICK ACTIONS -->
+
+                <div class="admin-card admin-quick-actions-card">
+
+                    <div class="section-title">
 
                         <div>
 
-                            <label>Date</label>
+                            <h2>
+                                Quick Actions
+                            </h2>
+
+                            <p>
+                                Common HR tasks
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-quick-actions">
+
+
+                        <button
+                            type="button"
+                            class="admin-quick-action"
+                            onclick="document.getElementById('createEmployeeBtn').click()"
+                        >
+
+                            <span>
+                                ＋
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Create Employee
+                                </strong>
+
+                                <small>
+                                    Add a new employee account
+                                </small>
+
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="admin-quick-action"
+                            onclick="document.getElementById('employeesBtn').click()"
+                        >
+
+                            <span>
+                                👥
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Manage Employees
+                                </strong>
+
+                                <small>
+                                    View and update employee profiles
+                                </small>
+
+                            </div>
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="admin-quick-action"
+                            onclick="document.getElementById('leaveManagementBtn').click()"
+                        >
+
+                            <span>
+                                📅
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Leave Requests
+                                </strong>
+
+                                <small>
+                                    Review employee leave requests
+                                </small>
+
+                            </div>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- FILTER -->
+
+                <div class="admin-card filter-card">
+
+                    <div class="section-title">
+
+                        <div>
+
+                            <h2>
+                                Attendance Filter
+                            </h2>
+
+                            <p>
+                                Find attendance by date, employee or status
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="filter-grid">
+
+
+                        <div>
+
+                            <label for="filterDate">
+                                Date
+                            </label>
 
                             <input
                                 type="date"
@@ -168,7 +674,9 @@
 
                         <div>
 
-                            <label>Employee</label>
+                            <label for="filterEmployee">
+                                Employee
+                            </label>
 
                             <input
                                 type="text"
@@ -181,7 +689,9 @@
 
                         <div>
 
-                            <label>Status</label>
+                            <label for="filterStatus">
+                                Status
+                            </label>
 
                             <select id="filterStatus">
 
@@ -212,6 +722,7 @@
                                 Filter
                             </button>
 
+
                             <button
                                 id="resetBtn"
                                 class="secondary-btn"
@@ -222,19 +733,30 @@
 
                         </div>
 
+
                     </div>
 
                 </div>
 
 
-                <!-- ATTENDANCE -->
+
+                <!-- ATTENDANCE RECORDS -->
+
                 <div class="admin-card">
 
                     <div class="section-title">
 
-                        <h2>
-                            Attendance Records
-                        </h2>
+                        <div>
+
+                            <h2>
+                                Attendance Records
+                            </h2>
+
+                            <p>
+                                Employee check-in and check-out records
+                            </p>
+
+                        </div>
 
                     </div>
 
@@ -258,7 +780,8 @@
                             </thead>
 
 
-                            <tbody id="attendanceTableBody"></tbody>
+                            <tbody id="attendanceTableBody">
+                            </tbody>
 
                         </table>
 
@@ -268,8 +791,10 @@
 
             </section>
 
-
+                        <!-- ================================================== -->
             <!-- CREATE EMPLOYEE -->
+            <!-- ================================================== -->
+
             <section
                 id="createEmployeePage"
                 class="page-section"
@@ -279,12 +804,16 @@
 
                     <div>
 
+                        <p class="page-eyebrow">
+                            Employee Management
+                        </p>
+
                         <h1>
                             Create New Employee
                         </h1>
 
                         <p>
-                            Add a new employee to the Dazzle attendance system
+                            Create an employee account and HR profile
                         </p>
 
                     </div>
@@ -296,18 +825,23 @@
 
                     <div class="section-title">
 
-                        <h2>
-                            Employee Information
-                        </h2>
+                        <div>
 
-                        <p>
-                            Enter the employee's basic information below.
-                        </p>
+                            <h2>
+                                Employee Information
+                            </h2>
+
+                            <p>
+                                Enter the employee's personal and job information
+                            </p>
+
+                        </div>
 
                     </div>
 
 
                     <form id="employeeForm">
+
 
                         <div class="form-section-title">
                             Basic Information
@@ -367,6 +901,82 @@
 
                             <div class="form-group">
 
+                                <label for="employeePhoneInput">
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="employeePhoneInput"
+                                    placeholder="e.g. 017XXXXXXXX"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="employeeDobInput">
+                                    Date of Birth
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="employeeDobInput"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="employeeNidInput">
+                                    NID Number
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="employeeNidInput"
+                                    placeholder="Enter NID number"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="employeeEmergencyContactInput">
+                                    Emergency Contact
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="employeeEmergencyContactInput"
+                                    placeholder="e.g. 017XXXXXXXX"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="employeePresentAddressInput">
+                                    Present Address
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="employeePresentAddressInput"
+                                    placeholder="Enter present address"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
                                 <label for="employeePasswordInput">
                                     Temporary Password
                                 </label>
@@ -375,7 +985,6 @@
                                     type="password"
                                     id="employeePasswordInput"
                                     placeholder="Enter temporary password"
-                                    
                                 >
 
                             </div>
@@ -453,6 +1062,60 @@
 
                             </div>
 
+
+                            <div class="form-group">
+
+                                <label for="employmentTypeInput">
+                                    Employment Type
+                                </label>
+
+                                <select
+                                    id="employmentTypeInput"
+                                    required
+                                >
+
+                                    <option value="">
+                                        Select employment type
+                                    </option>
+
+                                    <option value="Full Time">
+                                        Full Time
+                                    </option>
+
+                                    <option value="Part Time">
+                                        Part Time
+                                    </option>
+
+                                    <option value="Probation">
+                                        Probation
+                                    </option>
+
+                                    <option value="Contract">
+                                        Contract
+                                    </option>
+
+                                    <option value="Intern">
+                                        Intern
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="probationEndDateInput">
+                                    Probation End Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="probationEndDateInput"
+                                >
+
+                            </div>
+
                         </div>
 
 
@@ -522,6 +1185,7 @@
                             class="employee-form-status"
                         ></div>
 
+
                     </form>
 
                 </div>
@@ -529,7 +1193,11 @@
             </section>
 
 
+
+            <!-- ================================================== -->
             <!-- EMPLOYEES -->
+            <!-- ================================================== -->
+
             <section
                 id="employeesPage"
                 class="page-section"
@@ -539,12 +1207,105 @@
 
                     <div>
 
+                        <p class="page-eyebrow">
+                            Employee Management
+                        </p>
+
                         <h1>
                             Employees
                         </h1>
 
                         <p>
-                            Manage Dazzle employees
+                            View and manage Dazzle employees
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="primary-btn page-heading-action"
+                        onclick="document.getElementById('createEmployeeBtn').click()"
+                    >
+                        + Create Employee
+                    </button>
+
+                </div>
+
+
+                <div class="admin-card">
+
+                    <div class="section-title">
+
+                        <div>
+
+                            <h2>
+                                Employee Directory
+                            </h2>
+
+                            <p>
+                                All employees registered in the HRM system
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>ID</th>
+                                    <th>Department</th>
+                                    <th>Designation</th>
+                                    <th>Office / Branch</th>
+                                    <th>Joining Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="employeesTableBody"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================================================== -->
+            <!-- LEAVE MANAGEMENT -->
+            <!-- ================================================== -->
+
+            <section
+                id="leaveManagementPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+
+                        <p class="page-eyebrow">
+                            Employee Leave
+                        </p>
+
+                        <h1>
+                            Leave Management
+                        </h1>
+
+                        <p>
+                            Review pending, approved and rejected leave requests
                         </p>
 
                     </div>
@@ -556,13 +1317,17 @@
 
                     <div class="section-title">
 
-                        <h2>
-                            Employee List
-                        </h2>
+                        <div>
 
-                        <p>
-                            View all employees registered in the attendance system.
-                        </p>
+                            <h2>
+                                Leave Requests
+                            </h2>
+
+                            <p>
+                                Review and manage employee leave applications
+                            </p>
+
+                        </div>
 
                     </div>
 
@@ -573,21 +1338,28 @@
 
                             <thead>
 
-                    <tr>
-    <th>Employee</th>
-    <th>ID</th>
-    <th>Department</th>
-    <th>Designation</th>
-    <th>Office / Branch</th>
-    <th>Joining Date</th>
-    <th>Status</th>
-    <th>Action</th>
-</tr>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Leave Type</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Days</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
 
                             </thead>
 
+                            <tbody id="leaveRequestsTableBody">
 
-                            <tbody id="employeesTableBody"></tbody>
+                                <tr>
+                                    <td colspan="8">
+                                        No leave requests found.
+                                    </td>
+                                </tr>
+
+                            </tbody>
 
                         </table>
 
@@ -596,30 +1368,527 @@
                 </div>
 
             </section>
-<!-- EMPLOYEE MODAL -->
 
-<div
-    id="employeeModal"
-    class="employee-modal"
+          <!-- ================================================== -->
+<!-- ATTENDANCE MANAGEMENT -->
+<!-- ================================================== -->
+
+<section
+    id="attendanceManagementPage"
+    class="page-section"
 >
 
-    <div class="employee-modal-content">
+    <div class="page-heading">
 
-        <div class="employee-modal-header">
+        <div>
+
+            <p class="page-eyebrow">
+                Attendance Control
+            </p>
+
+            <h1>
+                Attendance Management
+            </h1>
+
+            <p>
+                Monitor daily attendance, late entry, absence, leave and weekly off
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- DAILY ATTENDANCE FILTER -->
+    <!-- ========================================= -->
+
+    <div class="admin-card attendance-management-card">
+
+        <div class="section-title">
 
             <div>
-                <h2 id="modalEmployeeName">
-                    Employee
+
+                <h2>
+                    Daily Attendance
                 </h2>
 
-                <p id="modalEmployeeId">
-                    -
+                <p>
+                    View attendance status for a specific date
                 </p>
+
             </div>
+
+        </div>
+
+
+        <div class="attendance-management-filters">
+
+            <div class="form-group">
+
+                <label for="attendanceManageDate">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="attendanceManageDate"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceManageDepartment">
+                    Department
+                </label>
+
+                <select id="attendanceManageDepartment">
+
+                    <option value="">
+                        All Departments
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceManageBranch">
+                    Branch / Office
+                </label>
+
+                <select id="attendanceManageBranch">
+
+                    <option value="">
+                        All Branches
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceManageEmployee">
+                    Employee
+                </label>
+
+                <select id="attendanceManageEmployee">
+
+                    <option value="">
+                        All Employees
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="attendance-filter-actions">
+
+                <button
+                    type="button"
+                    id="loadDailyAttendanceBtn"
+                    class="primary-btn"
+                >
+                    Load Attendance
+                </button>
+
+                <button
+                    type="button"
+                    id="attendanceTodayBtn"
+                    class="secondary-btn"
+                >
+                    Today
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- DAILY SUMMARY -->
+    <!-- ========================================= -->
+
+    <div class="attendance-management-summary">
+
+        <div class="summary-card">
+
+            <div class="summary-card-content">
+
+                <span class="summary-label">
+                    Present
+                </span>
+
+                <strong id="attendanceMgmtPresentCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-card-content">
+
+                <span class="summary-label">
+                    Late
+                </span>
+
+                <strong id="attendanceMgmtLateCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-card-content">
+
+                <span class="summary-label">
+                    Absent
+                </span>
+
+                <strong id="attendanceMgmtAbsentCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-card-content">
+
+                <span class="summary-label">
+                    On Leave
+                </span>
+
+                <strong id="attendanceMgmtLeaveCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-card-content">
+
+                <span class="summary-label">
+                    Weekly Off
+                </span>
+
+                <strong id="attendanceMgmtWeeklyOffCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-card-content">
+
+                <span class="summary-label">
+                    Checked Out
+                </span>
+
+                <strong id="attendanceMgmtCheckedOutCount">
+                    0
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- DAILY ATTENDANCE TABLE -->
+    <!-- ========================================= -->
+
+    <div class="admin-card attendance-management-card">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Daily Employee Status
+                </h2>
+
+                <p>
+                    Attendance status based on assigned shift, leave and weekly off
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper attendance-management-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Employee</th>
+                        <th>ID</th>
+                        <th>Office</th>
+                        <th>Shift</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Late</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="attendanceManagementTableBody">
+
+                    <tr>
+
+                        <td colspan="9">
+                            Select a date and load attendance.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- DATE RANGE REPORT -->
+    <!-- ========================================= -->
+
+    <div class="admin-card attendance-management-card">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Date Range Report
+                </h2>
+
+                <p>
+                    Review employee attendance history for a selected period
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="attendance-range-filters">
+
+            <div class="form-group">
+
+                <label for="attendanceRangeFrom">
+                    From
+                </label>
+
+                <input
+                    type="date"
+                    id="attendanceRangeFrom"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceRangeTo">
+                    To
+                </label>
+
+                <input
+                    type="date"
+                    id="attendanceRangeTo"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceRangeEmployee">
+                    Employee
+                </label>
+
+                <select id="attendanceRangeEmployee">
+
+                    <option value="">
+                        All Employees
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="attendanceRangeStatus">
+                    Status
+                </label>
+
+                <select id="attendanceRangeStatus">
+
+                    <option value="">
+                        All Status
+                    </option>
+
+                    <option value="present">
+                        Present
+                    </option>
+
+                    <option value="late">
+                        Late
+                    </option>
+
+                    <option value="absent">
+                        Absent
+                    </option>
+
+                    <option value="leave">
+                        On Leave
+                    </option>
+
+                    <option value="weekly-off">
+                        Weekly Off
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="attendance-filter-actions">
+
+                <button
+                    type="button"
+                    id="attendanceRangeFilterBtn"
+                    class="primary-btn"
+                >
+                    Generate Report
+                </button>
+
+                <button
+                    type="button"
+                    id="attendanceRangeResetBtn"
+                    class="secondary-btn"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper attendance-management-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Employee</th>
+                        <th>ID</th>
+                        <th>Office</th>
+                        <th>Shift</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Late</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="attendanceRangeTableBody">
+
+                    <tr>
+
+                        <td colspan="9">
+                            Select a date range to generate report.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- ================================================== -->
+<!-- ATTENDANCE CORRECTION MODAL -->
+<!-- ================================================== -->
+
+<div
+    id="attendanceCorrectionModal"
+    class="admin-modal"
+>
+
+    <div class="admin-modal-card">
+
+        <div class="admin-modal-header">
+
+            <div>
+
+                <p class="page-eyebrow">
+                    Manual Correction
+                </p>
+
+                <h2>
+                    Correct Attendance
+                </h2>
+
+            </div>
+
 
             <button
                 type="button"
-                id="closeEmployeeModal"
+                id="closeAttendanceCorrectionBtn"
                 class="modal-close-btn"
             >
                 ×
@@ -628,222 +1897,116 @@
         </div>
 
 
-        <div class="employee-modal-body">
+        <div class="admin-modal-body">
 
-            <div class="employee-detail-grid">
-
-                <div class="employee-detail-item">
-                    <span>Employee Name</span>
-                    <strong id="modalName">-</strong>
-                </div>
-
-                <div class="employee-detail-item">
-                    <span>Employee ID</span>
-                    <strong id="modalId">-</strong>
-                </div>
-
-                <div class="employee-detail-item">
-                    <span>Email</span>
-                    <strong id="modalEmail">-</strong>
-                </div>
-
-                <div class="employee-detail-item">
-                    <span>Department</span>
-                    <strong id="modalDepartment">-</strong>
-                </div>
-
-                <div class="employee-detail-item">
-                    <span>Designation</span>
-                    <strong id="modalDesignation">-</strong>
-                </div>
-
-                <div class="employee-detail-item">
-                    <span>Office / Branch</span>
-                    <strong id="modalOffice">-</strong>
-                </div>
-
-                <div class="employee-detail-item">
-                    <span>Joining Date</span>
-                    <strong id="modalJoiningDate">-</strong>
-                </div>
-
-                <div class="employee-detail-item">
-                    <span>Status</span>
-                    <strong id="modalStatus">-</strong>
-                </div>
-
-            </div>
-
-
-            <!-- EDIT FORM -->
-
-            <div
-                id="employeeEditForm"
-                class="employee-edit-form"
+            <input
+                type="hidden"
+                id="correctionAttendanceRecordId"
             >
 
-                <div class="form-section-title">
-                    Edit Employee
+
+            <div class="profile-grid">
+
+                <div class="form-group">
+
+                    <label>
+                        Employee
+                    </label>
+
+                    <input
+                        type="text"
+                        id="correctionEmployeeName"
+                        readonly
+                    >
+
                 </div>
 
 
-                <div class="employee-form-grid">
+                <div class="form-group">
 
-                    <div class="form-group">
+                    <label>
+                        Date
+                    </label>
 
-                        <label>
-                            Employee Name
-                        </label>
+                    <input
+                        type="date"
+                        id="correctionAttendanceDate"
+                        readonly
+                    >
 
-                        <input
-                            type="text"
-                            id="editEmployeeName"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Employee ID
-                        </label>
-
-                      <input
-    type="text"
-    id="editEmployeeId"
->
-
-                    </div>
+                </div>
 
 
-                    <div class="form-group">
+                <div class="form-group">
 
-                        <label>
-                            Email
-                        </label>
+                    <label for="correctionCheckInTime">
+                        Check In
+                    </label>
 
-                        <input
-                            type="email"
-                            id="editEmployeeEmail"
-                        >
+                    <input
+                        type="time"
+                        id="correctionCheckInTime"
+                    >
 
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Department
-                        </label>
-
-                        <input
-                            type="text"
-                            id="editDepartment"
-                        >
-
-                    </div>
+                </div>
 
 
-                    <div class="form-group">
+                <div class="form-group">
 
-                        <label>
-                            Designation
-                        </label>
+                    <label for="correctionCheckOutTime">
+                        Check Out
+                    </label>
 
-                        <input
-                            type="text"
-                            id="editDesignation"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Office / Branch
-                        </label>
-
-                        <input
-                            type="text"
-                            id="editOffice"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Joining Date
-                        </label>
-
-                        <input
-                            type="date"
-                            id="editJoiningDate"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Status
-                        </label>
-
-                        <select id="editStatus">
-
-                            <option value="active">
-                                Active
-                            </option>
-
-                            <option value="inactive">
-                                Inactive
-                            </option>
-
-                        </select>
-
-                    </div>
+                    <input
+                        type="time"
+                        id="correctionCheckOutTime"
+                    >
 
                 </div>
 
             </div>
+
+
+            <div class="form-group">
+
+                <label for="correctionReason">
+                    Correction Reason
+                </label>
+
+                <textarea
+                    id="correctionReason"
+                    rows="4"
+                    placeholder="Why is this attendance being corrected?"
+                ></textarea>
+
+            </div>
+
+
+            <div
+                id="attendanceCorrectionStatus"
+                class="employee-form-status"
+            ></div>
 
         </div>
 
 
-        <div class="employee-modal-footer">
+        <div class="admin-modal-footer">
 
             <button
                 type="button"
-                id="deleteEmployeeBtn"
-                class="danger-btn"
+                id="cancelAttendanceCorrectionBtn"
+                class="secondary-btn"
             >
-                Delete Employee
+                Cancel
             </button>
 
-
-            <div class="modal-footer-right">
-
-                <button
-                    type="button"
-                    id="cancelEditBtn"
-                    class="secondary-btn"
-                >
-                    Close
-                </button>
-
-                <button
-                    type="button"
-                    id="saveEmployeeBtn"
-                    class="primary-btn"
-                >
-                    Save Changes
-                </button>
-
-            </div>
+            <button
+                type="button"
+                id="saveAttendanceCorrectionBtn"
+                class="primary-btn"
+            >
+                Save Correction
+            </button>
 
         </div>
 
@@ -851,41 +2014,2098 @@
 
 </div>
 
-        </main>
+
+            <!-- ================================================== -->
+            <!-- DEPARTMENTS & BRANCHES -->
+            <!-- ================================================== -->
+
+           
+<!-- ================================================== -->
+<!-- DEPARTMENTS & BRANCHES -->
+<!-- ================================================== -->
+
+<section
+    id="departmentsBranchesPage"
+    class="page-section"
+>
+
+    <div class="page-heading">
+
+        <div>
+
+            <p class="page-eyebrow">
+                Organization Structure
+            </p>
+
+            <h1>
+                Departments & Branches
+            </h1>
+
+            <p>
+                Manage departments, designations and Dazzle office / outlet locations
+            </p>
+
+        </div>
 
     </div>
 
 
+    <!-- ========================================= -->
+    <!-- DEPARTMENTS -->
+    <!-- ========================================= -->
+
+    <div class="admin-card organization-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Departments
+                </h2>
+
+                <p>
+                    Create and manage company departments
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            id="departmentForm"
+            class="organization-form"
+        >
+
+            <div class="organization-form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="departmentNameInput">
+                        Department Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="departmentNameInput"
+                        placeholder="e.g. Human Resources"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="departmentCodeInput">
+                        Department Code
+                    </label>
+
+                    <input
+                        type="text"
+                        id="departmentCodeInput"
+                        placeholder="e.g. HR"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="departmentStatusInput">
+                        Status
+                    </label>
+
+                    <select
+                        id="departmentStatusInput"
+                        required
+                    >
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="organization-form-action">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        + Add Department
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="departmentFormStatus"
+                class="employee-form-status"
+            ></div>
+
+        </form>
+
+
+        <div class="table-wrapper organization-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Department</th>
+                        <th>Code</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="departmentsTableBody">
+
+                    <tr>
+
+                        <td colspan="4">
+                            No departments found.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================= -->
+    <!-- DESIGNATIONS -->
+    <!-- ========================================= -->
+
+    <div class="admin-card organization-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Designations
+                </h2>
+
+                <p>
+                    Create and manage employee job titles
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            id="designationForm"
+            class="organization-form"
+        >
+
+            <div class="organization-form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="designationNameInput">
+                        Designation
+                    </label>
+
+                    <input
+                        type="text"
+                        id="designationNameInput"
+                        placeholder="e.g. Sales Executive"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="designationDepartmentInput">
+                        Department
+                    </label>
+
+                    <select
+                        id="designationDepartmentInput"
+                        required
+                    >
+
+                        <option value="">
+                            Select Department
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="designationStatusInput">
+                        Status
+                    </label>
+
+                    <select
+                        id="designationStatusInput"
+                        required
+                    >
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="organization-form-action">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        + Add Designation
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="designationFormStatus"
+                class="employee-form-status"
+            ></div>
+
+        </form>
+
+
+        <div class="table-wrapper organization-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Designation</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="designationsTableBody">
+
+                    <tr>
+
+                        <td colspan="4">
+                            No designations found.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================= -->
+    <!-- BRANCHES / OFFICES -->
+    <!-- ========================================= -->
+
+    <div class="admin-card organization-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Branches & Offices
+                </h2>
+
+                <p>
+                    Manage Dazzle outlets, offices and other work locations
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            id="branchForm"
+            class="organization-form"
+        >
+
+            <div class="organization-form-grid branch-form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="branchNameInput">
+                        Branch / Office Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="branchNameInput"
+                        placeholder="e.g. Jamuna Future Park"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="branchCodeInput">
+                        Code
+                    </label>
+
+                    <input
+                        type="text"
+                        id="branchCodeInput"
+                        placeholder="e.g. JFP-01"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="branchTypeInput">
+                        Location Type
+                    </label>
+
+                    <select
+                        id="branchTypeInput"
+                        required
+                    >
+
+                        <option value="">
+                            Select Type
+                        </option>
+
+                        <option value="Outlet">
+                            Outlet
+                        </option>
+
+                        <option value="Head Office">
+                            Head Office
+                        </option>
+
+                        <option value="Online Office">
+                            Online Office
+                        </option>
+
+                        <option value="Service Center">
+                            Service Center
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="branchCityInput">
+                        City
+                    </label>
+
+                    <input
+                        type="text"
+                        id="branchCityInput"
+                        placeholder="e.g. Dhaka"
+                    >
+
+                </div>
+
+
+                <div class="form-group organization-wide-field">
+
+                    <label for="branchAddressInput">
+                        Address
+                    </label>
+
+                    <input
+                        type="text"
+                        id="branchAddressInput"
+                        placeholder="Enter branch / office address"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="branchStatusInput">
+                        Status
+                    </label>
+
+                    <select
+                        id="branchStatusInput"
+                        required
+                    >
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="organization-form-action">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        + Add Branch
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="branchFormStatus"
+                class="employee-form-status"
+            ></div>
+
+        </form>
+
+
+        <div class="table-wrapper organization-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Branch / Office</th>
+                        <th>Code</th>
+                        <th>Type</th>
+                        <th>City</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="branchesTableBody">
+
+                    <tr>
+
+                        <td colspan="6">
+                            No branches found.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+            <!-- ================================================== -->
+<!-- SHIFT & WEEKLY OFF -->
+<!-- ================================================== -->
+
+<section
+    id="shiftWeeklyOffPage"
+    class="page-section"
+>
+
+    <div class="page-heading">
+
+        <div>
+
+            <p class="page-eyebrow">
+                Attendance Setup
+            </p>
+
+            <h1>
+                Shift & Weekly Off
+            </h1>
+
+            <p>
+                Manage employee duty schedules and weekly off days
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================= -->
+    <!-- SHIFT MANAGEMENT -->
+    <!-- ========================================= -->
+
+    <div class="admin-card organization-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Shift Management
+                </h2>
+
+                <p>
+                    Create duty shifts with check-in and check-out times
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            id="shiftForm"
+            class="organization-form"
+        >
+
+            <div class="organization-form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="shiftNameInput">
+                        Shift Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="shiftNameInput"
+                        placeholder="e.g. Regular Shift"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="shiftStartTimeInput">
+                        Start Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="shiftStartTimeInput"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="shiftEndTimeInput">
+                        End Time
+                    </label>
+
+                    <input
+                        type="time"
+                        id="shiftEndTimeInput"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="shiftGraceMinutesInput">
+                        Late Grace
+                    </label>
+
+                    <input
+                        type="number"
+                        id="shiftGraceMinutesInput"
+                        min="0"
+                        value="0"
+                        placeholder="Minutes"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="shiftStatusInput">
+                        Status
+                    </label>
+
+                    <select
+                        id="shiftStatusInput"
+                        required
+                    >
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="organization-form-action">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        + Add Shift
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="shiftFormStatus"
+                class="employee-form-status"
+            ></div>
+
+        </form>
+
+
+        <div class="table-wrapper organization-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Shift</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Grace</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="shiftsTableBody">
+
+                    <tr>
+
+                        <td colspan="6">
+                            No shifts found.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ========================================= -->
+    <!-- EMPLOYEE SHIFT ASSIGNMENT -->
+    <!-- ========================================= -->
+
+    <div class="admin-card organization-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Employee Shift Assignment
+                </h2>
+
+                <p>
+                    Assign a duty shift to an employee
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            id="employeeShiftForm"
+            class="organization-form"
+        >
+
+            <div class="organization-form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="shiftEmployeeInput">
+                        Employee
+                    </label>
+
+                    <select
+                        id="shiftEmployeeInput"
+                        required
+                    >
+
+                        <option value="">
+                            Select Employee
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="employeeShiftInput">
+                        Shift
+                    </label>
+
+                    <select
+                        id="employeeShiftInput"
+                        required
+                    >
+
+                        <option value="">
+                            Select Shift
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="organization-form-action">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Assign Shift
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="employeeShiftFormStatus"
+                class="employee-form-status"
+            ></div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- ========================================= -->
+    <!-- WEEKLY OFF -->
+    <!-- ========================================= -->
+
+    <div class="admin-card organization-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Weekly Off Assignment
+                </h2>
+
+                <p>
+                    Set the employee's regular weekly off day
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            id="weeklyOffForm"
+            class="organization-form"
+        >
+
+            <div class="organization-form-grid">
+
+
+                <div class="form-group">
+
+                    <label for="weeklyOffEmployeeInput">
+                        Employee
+                    </label>
+
+                    <select
+                        id="weeklyOffEmployeeInput"
+                        required
+                    >
+
+                        <option value="">
+                            Select Employee
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="weeklyOffDayInput">
+                        Weekly Off
+                    </label>
+
+                    <select
+                        id="weeklyOffDayInput"
+                        required
+                    >
+
+                        <option value="">
+                            Select Day
+                        </option>
+
+                        <option value="Sunday">
+                            Sunday
+                        </option>
+
+                        <option value="Monday">
+                            Monday
+                        </option>
+
+                        <option value="Tuesday">
+                            Tuesday
+                        </option>
+
+                        <option value="Wednesday">
+                            Wednesday
+                        </option>
+
+                        <option value="Thursday">
+                            Thursday
+                        </option>
+
+                        <option value="Friday">
+                            Friday
+                        </option>
+
+                        <option value="Saturday">
+                            Saturday
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="organization-form-action">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Save Weekly Off
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="weeklyOffFormStatus"
+                class="employee-form-status"
+            ></div>
+
+        </form>
+
+    </div>
+
+
+
+    <!-- ========================================= -->
+    <!-- EMPLOYEE SCHEDULE TABLE -->
+    <!-- ========================================= -->
+
+    <div class="admin-card organization-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    Employee Schedule
+                </h2>
+
+                <p>
+                    Current shift and weekly off configuration
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper organization-table">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Employee</th>
+                        <th>Employee ID</th>
+                        <th>Branch / Office</th>
+                        <th>Shift</th>
+                        <th>Weekly Off</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="employeeScheduleTableBody">
+
+                    <tr>
+
+                        <td colspan="6">
+                            No employee schedule found.
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+            <!-- ================================================== -->
+            <!-- PAYROLL -->
+            <!-- ================================================== -->
+
+            <section
+                id="payrollPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <p class="page-eyebrow">
+                            Compensation
+                        </p>
+
+                        <h1>
+                            Payroll
+                        </h1>
+
+                        <p>
+                            Salary, deductions, incentives, fines and monthly payroll processing
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="module-grid">
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">৳</span>
+                        <h2>Salary Structure</h2>
+                        <p>
+                            Maintain basic salary and employee compensation components.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">−</span>
+                        <h2>Deductions & Fine</h2>
+                        <p>
+                            Track approved attendance deductions, fines and adjustments.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">＋</span>
+                        <h2>Incentive / Commission</h2>
+                        <p>
+                            Maintain sales incentives, commissions and performance additions.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">▤</span>
+                        <h2>Salary Sheet & Payslip</h2>
+                        <p>
+                            Generate monthly salary sheets and employee payslip records.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================================================== -->
+            <!-- PERFORMANCE -->
+            <!-- ================================================== -->
+
+            <section
+                id="performancePage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <p class="page-eyebrow">
+                            Performance
+                        </p>
+
+                        <h1>
+                            Performance / KPI
+                        </h1>
+
+                        <p>
+                            Track employee targets, achievement and monthly performance scores
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="module-grid">
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">◎</span>
+                        <h2>KPI Setup</h2>
+                        <p>
+                            Define department and role-specific KPI components and weights.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">↗</span>
+                        <h2>Target vs Achievement</h2>
+                        <p>
+                            Record monthly targets, achievement and accuracy/performance data.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">★</span>
+                        <h2>Performance Review</h2>
+                        <p>
+                            Review final scores and employee performance history.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================================================== -->
+            <!-- PROBATION -->
+            <!-- ================================================== -->
+
+            <section
+                id="probationPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <p class="page-eyebrow">
+                            Employment Status
+                        </p>
+
+                        <h1>
+                            Probation & Confirmation
+                        </h1>
+
+                        <p>
+                            Monitor probation periods, confirmation due dates and employment status changes
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="module-grid">
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">◌</span>
+                        <h2>On Probation</h2>
+                        <p>
+                            View all employees currently serving probation.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">!</span>
+                        <h2>Confirmation Due</h2>
+                        <p>
+                            See employees whose probation period is ending soon.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">✓</span>
+                        <h2>Confirm / Extend</h2>
+                        <p>
+                            Record confirmation decisions or probation extensions.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================================================== -->
+            <!-- DOCUMENTS -->
+            <!-- ================================================== -->
+
+            <section
+                id="documentsPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <p class="page-eyebrow">
+                            Employee Records
+                        </p>
+
+                        <h1>
+                            Documents
+                        </h1>
+
+                        <p>
+                            Maintain employee HR documents and document status
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="module-grid">
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">▤</span>
+                        <h2>Employee Documents</h2>
+                        <p>
+                            Track NID, joining documents and required HR records.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">✉</span>
+                        <h2>Letters</h2>
+                        <p>
+                            Manage appointment, offer, warning, permission and other letters.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">✓</span>
+                        <h2>NOC / Clearance</h2>
+                        <p>
+                            Track NOC and employee clearance documentation.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================================================== -->
+            <!-- RECRUITMENT -->
+            <!-- ================================================== -->
+
+            <section
+                id="recruitmentPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <p class="page-eyebrow">
+                            Talent Acquisition
+                        </p>
+
+                        <h1>
+                            Recruitment & Joining
+                        </h1>
+
+                        <p>
+                            Manage candidates from selection through joining completion
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="module-grid">
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">✦</span>
+                        <h2>Candidates</h2>
+                        <p>
+                            Track shortlisted, interviewed and selected candidates.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">✓</span>
+                        <h2>Joining Checklist</h2>
+                        <p>
+                            Track required steps before an employee can officially join duty.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">✉</span>
+                        <h2>Permission Letter</h2>
+                        <p>
+                            Maintain official duty-joining permission records.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================================================== -->
+            <!-- EXIT MANAGEMENT -->
+            <!-- ================================================== -->
+
+            <section
+                id="exitManagementPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <p class="page-eyebrow">
+                            Employee Lifecycle
+                        </p>
+
+                        <h1>
+                            Exit Management
+                        </h1>
+
+                        <p>
+                            Manage resignation, notice, clearance and final employee exit
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="module-grid">
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">↪</span>
+                        <h2>Resignation</h2>
+                        <p>
+                            Record resignation submissions and notice-period information.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">✓</span>
+                        <h2>Clearance</h2>
+                        <p>
+                            Track department and company clearance before final release.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">৳</span>
+                        <h2>Final Settlement</h2>
+                        <p>
+                            Maintain final settlement and release-status records.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================================================== -->
+            <!-- REPORTS -->
+            <!-- ================================================== -->
+
+            <section
+                id="reportsPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <p class="page-eyebrow">
+                            Analytics
+                        </p>
+
+                        <h1>
+                            Reports
+                        </h1>
+
+                        <p>
+                            Central reporting area for HR, attendance, leave, payroll and performance
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="module-grid">
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">◷</span>
+                        <h2>Attendance Report</h2>
+                        <p>
+                            Employee, branch and date-wise attendance reporting.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">📅</span>
+                        <h2>Leave Report</h2>
+                        <p>
+                            Leave request and approval history reporting.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">👥</span>
+                        <h2>Employee Report</h2>
+                        <p>
+                            Employee master report by department, branch and status.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">৳</span>
+                        <h2>Payroll Report</h2>
+                        <p>
+                            Monthly payroll, deductions and incentive summaries.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================================================== -->
+            <!-- SETTINGS -->
+            <!-- ================================================== -->
+
+            <section
+                id="settingsPage"
+                class="page-section"
+            >
+
+                <div class="page-heading">
+
+                    <div>
+                        <p class="page-eyebrow">
+                            System Configuration
+                        </p>
+
+                        <h1>
+                            Settings
+                        </h1>
+
+                        <p>
+                            Configure HRM rules, attendance settings and access control
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="module-grid">
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">⌂</span>
+                        <h2>Company Information</h2>
+                        <p>
+                            Maintain company and HRM system information.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">◎</span>
+                        <h2>Attendance Location</h2>
+                        <p>
+                            Configure office geofence locations and allowed radius.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">📅</span>
+                        <h2>Leave Rules</h2>
+                        <p>
+                            Configure leave categories and approval rules.
+                        </p>
+                    </div>
+
+                    <div class="admin-card module-card">
+                        <span class="module-icon">🔒</span>
+                        <h2>Roles & Permissions</h2>
+                        <p>
+                            Manage admin access and future role-based permissions.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>          
+
+        <!-- ================================================== -->
+    <!-- EMPLOYEE MODAL -->
+    <!-- ================================================== -->
+
+    <div
+        id="employeeModal"
+        class="employee-modal"
+    >
+
+        <div class="employee-modal-content">
+
+
+            <div class="employee-modal-header">
+
+                <div>
+
+                    <h2 id="modalEmployeeName">
+                        Employee
+                    </h2>
+
+                    <p id="modalEmployeeId">
+                        -
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="closeEmployeeModal"
+                    class="modal-close-btn"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="employee-modal-body">
+
+
+                <div class="employee-detail-grid">
+
+
+                    <div class="employee-detail-item">
+                        <span>Employee Name</span>
+                        <strong id="modalName">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Employee ID</span>
+                        <strong id="modalId">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Email</span>
+                        <strong id="modalEmail">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Phone Number</span>
+                        <strong id="modalPhone">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Date of Birth</span>
+                        <strong id="modalDob">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>NID Number</span>
+                        <strong id="modalNid">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Emergency Contact</span>
+                        <strong id="modalEmergencyContact">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Present Address</span>
+                        <strong id="modalPresentAddress">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Department</span>
+                        <strong id="modalDepartment">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Designation</span>
+                        <strong id="modalDesignation">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Office / Branch</span>
+                        <strong id="modalOffice">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Joining Date</span>
+                        <strong id="modalJoiningDate">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Employment Type</span>
+                        <strong id="modalEmploymentType">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Probation End Date</span>
+                        <strong id="modalProbationEndDate">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Status</span>
+                        <strong id="modalStatus">-</strong>
+                    </div>
+
+
+                </div>
+
+
+                <div
+                    id="employeeEditForm"
+                    class="employee-edit-form"
+                >
+
+                    <div class="form-section-title">
+                        Edit Employee
+                    </div>
+
+
+                    <div class="employee-form-grid">
+
+
+                        <div class="form-group">
+                            <label>Employee Name</label>
+
+                            <input
+                                type="text"
+                                id="editEmployeeName"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Employee ID</label>
+
+                            <input
+                                type="text"
+                                id="editEmployeeId"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Email</label>
+
+                            <input
+                                type="email"
+                                id="editEmployeeEmail"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Phone Number</label>
+
+                            <input
+                                type="tel"
+                                id="editEmployeePhone"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+
+                            <input
+                                type="date"
+                                id="editEmployeeDob"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>NID Number</label>
+
+                            <input
+                                type="text"
+                                id="editEmployeeNid"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Emergency Contact</label>
+
+                            <input
+                                type="tel"
+                                id="editEmergencyContact"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Present Address</label>
+
+                            <input
+                                type="text"
+                                id="editPresentAddress"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Department</label>
+
+                            <input
+                                type="text"
+                                id="editDepartment"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Designation</label>
+
+                            <input
+                                type="text"
+                                id="editDesignation"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Office / Branch</label>
+
+                            <input
+                                type="text"
+                                id="editOffice"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Joining Date</label>
+
+                            <input
+                                type="date"
+                                id="editJoiningDate"
+                            >
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Employment Type
+                            </label>
+
+                            <select id="editEmploymentType">
+
+                                <option value="">
+                                    Select employment type
+                                </option>
+
+                                <option value="Full Time">
+                                    Full Time
+                                </option>
+
+                                <option value="Part Time">
+                                    Part Time
+                                </option>
+
+                                <option value="Probation">
+                                    Probation
+                                </option>
+
+                                <option value="Contract">
+                                    Contract
+                                </option>
+
+                                <option value="Intern">
+                                    Intern
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Probation End Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="editProbationEndDate"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Status
+                            </label>
+
+                            <select id="editStatus">
+
+                                <option value="active">
+                                    Active
+                                </option>
+
+                                <option value="inactive">
+                                    Inactive
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="employee-modal-footer">
+
+                <button
+                    type="button"
+                    id="deleteEmployeeBtn"
+                    class="danger-btn"
+                >
+                    Delete Employee
+                </button>
+
+
+                <div class="modal-footer-right">
+
+                    <button
+                        type="button"
+                        id="cancelEditBtn"
+                        class="secondary-btn"
+                    >
+                        Close
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="saveEmployeeBtn"
+                        class="primary-btn"
+                    >
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================================================== -->
+    <!-- ADMIN PROFILE MODAL -->
+    <!-- ================================================== -->
+
+    <div
+        id="adminMyProfileModal"
+        class="employee-modal"
+    >
+
+        <div class="employee-modal-content admin-profile-modal-content">
+
+
+            <div class="employee-modal-header">
+
+                <div>
+
+                    <p class="profile-modal-eyebrow">
+                        Admin Account
+                    </p>
+
+                    <h2>
+                        My Profile
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="closeAdminMyProfileBtn"
+                    class="modal-close-btn"
+                    type="button"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="employee-modal-body">
+
+                <div class="employee-detail-grid">
+
+
+                    <div class="employee-detail-item">
+                        <span>Name</span>
+                        <strong id="adminProfileName">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Employee ID</span>
+                        <strong id="adminProfileEmployeeId">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Email</span>
+                        <strong id="adminProfileEmail">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Phone Number</span>
+                        <strong id="adminProfilePhone">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Department</span>
+                        <strong id="adminProfileDepartment">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Designation</span>
+                        <strong id="adminProfileDesignation">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Office / Branch</span>
+                        <strong id="adminProfileOffice">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Joining Date</span>
+                        <strong id="adminProfileJoiningDate">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Employment Type</span>
+                        <strong id="adminProfileEmploymentType">-</strong>
+                    </div>
+
+
+                    <div class="employee-detail-item">
+                        <span>Status</span>
+                        <strong id="adminProfileStatus">-</strong>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================================================== -->
     <!-- FIREBASE + ADMIN JS -->
+    <!-- ================================================== -->
 
     <script type="module">
 
         import {
             initializeApp
-        } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
-     import {
-    getAuth,
-    signOut,
-    onAuthStateChanged,
-    createUserWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-  import {
-    getFirestore,
-    collection,
-    getDocs,
-    addDoc,
-    doc,
-    updateDoc,
-    deleteDoc
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+        import {
+            getAuth,
+            signOut,
+            onAuthStateChanged,
+            createUserWithEmailAndPassword
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+        import {
+            getFirestore,
+            collection,
+            getDocs,
+            addDoc,
+            doc,
+            setDoc,
+            updateDoc,
+            deleteDoc,
+            query,
+            where
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 
         const firebaseConfig = {
 
             apiKey:
-    "AIzaSyAYFW7n7vcHTi0E08caYbW7Iaizt1_VfKc",
+                "AIzaSyAYFW7n7vcHTi0E08caYbW7Iaizt1_VfKc",
 
             authDomain:
                 "dazzle-employee-attendance.firebaseapp.com",
@@ -909,61 +4129,99 @@
 
 
         const app =
-            initializeApp(firebaseConfig);
+            initializeApp(
+                firebaseConfig
+            );
+
 
         const auth =
-            getAuth(app);
+            getAuth(
+                app
+            );
+
 
         const db =
-            getFirestore(app);
+            getFirestore(
+                app
+            );
 
-// Secondary Firebase App
-// Used for creating employee accounts
-// without logging out the admin
 
-const employeeApp =
-    initializeApp(
-        firebaseConfig,
-        "employeeApp"
-    );
+        const employeeApp =
+            initializeApp(
+                firebaseConfig,
+                "employeeApp"
+            );
 
-const employeeAuth =
-    getAuth(employeeApp);
 
-        /*
-         * These are available to admin.js
-         */
+        const employeeAuth =
+            getAuth(
+                employeeApp
+            );
 
-        window.adminAuth = auth;
-        window.adminDB = db;
-        window.adminSignOut = signOut;
+
+        window.adminAuth =
+            auth;
+
+        window.adminDB =
+            db;
+
+        window.adminSignOut =
+            signOut;
+
         window.adminOnAuthStateChanged =
-    onAuthStateChanged;
+            onAuthStateChanged;
+
         window.employeeAuth =
-    employeeAuth;
+            employeeAuth;
 
-window.adminCreateUser =
-    createUserWithEmailAndPassword;
-        window.adminCollection = collection;
-        window.adminGetDocs = getDocs;
-        window.adminAddDoc = addDoc;
-        window.adminDoc = doc;
-        window.adminUpdateDoc = updateDoc;
-        window.adminDeleteDoc = deleteDoc;
+        window.adminCreateUser =
+            createUserWithEmailAndPassword;
 
-        /*
-         * Load admin.js
-         */
+        window.adminCollection =
+            collection;
+
+        window.adminGetDocs =
+            getDocs;
+
+        window.adminAddDoc =
+            addDoc;
+
+        window.adminSetDoc =
+            setDoc;
+
+        window.adminDoc =
+            doc;
+
+        window.adminUpdateDoc =
+            updateDoc;
+
+        window.adminDeleteDoc =
+            deleteDoc;
+
+        window.adminQuery =
+            query;
+
+        window.adminWhere =
+            where;
+
 
         const adminScript =
-            document.createElement("script");
+            document.createElement(
+                "script"
+            );
 
-        adminScript.src = "./admin.js";
-        adminScript.type = "module";
+        adminScript.src =
+            "./admin.js";
 
-        document.body.appendChild(adminScript);
+        adminScript.type =
+            "module";
+
+        document.body.appendChild(
+            adminScript
+        );
 
     </script>
+
 
 </body>
 
