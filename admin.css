@@ -1576,3 +1576,1743 @@ tbody tr:last-child td {
 .admin-header button:hover {
     opacity: 0.9;
 }
+
+/* =========================================================
+   DAZZLE HRM — NEW ADMIN DASHBOARD ADDITIONS
+   Paste this entire section at the END of admin.css
+========================================================= */
+
+
+/* =========================================================
+   HEADER STRUCTURE
+========================================================= */
+
+.admin-header {
+    justify-content: space-between;
+}
+
+
+.admin-header-left {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+
+.admin-header-left .brand-name {
+    flex-shrink: 0;
+}
+
+
+.admin-header-left .header-title {
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ADMIN PROFILE MENU
+========================================================= */
+
+.admin-profile-wrapper {
+    position: relative;
+
+    margin-left: auto;
+}
+
+
+.admin-header .admin-profile-menu-btn {
+    height: auto;
+
+    min-height: 46px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 5px 9px;
+
+    margin-left: 0;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease;
+}
+
+
+.admin-header .admin-profile-menu-btn:hover {
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    opacity: 1;
+}
+
+
+.admin-profile-avatar {
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #111111;
+
+    font-size: 17px;
+}
+
+
+.admin-profile-info {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 110px;
+
+    text-align: left;
+}
+
+
+.admin-profile-info span {
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    line-height: 1.25;
+}
+
+
+.admin-profile-info small {
+    margin-top: 3px;
+
+    color: #999da3;
+
+    font-size: 10px;
+    font-weight: 500;
+
+    line-height: 1.2;
+}
+
+
+.admin-profile-arrow {
+    color: #989ca1;
+
+    font-size: 11px;
+
+    margin-left: 2px;
+}
+
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+.admin-profile-dropdown {
+    display: none;
+
+    position: absolute;
+
+    top: calc(100% + 9px);
+    right: 0;
+
+    width: 225px;
+
+    padding: 7px;
+
+    background: #ffffff;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 11px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0, 0, 0, 0.16);
+
+    z-index: 5000;
+}
+
+
+.admin-profile-dropdown.active {
+    display: block;
+
+    animation:
+        adminDropdownOpen
+        0.16s ease;
+}
+
+
+@keyframes adminDropdownOpen {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+.admin-header
+.admin-profile-dropdown
+button {
+
+    width: 100%;
+
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 11px;
+
+    margin: 0;
+
+    border: none;
+
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: #25272a;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease;
+}
+
+
+.admin-header
+.admin-profile-dropdown
+button:hover {
+
+    background: #f4f4f5;
+
+    color: #111111;
+
+    opacity: 1;
+}
+
+
+.admin-profile-divider {
+    height: 1px;
+
+    background: var(--border);
+
+    margin: 6px 4px;
+}
+
+
+.admin-header
+.admin-profile-dropdown
+.admin-profile-logout {
+
+    color: var(--red);
+}
+
+
+.admin-header
+.admin-profile-dropdown
+.admin-profile-logout:hover {
+
+    background: var(--red-soft);
+
+    color: var(--red);
+}
+
+
+
+/* =========================================================
+   SIDEBAR LABEL
+========================================================= */
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sidebar-label {
+    padding:
+        0 13px
+        11px;
+
+    color: #a0a3a8;
+
+    font-size: 9px;
+
+    font-weight: 750;
+
+    letter-spacing: 1px;
+}
+
+
+.sidebar-bottom-note {
+    margin-top: auto;
+
+    padding:
+        15px 13px
+        2px;
+
+    color: #b0b3b7;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    border-top:
+        1px solid var(--border-soft);
+}
+
+
+
+/* =========================================================
+   PAGE EYEBROW
+========================================================= */
+
+.page-heading .page-eyebrow {
+    margin-bottom: 7px;
+
+    color: #8c9096;
+
+    font-size: 9px;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+
+/* =========================================================
+   SUMMARY CARDS — NEW STRUCTURE
+========================================================= */
+
+.summary-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+}
+
+
+.summary-card-icon {
+    position: relative;
+
+    z-index: 2;
+
+    width: 43px;
+    height: 43px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #f5f5f6;
+
+    border:
+        1px solid #ededee;
+
+    font-size: 17px;
+}
+
+
+.summary-card > div:last-child {
+    position: relative;
+
+    z-index: 2;
+
+    min-width: 0;
+}
+
+
+.summary-card span {
+    margin-bottom: 9px;
+}
+
+
+.summary-card strong {
+    font-size: 27px;
+}
+
+
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+.admin-quick-actions-card {
+    padding:
+        20px 22px;
+}
+
+
+.admin-quick-actions {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 11px;
+}
+
+
+.admin-quick-action {
+    min-height: 82px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    color: var(--text);
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+
+.admin-quick-action:hover {
+    background: #fafafa;
+
+    border-color: #d8dade;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 5px 15px
+        rgba(0, 0, 0, 0.045);
+}
+
+
+.admin-quick-action > span {
+    width: 38px;
+    height: 38px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 9px;
+
+    background: #f4f4f5;
+
+    font-size: 17px;
+}
+
+
+.admin-quick-action div {
+    min-width: 0;
+}
+
+
+.admin-quick-action strong {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #242629;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.admin-quick-action small {
+    display: block;
+
+    color: var(--text-3);
+
+    font-size: 10px;
+
+    line-height: 1.4;
+}
+
+
+
+/* =========================================================
+   MODAL EYEBROW / SECTION TITLE
+========================================================= */
+
+.modal-eyebrow {
+    margin: 0 0 5px !important;
+
+    color: var(--text-3);
+
+    font-size: 9px !important;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.9px;
+}
+
+
+.modal-section-title {
+    margin-bottom: 13px;
+
+    color: #72767c;
+
+    font-size: 10px;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.7px;
+}
+
+
+
+/* =========================================================
+   ADMIN PROFILE MODAL
+========================================================= */
+
+.admin-profile-modal-content {
+    max-width: 720px;
+}
+
+
+#adminProfileModal
+.employee-detail-grid {
+
+    margin-bottom: 0;
+}
+
+
+
+/* =========================================================
+   LEAVE MANAGEMENT
+========================================================= */
+
+#leaveManagementPage
+table {
+
+    min-width: 950px;
+}
+
+
+#leaveRequestsTableBody
+td[colspan] {
+
+    height: auto;
+
+    padding: 35px 20px;
+
+    text-align: center;
+
+    color: var(--text-3);
+}
+
+
+
+/* =========================================================
+   ATTENDANCE / EMPLOYEE TABLE IMPROVEMENT
+========================================================= */
+
+#attendanceTableBody td,
+#employeesTableBody td,
+#leaveRequestsTableBody td {
+
+    line-height: 1.45;
+}
+
+
+#employeesTableBody td:first-child,
+#attendanceTableBody td:first-child {
+
+    font-weight: 600;
+
+    color: #222222;
+}
+
+
+
+/* =========================================================
+   HEADER BUTTON GLOBAL OVERRIDE
+   Prevent old .admin-header button rule from breaking
+   the new profile/dropdown design
+========================================================= */
+
+.admin-header button {
+    margin-left: 0;
+}
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+    .admin-quick-actions {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .admin-header {
+        justify-content:
+            space-between;
+    }
+
+
+    .admin-header-left {
+        min-width: 0;
+    }
+
+
+    .admin-profile-info {
+        display: none;
+    }
+
+
+    .admin-profile-arrow {
+        display: none;
+    }
+
+
+    .admin-header
+    .admin-profile-menu-btn {
+
+        min-height: 40px;
+
+        padding: 2px;
+
+        background: transparent;
+    }
+
+
+    .admin-profile-avatar {
+        width: 35px;
+        height: 35px;
+    }
+
+
+    .admin-profile-dropdown {
+        width: 215px;
+
+        top:
+            calc(100% + 8px);
+    }
+
+
+    .sidebar-label {
+        display: none;
+    }
+
+
+    .sidebar-bottom-note {
+        display: none;
+    }
+
+
+    .admin-quick-actions {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .admin-quick-action {
+        min-height: 74px;
+    }
+
+
+    .summary-card {
+        min-height: 94px;
+
+        padding: 17px;
+    }
+
+
+    .summary-card-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+
+    .summary-card strong {
+        font-size: 25px;
+    }
+
+
+    .page-heading
+    .page-eyebrow {
+
+        margin-bottom: 5px;
+    }
+
+
+    #adminProfileModal
+    .employee-detail-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+}
+/* =========================================================
+   DAZZLE HRM — FULL MODULE LAYOUT PATCH
+========================================================= */
+
+.sidebar {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+.sidebar-section-label {
+    margin-top: 16px;
+    padding-top: 14px;
+
+    border-top:
+        1px solid var(--border-soft);
+}
+
+
+.nav-sub-item {
+    padding-left: 26px;
+}
+
+
+.module-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.module-card {
+    min-height: 150px;
+
+    margin-bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-start;
+}
+
+
+.module-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 16px;
+
+    border-radius: 10px;
+
+    background: #f4f4f5;
+
+    border:
+        1px solid var(--border-soft);
+
+    font-size: 17px;
+}
+
+
+.module-card h2 {
+    margin-bottom: 7px;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    letter-spacing: -0.2px;
+}
+
+
+.module-card p {
+    color: var(--text-2);
+
+    font-size: 12px;
+
+    line-height: 1.55;
+}
+
+
+@media (max-width: 1050px) {
+
+    .module-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .sidebar-section-label {
+        display: none;
+    }
+
+
+    .nav-sub-item {
+        padding-left: 0;
+    }
+
+
+    .module-card {
+        min-height: 130px;
+    }
+
+}
+
+/* =========================================================
+   ORGANIZATION STRUCTURE
+   Departments / Designations / Branches
+========================================================= */
+
+.organization-section {
+    margin-bottom: 22px;
+}
+
+
+.organization-form {
+    margin-top: 16px;
+    margin-bottom: 24px;
+
+    padding-bottom: 22px;
+
+    border-bottom:
+        1px solid var(--border-soft);
+}
+
+
+.organization-form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+    align-items: end;
+}
+
+
+.branch-form-grid {
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+}
+
+
+.organization-wide-field {
+    grid-column:
+        span 2;
+}
+
+
+.organization-form-action {
+    display: flex;
+    align-items: flex-end;
+}
+
+
+.organization-form-action .primary-btn {
+    width: 100%;
+    min-height: 42px;
+}
+
+
+.organization-table {
+    margin-top: 8px;
+}
+
+
+.organization-table table {
+    min-width: 720px;
+}
+
+
+.organization-table td {
+    vertical-align: middle;
+}
+
+
+.organization-table .employee-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+}
+
+
+.organization-table .edit-organization-btn,
+.organization-table .toggle-organization-btn,
+.organization-table .delete-organization-btn {
+    border: none;
+
+    padding: 7px 10px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.organization-table .edit-organization-btn {
+    background: #f4f4f5;
+    color: #111827;
+}
+
+
+.organization-table .toggle-organization-btn {
+    background: #eef2ff;
+    color: #3730a3;
+}
+
+
+.organization-table .delete-organization-btn {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+
+.organization-table .edit-organization-btn:hover,
+.organization-table .toggle-organization-btn:hover,
+.organization-table .delete-organization-btn:hover {
+    opacity: 0.85;
+}
+
+
+.organization-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.organization-status.active {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+
+.organization-status.inactive {
+    background: #f4f4f5;
+    color: #6b7280;
+}
+
+
+/* =========================
+   TABLE EMPTY STATE
+========================= */
+
+.organization-table tbody td[colspan] {
+    text-align: center;
+
+    padding: 28px;
+
+    color: var(--text-2);
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+    .organization-form-grid,
+    .branch-form-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .organization-wide-field {
+        grid-column:
+            span 2;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .organization-form-grid,
+    .branch-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .organization-wide-field {
+        grid-column:
+            span 1;
+    }
+
+
+    .organization-form-action {
+        width: 100%;
+    }
+
+
+    .organization-form-action .primary-btn {
+        width: 100%;
+    }
+
+}
+
+/* =========================================================
+   SHIFT & WEEKLY OFF
+========================================================= */
+
+#shiftWeeklyOffPage .organization-section {
+    margin-bottom: 22px;
+}
+
+
+#shiftWeeklyOffPage .organization-form-grid {
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+}
+
+
+#shiftWeeklyOffPage .organization-form-action {
+    display: flex;
+    align-items: flex-end;
+}
+
+
+#shiftWeeklyOffPage .organization-form-action .primary-btn {
+    width: 100%;
+    min-height: 42px;
+}
+
+
+/* =========================
+   SCHEDULE TABLE
+========================= */
+
+#employeeScheduleTableBody td {
+    vertical-align: middle;
+}
+
+
+.schedule-employee-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.schedule-employee-name {
+    font-weight: 700;
+    color: var(--text-1);
+}
+
+
+.schedule-employee-designation {
+    font-size: 12px;
+    color: var(--text-2);
+}
+
+
+.schedule-shift-name {
+    font-weight: 600;
+    color: var(--text-1);
+}
+
+
+.schedule-shift-time {
+    display: block;
+    margin-top: 3px;
+
+    font-size: 11px;
+    color: var(--text-2);
+}
+
+
+.schedule-empty {
+    color: var(--text-2);
+    font-size: 12px;
+}
+
+
+/* =========================
+   WEEKLY OFF BADGE
+========================= */
+
+.weekly-off-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+
+.no-weekly-off-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    background: #f4f4f5;
+    color: #71717a;
+}
+
+
+/* =========================
+   SHIFT STATUS
+========================= */
+
+.shift-status {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.shift-status.active {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+
+.shift-status.inactive {
+    background: #f4f4f5;
+    color: #6b7280;
+}
+
+
+/* =========================
+   SHIFT ACTION BUTTONS
+========================= */
+
+.edit-shift-btn,
+.toggle-shift-btn,
+.delete-shift-btn,
+.edit-schedule-btn {
+    border: none;
+
+    padding: 7px 10px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.edit-shift-btn,
+.edit-schedule-btn {
+    background: #f4f4f5;
+    color: #111827;
+}
+
+
+.toggle-shift-btn {
+    background: #eef2ff;
+    color: #3730a3;
+}
+
+
+.delete-shift-btn {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+
+.edit-shift-btn:hover,
+.toggle-shift-btn:hover,
+.delete-shift-btn:hover,
+.edit-schedule-btn:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================
+   SHIFT TABLE
+========================= */
+
+#shiftWeeklyOffPage .organization-table table {
+    min-width: 760px;
+}
+
+
+#shiftWeeklyOffPage .organization-table tbody td[colspan] {
+    text-align: center;
+
+    padding: 28px;
+
+    color: var(--text-2);
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+
+    #shiftWeeklyOffPage .organization-form-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    #shiftWeeklyOffPage .organization-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    #shiftWeeklyOffPage .organization-form-action {
+        width: 100%;
+    }
+
+
+    #shiftWeeklyOffPage .organization-form-action .primary-btn {
+        width: 100%;
+    }
+
+}
+
+/* =========================================================
+   ATTENDANCE MANAGEMENT
+========================================================= */
+
+.attendance-management-card {
+    margin-bottom: 22px;
+}
+
+
+/* =========================
+   FILTERS
+========================= */
+
+.attendance-management-filters,
+.attendance-range-filters {
+    display: grid;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr))
+        auto;
+
+    gap: 14px;
+
+    align-items: end;
+}
+
+
+.attendance-filter-actions {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+}
+
+
+.attendance-filter-actions button {
+    min-height: 42px;
+    white-space: nowrap;
+}
+
+
+/* =========================
+   SUMMARY CARDS
+========================= */
+
+.attendance-management-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-bottom: 22px;
+}
+
+
+.attendance-management-summary .summary-card {
+    min-height: 110px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--border-soft);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 14px rgba(15, 23, 42, 0.04);
+}
+
+
+.attendance-management-summary .summary-card-content {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+
+.attendance-management-summary .summary-label {
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--text-2);
+}
+
+
+.attendance-management-summary strong {
+    font-size: 28px;
+    line-height: 1;
+
+    color: var(--text-1);
+}
+
+
+/* =========================
+   TABLE
+========================= */
+
+.attendance-management-table {
+    margin-top: 16px;
+}
+
+
+.attendance-management-table table {
+    min-width: 1100px;
+}
+
+
+.attendance-management-table td {
+    vertical-align: middle;
+}
+
+
+.attendance-management-table tbody td[colspan] {
+    text-align: center;
+
+    padding: 30px;
+
+    color: var(--text-2);
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   EMPLOYEE CELL
+========================= */
+
+.attendance-employee-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.attendance-employee-name {
+    font-weight: 700;
+
+    color: var(--text-1);
+}
+
+
+.attendance-employee-designation {
+    font-size: 11px;
+
+    color: var(--text-2);
+}
+
+
+/* =========================
+   STATUS BADGES
+========================= */
+
+.attendance-status-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 5px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.attendance-status-badge.present {
+    background: #ecfdf5;
+    color: #047857;
+}
+
+
+.attendance-status-badge.late {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+
+.attendance-status-badge.absent {
+    background: #fef2f2;
+    color: #b91c1c;
+}
+
+
+.attendance-status-badge.leave {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+
+.attendance-status-badge.weekly-off {
+    background: #f5f3ff;
+    color: #6d28d9;
+}
+
+
+.attendance-status-badge.checked-out {
+    background: #ecfeff;
+    color: #0e7490;
+}
+
+
+/* =========================
+   LATE DISPLAY
+========================= */
+
+.attendance-late {
+    font-weight: 700;
+    color: #c2410c;
+}
+
+
+.attendance-on-time {
+    font-weight: 600;
+    color: #047857;
+}
+
+
+.attendance-not-applicable {
+    color: var(--text-2);
+}
+
+
+/* =========================
+   CORRECTION BUTTON
+========================= */
+
+.attendance-correction-btn {
+    border: none;
+
+    padding: 7px 10px;
+
+    border-radius: 7px;
+
+    background: #f4f4f5;
+    color: #111827;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+
+.attendance-correction-btn:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================
+   CORRECTION MODAL
+========================= */
+
+#attendanceCorrectionModal {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(15, 23, 42, 0.55);
+
+    backdrop-filter: blur(3px);
+}
+
+
+#attendanceCorrectionModal.active {
+    display: flex;
+}
+
+
+#attendanceCorrectionModal .admin-modal-card {
+    width: min(680px, 100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.2);
+}
+
+
+#attendanceCorrectionModal .admin-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 20px 22px;
+
+    border-bottom:
+        1px solid var(--border-soft);
+}
+
+
+#attendanceCorrectionModal .admin-modal-body {
+    padding: 22px;
+}
+
+
+#attendanceCorrectionModal .admin-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 16px 22px;
+
+    border-top:
+        1px solid var(--border-soft);
+}
+
+
+#attendanceCorrectionModal textarea {
+    width: 100%;
+
+    resize: vertical;
+
+    min-height: 100px;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1250px) {
+
+    .attendance-management-summary {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+
+    .attendance-management-filters,
+    .attendance-range-filters {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .attendance-filter-actions {
+        grid-column: span 2;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .attendance-management-summary {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+
+    .attendance-management-filters,
+    .attendance-range-filters {
+        grid-template-columns: 1fr;
+    }
+
+
+    .attendance-filter-actions {
+        grid-column: span 1;
+
+        width: 100%;
+
+        flex-direction: column;
+    }
+
+
+    .attendance-filter-actions button {
+        width: 100%;
+    }
+
+
+    #attendanceCorrectionModal .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .attendance-management-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+
+
+    .attendance-management-summary strong {
+        font-size: 24px;
+    }
+
+
+    #attendanceCorrectionModal {
+        padding: 10px;
+    }
+
+
+    #attendanceCorrectionModal .admin-modal-footer {
+        flex-direction: column;
+    }
+
+
+    #attendanceCorrectionModal .admin-modal-footer button {
+        width: 100%;
+    }
+
+}
