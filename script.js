@@ -36,6 +36,12 @@ const passwordInput =
 const loginMessage =
     document.getElementById("loginMessage");
 
+    const forgotPasswordBtn =
+    document.getElementById("forgotPasswordBtn");
+
+    const togglePasswordBtn =
+    document.getElementById("togglePasswordBtn");
+
 const logoutBtn =
     document.getElementById("logoutBtn");
 
@@ -106,6 +112,382 @@ const headerEmployeeDesignation =
 
 const myProfileBtn =
     document.getElementById("myProfileBtn");
+
+const employeeDashboardNav =
+    document.getElementById("employeeDashboardNav");
+
+ const employeeMyProfileNav =
+    document.getElementById("employeeMyProfileNav");
+
+const employeeMyProfilePage =
+    document.getElementById("employeeMyProfilePage"); 
+
+    const employeeAttendanceNav =
+    document.getElementById("employeeAttendanceNav");
+
+const employeeAttendancePage =
+    document.getElementById("employeeAttendancePage");
+
+    const employeeSettingsNav =
+    document.getElementById(
+        "employeeSettingsNav"
+    );
+
+const employeeSettingsPage =
+    document.getElementById(
+        "employeeSettingsPage"
+    );
+
+const employeeChangePasswordForm =
+    document.getElementById(
+        "employeeChangePasswordForm"
+    );
+
+const employeeCurrentPassword =
+    document.getElementById(
+        "employeeCurrentPassword"
+    );
+
+const employeeNewPassword =
+    document.getElementById(
+        "employeeNewPassword"
+    );
+
+const employeeConfirmPassword =
+    document.getElementById(
+        "employeeConfirmPassword"
+    );
+
+const employeePasswordChangeStatus =
+    document.getElementById(
+        "employeePasswordChangeStatus"
+    );
+
+const employeeAttendancePageBody =
+    document.getElementById("employeeAttendancePageBody");
+
+   const employeeAttendanceFromDate =
+    document.getElementById(
+        "employeeAttendanceFromDate"
+    );
+
+const employeeAttendanceToDate =
+    document.getElementById(
+        "employeeAttendanceToDate"
+    );
+
+const employeeAttendanceFilterBtn =
+    document.getElementById(
+        "employeeAttendanceFilterBtn"
+    );
+
+const employeeAttendanceResetBtn =
+    document.getElementById(
+        "employeeAttendanceResetBtn"
+    ); 
+
+    const profilePageEmployeeName =
+    document.getElementById("profilePageEmployeeName");
+
+const profilePageEmployeeId =
+    document.getElementById("profilePageEmployeeId");
+
+const profilePageEmployeeEmail =
+    document.getElementById("profilePageEmployeeEmail");
+
+const profilePageEmployeePhone =
+    document.getElementById("profilePageEmployeePhone");
+
+const profilePageEmployeeDob =
+    document.getElementById("profilePageEmployeeDob");
+
+const profilePageEmployeeNid =
+    document.getElementById("profilePageEmployeeNid");
+
+const profilePageEmergencyContact =
+    document.getElementById("profilePageEmergencyContact");
+
+const profilePagePresentAddress =
+    document.getElementById("profilePagePresentAddress");
+
+const profilePageDepartment =
+    document.getElementById("profilePageDepartment");
+
+const profilePageDesignation =
+    document.getElementById("profilePageDesignation");
+
+const profilePageOffice =
+    document.getElementById("profilePageOffice");
+
+const profilePageJoiningDate =
+    document.getElementById("profilePageJoiningDate");
+
+const profilePageEmploymentType =
+    document.getElementById("profilePageEmploymentType");
+
+const profilePageProbationEndDate =
+    document.getElementById("profilePageProbationEndDate");
+
+const profilePageEmployeeStatus =
+    document.getElementById("profilePageEmployeeStatus");
+
+    if (employeeMyProfileNav) {
+
+    employeeMyProfileNav.addEventListener(
+        "click",
+        () => {
+
+            const dashboardHeading =
+                document.querySelector(
+                    ".employee-dashboard-heading"
+                );
+
+            const summaryGrid =
+                document.querySelector(
+                    ".employee-summary-grid"
+                );
+
+            const dashboardGrid =
+                document.querySelector(
+                    ".employee-dashboard-grid"
+                );
+
+            if (dashboardHeading) {
+                dashboardHeading.style.display =
+                    "none";
+            }
+
+            if (summaryGrid) {
+                summaryGrid.style.display =
+                    "none";
+            }
+
+            if (dashboardGrid) {
+                dashboardGrid.style.display =
+                    "none";
+            }
+
+            if (employeeMyProfilePage) {
+                employeeMyProfilePage.style.display =
+                    "block";
+            }
+
+            document
+                .querySelectorAll(
+                    ".employee-nav-item"
+                )
+                .forEach(
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                );
+
+            employeeMyProfileNav.classList.add(
+                "active"
+            );
+        }
+    );
+}
+
+if (employeeDashboardNav) {
+
+    employeeDashboardNav.addEventListener(
+        "click",
+        () => {
+
+            const dashboardHeading =
+                document.querySelector(
+                    ".employee-dashboard-heading"
+                );
+
+            const summaryGrid =
+                document.querySelector(
+                    ".employee-summary-grid"
+                );
+
+            const dashboardGrid =
+                document.querySelector(
+                    ".employee-dashboard-grid"
+                );
+
+            if (dashboardHeading) {
+                dashboardHeading.style.display =
+                    "";
+            }
+
+            if (summaryGrid) {
+                summaryGrid.style.display =
+                    "";
+            }
+
+            if (dashboardGrid) {
+                dashboardGrid.style.display =
+                    "";
+            }
+
+            if (employeeMyProfilePage) {
+                employeeMyProfilePage.style.display =
+                    "none";
+            }
+
+            if (employeeSettingsPage) {
+    employeeSettingsPage.style.display =
+        "none";
+}
+
+            document
+                .querySelectorAll(
+                    ".employee-nav-item"
+                )
+                .forEach(
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                );
+
+            employeeDashboardNav.classList.add(
+                "active"
+            );
+        }
+    );
+}
+
+if (employeeAttendanceNav) {
+
+    employeeAttendanceNav.addEventListener(
+        "click",
+        () => {
+
+            const dashboardHeading =
+                document.querySelector(
+                    ".employee-dashboard-heading"
+                );
+
+            const summaryGrid =
+                document.querySelector(
+                    ".employee-summary-grid"
+                );
+
+            const dashboardGrid =
+                document.querySelector(
+                    ".employee-dashboard-grid"
+                );
+
+            if (dashboardHeading) {
+                dashboardHeading.style.display =
+                    "none";
+            }
+
+            if (summaryGrid) {
+                summaryGrid.style.display =
+                    "none";
+            }
+
+            if (dashboardGrid) {
+                dashboardGrid.style.display =
+                    "none";
+            }
+
+            if (employeeMyProfilePage) {
+                employeeMyProfilePage.style.display =
+                    "none";
+            }
+
+            if (employeeAttendancePage) {
+                employeeAttendancePage.style.display =
+                    "block";
+            }
+
+            document
+                .querySelectorAll(
+                    ".employee-nav-item"
+                )
+                .forEach(
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                );
+
+            employeeAttendanceNav.classList.add(
+                "active"
+            );
+        }
+    );
+}
+
+if (employeeSettingsNav) {
+
+    employeeSettingsNav.addEventListener(
+        "click",
+        () => {
+
+            const dashboardHeading =
+                document.querySelector(
+                    ".employee-dashboard-heading"
+                );
+
+            const summaryGrid =
+                document.querySelector(
+                    ".employee-summary-grid"
+                );
+
+            const dashboardGrid =
+                document.querySelector(
+                    ".employee-dashboard-grid"
+                );
+
+
+            if (dashboardHeading) {
+                dashboardHeading.style.display =
+                    "none";
+            }
+
+            if (summaryGrid) {
+                summaryGrid.style.display =
+                    "none";
+            }
+
+            if (dashboardGrid) {
+                dashboardGrid.style.display =
+                    "none";
+            }
+
+            if (employeeMyProfilePage) {
+                employeeMyProfilePage.style.display =
+                    "none";
+            }
+
+            if (employeeAttendancePage) {
+                employeeAttendancePage.style.display =
+                    "none";
+            }
+
+            if (employeeSettingsPage) {
+                employeeSettingsPage.style.display =
+                    "block";
+            }
+
+
+            document
+                .querySelectorAll(
+                    ".employee-nav-item"
+                )
+                .forEach(
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                );
+
+            employeeSettingsNav.classList.add(
+                "active"
+            );
+        }
+    );
+}
 
 const attendanceReportBtn =
     document.getElementById("attendanceReportBtn");
@@ -512,6 +894,34 @@ async function verifyOfficeLocation() {
     };
 }
 
+if (togglePasswordBtn) {
+
+    togglePasswordBtn.addEventListener(
+        "click",
+        () => {
+
+            const isPasswordHidden =
+                passwordInput.type === "password";
+
+            passwordInput.type =
+                isPasswordHidden
+                    ? "text"
+                    : "password";
+
+            togglePasswordBtn.textContent =
+                isPasswordHidden
+                    ? "🙈"
+                    : "👁";
+
+            togglePasswordBtn.setAttribute(
+                "aria-label",
+                isPasswordHidden
+                    ? "Hide password"
+                    : "Show password"
+            );
+        }
+    );
+}
 
 /* ========================= */
 /* LOGIN */
@@ -540,22 +950,66 @@ loginForm.addEventListener(
             loginMessage.textContent =
                 "";
 
-        } catch (error) {
+} catch (error) {
 
-            console.error(
-                "LOGIN ERROR:",
-                error.code,
-                error.message
-            );
+    console.error(
+        "LOGIN ERROR:",
+        error.code,
+        error.message
+    );
 
-            loginMessage.textContent =
-                error.code +
-                " — " +
-                error.message;
-        }
+    loginMessage.textContent =
+        "Wrong email or password.";
+
+    loginMessage.style.color =
+        "red";
+}
     }
 );
 
+if (forgotPasswordBtn) {
+
+    forgotPasswordBtn.addEventListener(
+        "click",
+        async () => {
+
+            const email =
+                emailInput.value.trim();
+
+            if (!email) {
+
+                loginMessage.textContent =
+                    "Please enter your email address first.";
+
+                return;
+            }
+
+            try {
+
+                loginMessage.textContent =
+                    "Sending password reset email...";
+
+                await window.firebaseSendPasswordResetEmail(
+                    window.firebaseAuth,
+                    email
+                );
+
+                loginMessage.textContent =
+                    "Password reset email sent. Please check your inbox.";
+
+            } catch (error) {
+
+                console.error(
+                    "PASSWORD RESET ERROR:",
+                    error
+                );
+
+                loginMessage.textContent =
+                    "Unable to send password reset email.";
+            }
+        }
+    );
+}
 
 /* ========================= */
 /* AUTH STATE */
@@ -741,6 +1195,86 @@ window.firebaseOnAuthStateChanged(
 
                 populateProfileModal();
 
+                if (profilePageEmployeeName) {
+    profilePageEmployeeName.textContent =
+        employee.name || "-";
+}
+
+if (profilePageEmployeeId) {
+    profilePageEmployeeId.textContent =
+        employee.employeeId || "-";
+}
+
+if (profilePageEmployeeEmail) {
+    profilePageEmployeeEmail.textContent =
+        employee.email || "-";
+}
+
+if (profilePageEmployeePhone) {
+    profilePageEmployeePhone.textContent =
+        employee.phone || "-";
+}
+
+if (profilePageEmployeeDob) {
+    profilePageEmployeeDob.textContent =
+        employee.dob || "-";
+}
+
+if (profilePageEmployeeNid) {
+    profilePageEmployeeNid.textContent =
+        employee.nid || "-";
+}
+
+if (profilePageEmergencyContact) {
+    profilePageEmergencyContact.textContent =
+        employee.emergencyContact || "-";
+}
+
+if (profilePagePresentAddress) {
+    profilePagePresentAddress.textContent =
+        employee.presentAddress || "-";
+}
+
+if (profilePageDepartment) {
+    profilePageDepartment.textContent =
+        employee.department || "-";
+}
+
+if (profilePageDesignation) {
+    profilePageDesignation.textContent =
+        employee.designation || "-";
+}
+
+if (profilePageOffice) {
+    profilePageOffice.textContent =
+        employee.office || "-";
+}
+
+if (profilePageJoiningDate) {
+    profilePageJoiningDate.textContent =
+        formatDateValue(
+            employee.joiningDate
+        );
+}
+
+if (profilePageEmploymentType) {
+    profilePageEmploymentType.textContent =
+        employee.employmentType || "-";
+}
+
+if (profilePageProbationEndDate) {
+    profilePageProbationEndDate.textContent =
+        formatDateValue(
+            employee.probationEndDate
+        );
+}
+
+if (profilePageEmployeeStatus) {
+    profilePageEmployeeStatus.textContent =
+        employee.status === "active"
+            ? "Active"
+            : "Inactive";
+}
 
                 /* ========================= */
                 /* ADMIN ROLE */
@@ -1878,7 +2412,172 @@ async function getMyAttendanceRecords() {
     return records;
 
 }
+async function getMyEmployeeSchedule() {
 
+    if (
+        !window.firebaseAuth.currentUser
+    ) {
+        return null;
+    }
+
+    const scheduleRef =
+        window.firebaseCollection(
+            window.firebaseDB,
+            "employeeSchedules"
+        );
+
+    const q =
+        window.firebaseQuery(
+            scheduleRef,
+
+            window.firebaseWhere(
+                "employeeUid",
+                "==",
+                window.firebaseAuth
+                    .currentUser
+                    .uid
+            )
+        );
+
+    const snapshot =
+        await window.firebaseGetDocs(
+            q
+        );
+
+    if (snapshot.empty) {
+        return null;
+    }
+
+    return snapshot.docs[0].data();
+}
+async function getMyApprovedLeaveRequests() {
+
+    if (
+        !employee ||
+        !window.firebaseAuth.currentUser
+    ) {
+        return [];
+    }
+
+    const leaveRef =
+        window.firebaseCollection(
+            window.firebaseDB,
+            "leaveRequests"
+        );
+
+    const q =
+        window.firebaseQuery(
+            leaveRef,
+
+            window.firebaseWhere(
+                "uid",
+                "==",
+                window.firebaseAuth
+                    .currentUser
+                    .uid
+            ),
+
+            window.firebaseWhere(
+                "status",
+                "==",
+                "approved"
+            )
+        );
+
+    const snapshot =
+        await window.firebaseGetDocs(
+            q
+        );
+
+    return snapshot.docs.map(
+        doc => ({
+            id: doc.id,
+            ...doc.data()
+        })
+    );
+}
+
+function isDateOnApprovedLeave(
+    dateKey,
+    approvedLeaves
+) {
+
+    return approvedLeaves.some(
+        leave => {
+
+            return (
+                leave.fromDate &&
+                leave.toDate &&
+                dateKey >= leave.fromDate &&
+                dateKey <= leave.toDate
+            );
+
+        }
+    );
+}
+
+function getDateKeysBetween(
+    startDate,
+    endDate
+) {
+
+    const dates = [];
+
+    const currentDate =
+        new Date(
+            startDate + "T00:00:00"
+        );
+
+    const lastDate =
+        new Date(
+            endDate + "T00:00:00"
+        );
+
+    while (
+        currentDate <= lastDate
+    ) {
+
+        const year =
+            currentDate.getFullYear();
+
+        const month =
+            String(
+                currentDate.getMonth() + 1
+            ).padStart(2, "0");
+
+        const day =
+            String(
+                currentDate.getDate()
+            ).padStart(2, "0");
+
+        dates.push(
+            `${year}-${month}-${day}`
+        );
+
+        currentDate.setDate(
+            currentDate.getDate() + 1
+        );
+    }
+
+    return dates;
+}
+
+function getWeekdayName(
+    dateKey
+) {
+
+    const date =
+        new Date(
+            dateKey + "T00:00:00"
+        );
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            weekday: "long"
+        }
+    );
+}
 
 /* ========================= */
 /* ATTENDANCE HISTORY */
@@ -1889,28 +2588,154 @@ async function loadAttendanceHistory() {
     attendanceHistory.innerHTML =
         "";
 
+    if (employeeAttendancePageBody) {
+
+        employeeAttendancePageBody.innerHTML =
+            "";
+    }
+
 
     try {
 
         const records =
             await getMyAttendanceRecords();
 
+            const approvedLeaves =
+    await getMyApprovedLeaveRequests();
+
+    const employeeSchedule =
+    await getMyEmployeeSchedule();
+
+    const todayKey =
+    getTodayKey();
+
+const yesterday =
+    new Date();
+
+yesterday.setDate(
+    yesterday.getDate() - 1
+);
+
+const yesterdayKey =
+    [
+        yesterday.getFullYear(),
+
+        String(
+            yesterday.getMonth() + 1
+        ).padStart(2, "0"),
+
+        String(
+            yesterday.getDate()
+        ).padStart(2, "0")
+    ].join("-");
+
+
+const attendanceDateSet =
+    new Set(
+        records.map(
+            record =>
+                record.dateKey
+        )
+    );
+
+
+const startDate =
+    employee.joiningDate ||
+    (
+        records.length > 0
+            ? records[
+                records.length - 1
+              ].dateKey
+            : yesterdayKey
+    );
+
+
+const missingDateKeys =
+    getDateKeysBetween(
+        startDate,
+        yesterdayKey
+    ).filter(
+        dateKey =>
+            !attendanceDateSet.has(
+                dateKey
+            )
+    );
+
+
+missingDateKeys.forEach(
+    dateKey => {
+
+     const isLeave =
+    isDateOnApprovedLeave(
+        dateKey,
+        approvedLeaves
+    );
+
+const isDayOff =
+    employeeSchedule &&
+    employeeSchedule.weeklyOff &&
+    getWeekdayName(
+        dateKey
+    ).toLowerCase() ===
+    String(
+        employeeSchedule.weeklyOff
+    ).toLowerCase();
+
+
+records.push({
+    dateKey: dateKey,
+    date: formatDateValue(
+        dateKey
+    ),
+    checkInTime: "",
+    checkOutTime: "",
+    checkInDistance: undefined,
+    checkOutDistance: undefined,
+    status:
+        isLeave
+            ? "leave"
+            : isDayOff
+                ? "day-off"
+                : "absent"
+});  
+
+    }
+);
+
+
+records.sort(
+    (a, b) =>
+        (b.dateKey || "")
+            .localeCompare(
+                a.dateKey || ""
+            )
+);
 
         if (
-            records.length === 0
-        ) {
+    records.length === 0
+) {
 
-            attendanceHistory.innerHTML = `
-                <tr>
-                    <td colspan="5">
-                        No attendance found.
-                    </td>
-                </tr>
-            `;
+    attendanceHistory.innerHTML = `
+        <tr>
+            <td colspan="5">
+                No attendance found.
+            </td>
+        </tr>
+    `;
 
+    if (employeeAttendancePageBody) {
 
-            return;
-        }
+        employeeAttendancePageBody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    No attendance found.
+                </td>
+            </tr>
+        `;
+    }
+
+    return;
+}
 
 
         records.forEach(
@@ -1940,21 +2765,83 @@ async function loadAttendanceHistory() {
                     `Check In: ${checkInDistance}<br>
                      Check Out: ${checkOutDistance}`;
 
+const todayKey =
+    getTodayKey();
 
-                const status =
-                    record.status ===
-                    "completed"
+const isRecordDayOff =
+    employeeSchedule &&
+    employeeSchedule.weeklyOff &&
+    getWeekdayName(
+        record.dateKey
+    ).toLowerCase() ===
+    String(
+        employeeSchedule.weeklyOff
+    ).toLowerCase();
 
-                        ? "Completed"
+const status =
+    record.status === "completed"
 
-                        : record.status ===
-                          "checked-in"
+        ? (
+            isRecordDayOff
+                ? "Present (Day OFF)"
+                : "Present"
+          )
 
-                            ? "Checked In"
+        : record.status === "checked-in" &&
+          record.dateKey === todayKey
 
-                            : record.status ||
-                              "-";
+            ? (
+                isRecordDayOff
+                    ? "Working (Day OFF)"
+                    : "Working"
+              )
 
+            : record.status === "checked-in" &&
+              record.dateKey !== todayKey
+
+                ? (
+                    isRecordDayOff
+                        ? "Check Out Not Found (Day OFF)"
+                        : "Check Out Not Found"
+                  )
+
+                : record.status === "leave"
+
+                    ? "Leave"
+
+                    : record.status === "day-off"
+
+                        ? "Day OFF"
+
+                        : record.status === "absent"
+
+                            ? "Absent"
+
+                            : record.status || "-";
+
+const statusClass =
+    status === "Present" ||
+    status === "Present (Day OFF)"
+        ? "attendance-status-present"
+
+        : status === "Working" ||
+          status === "Working (Day OFF)"
+            ? "attendance-status-working"
+
+            : status === "Check Out Not Found" ||
+              status === "Check Out Not Found (Day OFF)"
+                ? "attendance-status-missing-checkout"
+
+                : status === "Leave"
+                    ? "attendance-status-leave"
+
+                    : status === "Day OFF"
+                        ? "attendance-status-dayoff"
+
+                        : status === "Absent"
+                            ? "attendance-status-absent"
+
+                            : "";
 
                 attendanceHistory.innerHTML += `
                     <tr>
@@ -1975,12 +2862,30 @@ async function loadAttendanceHistory() {
                             ${location}
                         </td>
 
-                        <td>
-                            ${status}
-                        </td>
+                       <td>
+    <span class="attendance-status-badge ${statusClass}">
+        ${status}
+    </span>
+</td>
 
                     </tr>
                 `;
+
+        if (employeeAttendancePageBody) {
+    employeeAttendancePageBody.innerHTML += `
+        <tr data-date="${record.dateKey || ""}">
+            <td>${record.date || "-"}</td>
+            <td>${record.checkInTime || "-"}</td>
+            <td>${record.checkOutTime || "-"}</td>
+            <td>${location}</td>
+            <td>
+                <span class="attendance-status-badge ${statusClass}">
+                    ${status}
+                </span>
+            </td>
+        </tr>
+    `;
+}       
 
             }
         );
@@ -2776,3 +3681,204 @@ adminDashboardBtn.addEventListener(
 
     }
 );
+
+if (employeeAttendanceFilterBtn) {
+
+    employeeAttendanceFilterBtn.addEventListener(
+        "click",
+        () => {
+
+            const fromDate =
+                employeeAttendanceFromDate
+                    ? employeeAttendanceFromDate.value
+                    : "";
+
+            const toDate =
+                employeeAttendanceToDate
+                    ? employeeAttendanceToDate.value
+                    : "";
+
+            const rows =
+                employeeAttendancePageBody
+                    ? employeeAttendancePageBody
+                        .querySelectorAll(
+                            "tr[data-date]"
+                        )
+                    : [];
+
+            rows.forEach(
+                row => {
+
+                    const rowDate =
+                        row.dataset.date || "";
+
+                    let showRow = true;
+
+                    if (
+                        fromDate &&
+                        rowDate < fromDate
+                    ) {
+                        showRow = false;
+                    }
+
+                    if (
+                        toDate &&
+                        rowDate > toDate
+                    ) {
+                        showRow = false;
+                    }
+
+                    row.style.display =
+                        showRow
+                            ? ""
+                            : "none";
+                }
+            );
+        }
+    );
+}
+
+if (employeeAttendanceResetBtn) {
+
+    employeeAttendanceResetBtn.addEventListener(
+        "click",
+        () => {
+
+            if (employeeAttendanceFromDate) {
+                employeeAttendanceFromDate.value = "";
+            }
+
+            if (employeeAttendanceToDate) {
+                employeeAttendanceToDate.value = "";
+            }
+
+            const rows =
+                employeeAttendancePageBody
+                    ? employeeAttendancePageBody
+                        .querySelectorAll(
+                            "tr[data-date]"
+                        )
+                    : [];
+
+            rows.forEach(
+                row => {
+
+                    row.style.display = "";
+                }
+            );
+        }
+    );
+}
+
+if (employeeChangePasswordForm) {
+
+    employeeChangePasswordForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+            const currentPassword =
+                employeeCurrentPassword.value;
+
+            const newPassword =
+                employeeNewPassword.value;
+
+            const confirmPassword =
+                employeeConfirmPassword.value;
+
+
+            if (
+                newPassword !== confirmPassword
+            ) {
+
+                employeePasswordChangeStatus.textContent =
+                    "New password and confirm password do not match.";
+
+                employeePasswordChangeStatus.style.color =
+                    "red";
+
+                return;
+            }
+
+
+            if (
+                newPassword.length < 6
+            ) {
+
+                employeePasswordChangeStatus.textContent =
+                    "New password must be at least 6 characters.";
+
+                employeePasswordChangeStatus.style.color =
+                    "red";
+
+                return;
+            }
+
+
+            employeePasswordChangeStatus.textContent =
+                "Updating password...";
+
+            employeePasswordChangeStatus.style.color =
+                "";
+
+
+            try {
+
+                const user =
+                    window.firebaseAuth.currentUser;
+
+                if (!user) {
+                    throw new Error(
+                        "No logged-in user found."
+                    );
+                }
+
+
+                const credential =
+                    window.firebaseEmailAuthProvider
+                        .credential(
+                            user.email,
+                            currentPassword
+                        );
+
+
+                await window.firebaseReauthenticateWithCredential(
+                    user,
+                    credential
+                );
+
+
+                await window.firebaseUpdatePassword(
+                    user,
+                    newPassword
+                );
+
+
+                employeePasswordChangeStatus.textContent =
+                    "Password changed successfully.";
+
+                employeePasswordChangeStatus.style.color =
+                    "green";
+
+
+                employeeChangePasswordForm.reset();
+
+
+            } catch (error) {
+
+                console.error(
+                    "CHANGE PASSWORD ERROR:",
+                    error
+                );
+
+
+                employeePasswordChangeStatus.textContent =
+                    "Current password is incorrect or password update failed.";
+
+                employeePasswordChangeStatus.style.color =
+                    "red";
+            }
+        }
+    );
+}
