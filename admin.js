@@ -48,6 +48,11 @@ const settingsPage = byId("settingsPage");
 
 const attendanceTableBody = byId("attendanceTableBody");
 const employeesTableBody = byId("employeesTableBody");
+const employeeSearchInput =
+    byId("employeeSearchInput");
+
+const clearEmployeeSearchBtn =
+    byId("clearEmployeeSearchBtn");
 const leaveRequestsTableBody = byId("leaveRequestsTableBody");
 
 const totalEmployees = byId("totalEmployees");
@@ -141,6 +146,724 @@ let currentAdminEmployee = null;
 // ========================================
 // HELPERS
 // ========================================
+
+function renderAttendanceTrendChart(
+    records
+) {
+
+    const canvas =
+        document.getElementById(
+            "attendanceTrendChart"
+        );
+
+    if (
+        !canvas ||
+        typeof Chart === "undefined"
+    ) {
+        return;
+    }
+
+
+    const days = [];
+
+    for (
+        let i = 6;
+        i >= 0;
+        i--
+    ) {
+
+        const date =
+            new Date();
+
+        date.setDate(
+            date.getDate() - i
+        );
+
+        const year =
+            date.getFullYear();
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(
+                2,
+                "0"
+            );
+
+        const day =
+            String(
+                date.getDate()
+            ).padStart(
+                2,
+                "0"
+            );
+
+        const dateKey =
+            `${year}-${month}-${day}`;
+
+        days.push(
+            dateKey
+        );
+    }
+
+
+    const attendanceCounts =
+        days.map(
+            dateKey => {
+
+                return records.filter(
+                    record =>
+                        getRecordDateKey(
+                            record
+                        ) ===
+                        dateKey
+                ).length;
+            }
+        );
+
+
+    const labels =
+        days.map(
+            dateKey => {
+
+                const date =
+                    new Date(
+                        dateKey +
+                        "T00:00:00"
+                    );
+
+                return date.toLocaleDateString(
+                    "en-US",
+                    {
+                        weekday: "short"
+                    }
+                );
+            }
+        );
+
+
+    if (
+        window.attendanceTrendChartInstance
+    ) {
+
+        window
+            .attendanceTrendChartInstance
+            .destroy();
+    }
+
+
+    window.attendanceTrendChartInstance =
+        new Chart(
+            canvas,
+            {
+
+                type:
+                    "line",
+
+                data: {
+
+                    labels:
+                        labels,
+
+                    datasets: [
+                        {
+                            label:
+                                "Attendance",
+
+                            data:
+                                attendanceCounts,
+
+                            borderColor:
+                                "#1677ff",
+
+                            backgroundColor:
+                                "rgba(22, 119, 255, 0.10)",
+
+                            borderWidth:
+                                2,
+
+                            tension:
+                                0.35,
+
+                            fill:
+                                true,
+
+                            pointRadius:
+                                3,
+
+                            pointHoverRadius:
+                                5
+                        }
+                    ]
+                },
+
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    plugins: {
+
+                        legend: {
+                            display:
+                                false
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero:
+                                true,
+
+                            ticks: {
+                                precision:
+                                    0
+                            },
+
+                            grid: {
+                                color:
+                                    "#edf2f7"
+                            }
+
+                        },
+
+                        x: {
+
+                            grid: {
+                                display:
+                                    false
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+}
+
+function renderDepartmentDistributionChart(
+    employeeList
+) {
+
+    const canvas =
+        document.getElementById(
+            "departmentDistributionChart"
+        );
+
+    if (
+        !canvas ||
+        typeof Chart === "undefined"
+    ) {
+        return;
+    }
+
+
+    const departmentCounts = {};
+
+
+    employeeList.forEach(
+        employee => {
+
+            const department =
+                String(
+                    employee.department ||
+                    "Unassigned"
+                ).trim() ||
+                "Unassigned";
+
+
+            departmentCounts[
+                department
+            ] =
+                (
+                    departmentCounts[
+                        department
+                    ] ||
+                    0
+                ) + 1;
+        }
+    );
+
+
+    const labels =
+        Object.keys(
+            departmentCounts
+        );
+
+
+    const values =
+        Object.values(
+            departmentCounts
+        );
+
+
+    if (
+        window
+            .departmentDistributionChartInstance
+    ) {
+
+        window
+            .departmentDistributionChartInstance
+            .destroy();
+    }
+
+
+    window.departmentDistributionChartInstance =
+        new Chart(
+            canvas,
+            {
+
+                type:
+                    "doughnut",
+
+                data: {
+
+                    labels:
+                        labels,
+
+                    datasets: [
+                        {
+
+                            data:
+                                values,
+
+                            backgroundColor: [
+                                "#1677ff",
+                                "#22c55e",
+                                "#f59e0b",
+                                "#8b5cf6",
+                                "#ef4444",
+                                "#06b6d4",
+                                "#ec4899",
+                                "#64748b"
+                            ],
+
+                            borderWidth:
+                                0,
+
+                            hoverOffset:
+                                6
+                        }
+                    ]
+                },
+
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    cutout:
+                        "68%",
+
+                    plugins: {
+
+                        legend: {
+
+                            position:
+                                "bottom",
+
+                            labels: {
+
+                                usePointStyle:
+                                    true,
+
+                                pointStyle:
+                                    "circle",
+
+                                boxWidth:
+                                    8,
+
+                                boxHeight:
+                                    8,
+
+                                padding:
+                                    14,
+
+                                font: {
+                                    size:
+                                        10
+                                },
+
+                                color:
+                                    "#64748b"
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+}
+
+
+function renderWeeklyAttendanceChart(
+    records
+) {
+
+    const canvas =
+        document.getElementById(
+            "weeklyAttendanceChart"
+        );
+
+    if (
+        !canvas ||
+        typeof Chart === "undefined"
+    ) {
+        return;
+    }
+
+
+    const days = [];
+
+    for (
+        let i = 6;
+        i >= 0;
+        i--
+    ) {
+
+        const date =
+            new Date();
+
+        date.setDate(
+            date.getDate() - i
+        );
+
+        const year =
+            date.getFullYear();
+
+        const month =
+            String(
+                date.getMonth() + 1
+            ).padStart(
+                2,
+                "0"
+            );
+
+        const day =
+            String(
+                date.getDate()
+            ).padStart(
+                2,
+                "0"
+            );
+
+        days.push(
+            `${year}-${month}-${day}`
+        );
+    }
+
+
+    const presentCounts =
+        days.map(
+            dateKey => {
+
+                return records.filter(
+                    record =>
+                        getRecordDateKey(
+                            record
+                        ) ===
+                        dateKey
+                ).length;
+            }
+        );
+
+
+    const labels =
+        days.map(
+            dateKey => {
+
+                const date =
+                    new Date(
+                        dateKey +
+                        "T00:00:00"
+                    );
+
+                return date.toLocaleDateString(
+                    "en-US",
+                    {
+                        weekday:
+                            "short"
+                    }
+                );
+            }
+        );
+
+
+    if (
+        window.weeklyAttendanceChartInstance
+    ) {
+
+        window
+            .weeklyAttendanceChartInstance
+            .destroy();
+    }
+
+
+    window.weeklyAttendanceChartInstance =
+        new Chart(
+            canvas,
+            {
+
+                type:
+                    "bar",
+
+                data: {
+
+                    labels:
+                        labels,
+
+                    datasets: [
+                        {
+
+                            label:
+                                "Present",
+
+                            data:
+                                presentCounts,
+
+                            backgroundColor:
+                                "#1677ff",
+
+                            borderRadius:
+                                6,
+
+                            maxBarThickness:
+                                28
+                        }
+                    ]
+                },
+
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    plugins: {
+
+                        legend: {
+                            display:
+                                false
+                        }
+
+                    },
+
+                    scales: {
+
+                        y: {
+
+                            beginAtZero:
+                                true,
+
+                            ticks: {
+                                precision:
+                                    0
+                            },
+
+                            grid: {
+                                color:
+                                    "#edf2f7"
+                            }
+
+                        },
+
+                        x: {
+
+                            grid: {
+                                display:
+                                    false
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+}
+
+function renderLeaveSummaryChart(
+    leaveList
+) {
+
+    const canvas =
+        document.getElementById(
+            "leaveSummaryChart"
+        );
+
+    if (
+        !canvas ||
+        typeof Chart === "undefined"
+    ) {
+        return;
+    }
+
+
+    let approved = 0;
+    let pending = 0;
+    let rejected = 0;
+
+
+    leaveList.forEach(
+        leave => {
+
+            const status =
+                String(
+                    leave.status || ""
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            if (
+                status === "approved"
+            ) {
+
+                approved++;
+
+            } else if (
+                status === "pending"
+            ) {
+
+                pending++;
+
+            } else if (
+                status === "rejected"
+            ) {
+
+                rejected++;
+            }
+        }
+    );
+
+
+    if (
+        window.leaveSummaryChartInstance
+    ) {
+
+        window
+            .leaveSummaryChartInstance
+            .destroy();
+    }
+
+
+    window.leaveSummaryChartInstance =
+        new Chart(
+            canvas,
+            {
+
+                type:
+                    "doughnut",
+
+                data: {
+
+                    labels: [
+                        "Approved",
+                        "Pending",
+                        "Rejected"
+                    ],
+
+                    datasets: [
+                        {
+
+                            data: [
+                                approved,
+                                pending,
+                                rejected
+                            ],
+
+                            backgroundColor: [
+                                "#22c55e",
+                                "#f59e0b",
+                                "#ef4444"
+                            ],
+
+                            borderWidth:
+                                0,
+
+                            hoverOffset:
+                                6
+                        }
+                    ]
+                },
+
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    cutout:
+                        "68%",
+
+                    plugins: {
+
+                        legend: {
+
+                            position:
+                                "bottom",
+
+                            labels: {
+
+                                usePointStyle:
+                                    true,
+
+                                pointStyle:
+                                    "circle",
+
+                                boxWidth:
+                                    8,
+
+                                boxHeight:
+                                    8,
+
+                                padding:
+                                    14,
+
+                                font: {
+                                    size:
+                                        10
+                                },
+
+                                color:
+                                    "#64748b"
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+        );
+}
+
 
 function getTodayDate() {
 
@@ -796,7 +1519,9 @@ async function loadEmployees() {
         renderEmployees();
 
         updateEmployeeBasedKPIs();
-
+renderDepartmentDistributionChart(
+    employees
+);
 
     } catch (
         error
@@ -831,7 +1556,9 @@ async function loadEmployees() {
 // RENDER EMPLOYEES
 // ========================================
 
-function renderEmployees() {
+function renderEmployees(
+    employeeList = employees
+) {
 
     if (
         !employeesTableBody
@@ -842,7 +1569,7 @@ function renderEmployees() {
 
 
     if (
-        employees.length ===
+        employeeList.length ===
         0
     ) {
 
@@ -872,7 +1599,7 @@ function renderEmployees() {
         "";
 
 
-    employees.forEach(
+    employeeList.forEach(
         employee => {
 
             const row =
@@ -2125,6 +2852,12 @@ async function loadAttendance() {
         updateAttendanceSummary(
             records
         );
+       renderAttendanceTrendChart(
+    records
+); 
+renderWeeklyAttendanceChart(
+    records
+);
 
 
     } catch (
@@ -3419,7 +4152,9 @@ async function loadLeaveRequests(
 
 
         renderLeaveRequests();
-
+renderLeaveSummaryChart(
+    leaveRequests
+);
 
         try {
 
@@ -10572,3 +11307,86 @@ attendanceManagementBtn.addEventListener(
 
     }
 );
+
+// ========================================================
+// EMPLOYEE SEARCH
+// ========================================================
+
+function filterEmployeeList() {
+
+    if (!employeeSearchInput) {
+        return;
+    }
+
+    const searchText =
+        employeeSearchInput
+            .value
+            .trim()
+            .toLowerCase();
+
+    if (clearEmployeeSearchBtn) {
+
+        clearEmployeeSearchBtn.classList.toggle(
+            "visible",
+            searchText.length > 0
+        );
+    }
+
+    if (!searchText) {
+
+        renderEmployees();
+
+        return;
+    }
+
+    const filteredEmployees =
+        employees.filter(
+            employee => {
+
+                const employeeName =
+                    String(
+                        employee.name || ""
+                    ).toLowerCase();
+
+                const employeeId =
+                    String(
+                        employee.employeeId || ""
+                    ).toLowerCase();
+
+                return (
+                    employeeName.includes(searchText)
+                    ||
+                    employeeId.includes(searchText)
+                );
+            }
+        );
+
+    renderEmployees(filteredEmployees);
+}
+if (employeeSearchInput) {
+
+    employeeSearchInput.addEventListener(
+        "input",
+        filterEmployeeList
+    );
+}
+
+
+if (clearEmployeeSearchBtn) {
+
+    clearEmployeeSearchBtn.addEventListener(
+        "click",
+        () => {
+
+            employeeSearchInput.value = "";
+
+            clearEmployeeSearchBtn.classList.remove(
+                "visible"
+            );
+
+            renderEmployees();
+
+            employeeSearchInput.focus();
+        }
+    );
+}
