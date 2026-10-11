@@ -527,7 +527,144 @@
 
                 </div>
 
+<!-- ==================================================
+     DASHBOARD ANALYTICS
+================================================== -->
 
+<div class="dashboard-analytics-grid">
+
+    <div class="admin-card dashboard-chart-card">
+
+        <div class="section-title dashboard-chart-title">
+
+            <div>
+                <h2>
+                    Attendance Trend
+                </h2>
+
+                <p>
+                    Daily attendance performance overview
+                </p>
+            </div>
+
+            <select
+                id="attendanceTrendRange"
+                class="dashboard-chart-filter"
+            >
+                <option value="7">
+                    Last 7 Days
+                </option>
+
+                <option value="30">
+                    Last 30 Days
+                </option>
+            </select>
+
+        </div>
+
+
+        <div class="dashboard-chart-placeholder">
+
+       <canvas
+    id="attendanceTrendChart"
+></canvas>     
+
+        </div>
+
+    </div>
+
+
+
+    <div class="admin-card dashboard-chart-card">
+
+        <div class="section-title">
+
+            <div>
+                <h2>
+                    Department Distribution
+                </h2>
+
+                <p>
+                    Employee distribution by department
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-chart-placeholder">
+
+<canvas
+    id="departmentDistributionChart"
+></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="dashboard-insight-grid">
+
+    <div class="admin-card dashboard-chart-card">
+
+        <div class="section-title">
+
+            <div>
+                <h2>
+                    Weekly Attendance
+                </h2>
+
+                <p>
+                    Present vs absent performance
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-chart-placeholder">
+
+            <canvas
+    id="weeklyAttendanceChart"
+></canvas>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="admin-card dashboard-chart-card">
+
+        <div class="section-title">
+
+            <div>
+                <h2>
+                    Leave Summary
+                </h2>
+
+                <p>
+                    Approved and pending leave overview
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="dashboard-chart-placeholder">
+
+            <canvas
+    id="leaveSummaryChart"
+></canvas>
+
+        </div>
+
+    </div>
+
+</div>
 
                 <!-- QUICK ACTIONS -->
 
@@ -1194,93 +1331,123 @@
 
 
 
-            <!-- ================================================== -->
-            <!-- EMPLOYEES -->
-            <!-- ================================================== -->
+         <!-- ================================================== -->
+<!-- EMPLOYEES -->
+<!-- ================================================== -->
 
-            <section
-                id="employeesPage"
-                class="page-section"
-            >
+<section
+    id="employeesPage"
+    class="page-section"
+>
 
-                <div class="page-heading">
+    <div class="page-heading">
 
-                    <div>
+        <div>
 
-                        <p class="page-eyebrow">
-                            Employee Management
-                        </p>
+            <p class="page-eyebrow">
+                Employee Management
+            </p>
 
-                        <h1>
-                            Employees
-                        </h1>
+            <h1>
+                Employees
+            </h1>
 
-                        <p>
-                            View and manage Dazzle employees
-                        </p>
+            <p>
+                View and manage Dazzle employees
+            </p>
 
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="primary-btn page-heading-action"
-                        onclick="document.getElementById('createEmployeeBtn').click()"
-                    >
-                        + Create Employee
-                    </button>
-
-                </div>
+        </div>
 
 
-                <div class="admin-card">
+        <button
+            type="button"
+            class="primary-btn page-heading-action"
+            onclick="document.getElementById('createEmployeeBtn').click()"
+        >
+            + Create Employee
+        </button>
 
-                    <div class="section-title">
-
-                        <div>
-
-                            <h2>
-                                Employee Directory
-                            </h2>
-
-                            <p>
-                                All employees registered in the HRM system
-                            </p>
-
-                        </div>
-
-                    </div>
+    </div>
 
 
-                    <div class="table-wrapper">
+    <div class="admin-card">
 
-                        <table>
+        <div class="section-title">
 
-                            <thead>
+            <div>
 
-                                <tr>
-                                    <th>Employee</th>
-                                    <th>ID</th>
-                                    <th>Department</th>
-                                    <th>Designation</th>
-                                    <th>Office / Branch</th>
-                                    <th>Joining Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
+                <h2>
+                    Employee Directory
+                </h2>
 
-                            </thead>
+                <p>
+                    All employees registered in the HRM system
+                </p>
 
-                            <tbody id="employeesTableBody"></tbody>
+            </div>
 
-                        </table>
+        </div>
 
-                    </div>
 
-                </div>
+        <!-- EMPLOYEE SEARCH -->
 
-            </section>
+        <div class="employee-search-bar">
 
+            <div class="employee-search-box">
+
+                <span class="employee-search-icon">
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="employeeSearchInput"
+                    placeholder="Search by employee name or ID..."
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    id="clearEmployeeSearchBtn"
+                    class="clear-employee-search-btn"
+                    title="Clear Search"
+                >
+                    ×
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Employee</th>
+                        <th>ID</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                        <th>Office / Branch</th>
+                        <th>Joining Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="employeesTableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
 
 
             <!-- ================================================== -->
@@ -4205,6 +4372,18 @@
             where;
 
 
+  const chartScript =
+    document.createElement(
+        "script"
+    );
+
+chartScript.src =
+    "https://cdn.jsdelivr.net/npm/chart.js";
+
+
+chartScript.onload =
+    () => {
+
         const adminScript =
             document.createElement(
                 "script"
@@ -4219,6 +4398,12 @@
         document.body.appendChild(
             adminScript
         );
+    };
+
+
+document.body.appendChild(
+    chartScript
+);    
 
     </script>
 
