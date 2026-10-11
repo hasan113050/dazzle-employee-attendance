@@ -130,120 +130,309 @@
 
 
 
+<!-- ================================================== -->
+<!-- LOGIN PAGE -->
+<!-- ================================================== -->
+
+<section
+    id="loginPage"
+    class="login-page"
+>
+
+    <div class="login-card">
+
+        <h1>
+            DAZZLE Login
+        </h1>
+
+        <p>
+            Login to access your employee account
+        </p>
+
+
+        <form id="loginForm">
+
+
+            <div class="input-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </div>
+
+
+          <div class="input-group">
+
+    <label for="password">
+        Password
+    </label>
+
+    <div class="password-field">
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Enter your password"
+            required
+        >
+
+        <button
+            type="button"
+            id="togglePasswordBtn"
+            class="toggle-password-btn"
+            aria-label="Show password"
+        >
+            👁
+        </button>
+
+    </div>
+
+</div> 
+
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                Login
+            </button>
+
+
+            <button
+                type="button"
+                id="forgotPasswordBtn"
+                class="forgot-password-btn"
+            >
+                Forgot Password?
+            </button>
+
+        </form>
+
+
+        <div
+            id="loginMessage"
+            class="message"
+        ></div>
+
+    </div>
+
+</section>
+
+
+
+
     <!-- ================================================== -->
-    <!-- LOGIN PAGE -->
-    <!-- ================================================== -->
+<!-- EMPLOYEE DASHBOARD -->
+<!-- ================================================== -->
 
-    <section
-        id="loginPage"
-        class="login-page"
-    >
+<main
+    id="dashboardPage"
+    class="dashboard-page"
+>
 
-        <div class="login-card">
-
-            <h1>
-                DAZZLE Login
-            </h1>
-
-            <p>
-                Login to access your employee account
-            </p>
+    <div class="employee-app-layout">
 
 
-            <form id="loginForm">
+        <!-- ================================================== -->
+        <!-- EMPLOYEE SIDEBAR -->
+        <!-- ================================================== -->
 
+        <aside class="employee-sidebar">
 
-                <div class="input-group">
+            <div class="employee-sidebar-brand">
 
-                    <label for="email">
-                        Email
-                    </label>
-
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="Enter your email"
-                        required
-                    >
-
+                <div class="employee-sidebar-logo">
+                    D
                 </div>
 
+                <div>
+                    <strong>
+                        DAZZLE
+                    </strong>
 
-                <div class="input-group">
-
-                    <label for="password">
-                        Password
-                    </label>
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter your password"
-                        required
-                    >
-
+                    <span>
+                        HRM System
+                    </span>
                 </div>
+
+            </div>
+
+
+            <nav class="employee-sidebar-nav">
 
 
                 <button
-                    type="submit"
-                    class="primary-btn"
+    type="button"
+    id="employeeDashboardNav"
+    class="employee-nav-item active"
+>
+    <span>⌂</span>
+    Dashboard
+</button>
+
+
+                <button
+    type="button"
+    id="employeeMyProfileNav"
+    class="employee-nav-item"
+>
+    <span>♙</span>
+    My Profile
+</button>
+
+
+<button
+    type="button"
+    id="employeeAttendanceNav"
+    class="employee-nav-item"
+>
+    <span>▣</span>
+    Attendance
+</button>
+
+<button type="button" id="employeeSettingsNav" class="employee-nav-item">
+    <span>⚙</span>
+    Settings
+</button>
+
+
+                <button
+                    type="button"
+                    class="employee-nav-item"
+                    onclick="document.getElementById('openLeaveRequestBtn').click()"
                 >
-                    Login
+                    <span>✈</span>
+                    Leave Request
                 </button>
 
-            </form>
 
 
-            <div
-                id="loginMessage"
-                class="message"
-            ></div>
-
-        </div>
-
-    </section>
+            </nav>
 
 
+            <div class="employee-sidebar-bottom">
 
-    <!-- ================================================== -->
-    <!-- EMPLOYEE DASHBOARD -->
-    <!-- ================================================== -->
+                <div class="sidebar-help-card">
 
-    <main
-        id="dashboardPage"
-        class="dashboard-page"
-    >
+                    <div class="sidebar-help-icon">
+                        ?
+                    </div>
 
-        <div class="dashboard-container">
+                    <div>
+                        <strong>
+                            Need Help?
+                        </strong>
+
+                        <span>
+                            Contact HR Department
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
 
 
-            <!-- ================================================== -->
-            <!-- WELCOME / EMPLOYEE SUMMARY -->
-            <!-- ================================================== -->
+        <!-- ================================================== -->
+        <!-- DASHBOARD CONTENT -->
+        <!-- ================================================== -->
 
-            <div class="welcome-card">
+        <div class="employee-dashboard-content">
+
+
+            <!-- WELCOME -->
+
+            <section class="employee-dashboard-heading">
 
                 <div>
 
-                    <p class="small-text">
-                        Welcome back
+                    <p class="dashboard-eyebrow">
+                        Employee Dashboard
                     </p>
 
-                    <h2 id="employeeName">
-                        Employee
-                    </h2>
+                    <h1>
+                        Welcome back,
+                        <span id="employeeName">
+                            Employee
+                        </span>
+                        👋
+                    </h1>
 
-                    <p id="employeeId">
-                        Employee ID
+                    <p>
+                        Here’s your attendance and work overview for today.
                     </p>
 
                 </div>
 
 
-                <div class="employee-summary">
+                <div class="dashboard-date-card">
 
-                    <div class="employee-summary-item">
+                    <span>
+                        📅
+                    </span>
+
+                    <div>
+
+                        <small>
+                            Today
+                        </small>
+
+                        <strong id="todayDate">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================================== -->
+            <!-- SUMMARY CARDS -->
+            <!-- ================================================== -->
+
+            <section class="employee-summary-grid">
+
+
+                <div class="employee-stat-card">
+
+                    <div class="employee-stat-icon blue">
+                        ID
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Employee ID
+                        </span>
+
+                        <strong id="employeeId">
+                            -
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="employee-stat-card">
+
+                    <div class="employee-stat-icon green">
+                        ✓
+                    </div>
+
+                    <div>
 
                         <span>
                             Designation
@@ -255,8 +444,16 @@
 
                     </div>
 
+                </div>
 
-                    <div class="employee-summary-item">
+
+                <div class="employee-stat-card">
+
+                    <div class="employee-stat-icon orange">
+                        ◫
+                    </div>
+
+                    <div>
 
                         <span>
                             Department
@@ -268,8 +465,16 @@
 
                     </div>
 
+                </div>
 
-                    <div class="employee-summary-item">
+
+                <div class="employee-stat-card">
+
+                    <div class="employee-stat-icon purple">
+                        ◉
+                    </div>
+
+                    <div>
 
                         <span>
                             Office / Branch
@@ -283,308 +488,928 @@
 
                 </div>
 
-            </div>
 
-
-
-            <!-- ================================================== -->
-            <!-- QUICK ACTIONS -->
-            <!-- ================================================== -->
-
-            <div class="employee-quick-actions">
-
-                <button
-                    id="openLeaveRequestBtn"
-                    class="quick-action-card"
-                    type="button"
-                >
-
-                    <span class="quick-action-icon">
-                        📝
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Leave Request
-                        </strong>
-
-                        <small>
-                            Submit a new leave request
-                        </small>
-
-                    </div>
-
-                </button>
-
-
-                <button
-                    id="openAttendanceReportBtn"
-                    class="quick-action-card"
-                    type="button"
-                >
-
-                    <span class="quick-action-icon">
-                        📊
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Attendance Report
-                        </strong>
-
-                        <small>
-                            View attendance by date
-                        </small>
-
-                    </div>
-
-                </button>
-
-            </div>
-
+            </section>
 
 
             <!-- ================================================== -->
-            <!-- TODAY'S ATTENDANCE -->
+            <!-- MAIN GRID -->
             <!-- ================================================== -->
 
-            <div class="attendance-card">
+            <div class="employee-dashboard-grid">
 
-                <div class="card-header">
 
-                    <div>
+                <!-- LEFT COLUMN -->
 
-                        <p class="small-text">
-                            Today
+                <div class="employee-dashboard-main">
+
+
+                    <!-- TODAY ATTENDANCE -->
+
+                    <section class="employee-dashboard-card attendance-card-new">
+
+                        <div class="employee-card-title">
+
+                            <div>
+
+                                <span class="employee-card-title-icon">
+                                    ◷
+                                </span>
+
+                                <div>
+
+                                    <h2>
+                                        Today's Attendance
+                                    </h2>
+
+                                    <p>
+                                        Manage your daily check-in and check-out
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="attendanceStatus"
+                                class="attendance-status"
+                            >
+                                Not Checked In
+                            </div>
+
+                        </div>
+
+
+                        <div class="attendance-time-grid">
+
+
+                            <div class="attendance-time-box">
+
+                                <span class="attendance-time-icon">
+                                    →
+                                </span>
+
+                                <div>
+
+                                    <small>
+                                        Check In
+                                    </small>
+
+                                    <strong id="checkInTime">
+                                        --
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="attendance-time-box">
+
+                                <span class="attendance-time-icon">
+                                    ←
+                                </span>
+
+                                <div>
+
+                                    <small>
+                                        Check Out
+                                    </small>
+
+                                    <strong id="checkOutTime">
+                                        --
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="attendance-actions">
+
+                            <button
+                                id="checkInBtn"
+                                class="primary-btn"
+                                type="button"
+                            >
+                                Check In
+                            </button>
+
+
+                            <button
+                                id="checkOutBtn"
+                                class="secondary-btn"
+                                type="button"
+                            >
+                                Check Out
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            id="attendanceMessage"
+                            class="message"
+                        ></div>
+
+                    </section>
+
+
+                    <!-- RECENT ATTENDANCE -->
+
+                    <section class="employee-dashboard-card">
+
+                        <div class="employee-card-title">
+
+                            <div>
+
+                                <span class="employee-card-title-icon">
+                                    ▣
+                                </span>
+
+                                <div>
+
+                                    <h2>
+                                        Recent Attendance
+                                    </h2>
+
+                                    <p>
+                                        Your latest attendance records
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                        
+
+                        </div>
+
+
+                        <div class="table-wrapper employee-table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Check In</th>
+                                        <th>Check Out</th>
+                                        <th>Location</th>
+                                        <th>Status</th>
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="attendanceHistory"></tbody>
+
+                            </table>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- LEAVE REQUESTS -->
+
+                    <section class="employee-dashboard-card">
+
+                        <div class="employee-card-title">
+
+                            <div>
+
+                                <span class="employee-card-title-icon">
+                                    ✈
+                                </span>
+
+                                <div>
+
+                                    <h2>
+                                        Recent Leave Requests
+                                    </h2>
+
+                                    <p>
+                                        Track your leave applications
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                type="button"
+                                class="employee-text-btn"
+                                onclick="document.getElementById('openLeaveRequestBtn').click()"
+                            >
+                                Apply Leave
+                            </button>
+
+                        </div>
+
+
+                        <div class="table-wrapper employee-table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+                                        <th>Leave Type</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Days</th>
+                                        <th>Status</th>
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody id="employeeLeaveRequestsBody">
+
+                                    <tr>
+
+                                        <td colspan="5">
+                                            No leave requests found.
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </section>
+
+
+                </div>
+
+
+                <!-- ================================================== -->
+                <!-- RIGHT COLUMN -->
+                <!-- ================================================== -->
+
+                <aside class="employee-dashboard-side">
+
+
+                    <!-- PROFILE CARD -->
+
+                    <section class="employee-profile-side-card">
+
+                        <div class="employee-profile-avatar-large">
+                            👤
+                        </div>
+
+                        <h3 id="dashboardProfileName">
+                            My Account
+                        </h3>
+
+                        <p>
+                            Employee Account
                         </p>
 
-                        <h2 id="todayDate">
-                            -
-                        </h2>
 
-                    </div>
+                        <div class="employee-profile-divider"></div>
 
 
-                    <div
-                        id="attendanceStatus"
-                        class="attendance-status"
-                    >
-                        Not Checked In
-                    </div>
+                        <button
+                            type="button"
+                            class="employee-profile-view-btn"
+                            onclick="document.getElementById('myProfileBtn').click()"
+                        >
+                            View My Profile
+                        </button>
 
-                </div>
-
-
-                <div class="time-section">
+                    </section>
 
 
-                    <div class="time-box">
+                    <!-- QUICK ACTIONS -->
 
-                        <span>
-                            Check In
-                        </span>
+                    <section class="employee-dashboard-card side-quick-actions">
 
-                        <strong id="checkInTime">
-                            --
-                        </strong>
+                        <div class="employee-side-section-title">
 
-                    </div>
+                            <span>
+                                ⚡
+                            </span>
 
+                            <h3>
+                                Quick Actions
+                            </h3>
 
-                    <div class="time-box">
-
-                        <span>
-                            Check Out
-                        </span>
-
-                        <strong id="checkOutTime">
-                            --
-                        </strong>
-
-                    </div>
+                        </div>
 
 
-                </div>
+                        <button
+                            id="openLeaveRequestBtn"
+                            class="employee-side-action"
+                            type="button"
+                        >
+
+                            <span>
+                                ✈
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Request Leave
+                                </strong>
+
+                                <small>
+                                    Submit leave application
+                                </small>
+
+                            </div>
+
+                        </button>
 
 
-                <div class="attendance-actions">
+                        <button
+                            id="openAttendanceReportBtn"
+                            class="employee-side-action"
+                            type="button"
+                        >
 
-                    <button
-                        id="checkInBtn"
-                        class="primary-btn"
-                        type="button"
-                    >
-                        Check In
-                    </button>
+                            <span>
+                                ▣
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Attendance Report
+                                </strong>
+
+                                <small>
+                                    View attendance history
+                                </small>
+
+                            </div>
+
+                        </button>
 
 
-                    <button
-                        id="checkOutBtn"
-                        class="secondary-btn"
-                        type="button"
-                    >
-                        Check Out
-                    </button>
-
-                </div>
+                    </section>
 
 
-                <div
-                    id="attendanceMessage"
-                    class="message"
-                ></div>
+                </aside>
+
 
             </div>
+<section
+    id="employeeMyProfilePage"
+    class="employee-content-page"
+    style="display: none;"
+>
+
+    <div class="employee-page-heading">
+
+        <div>
+
+            <p class="dashboard-eyebrow">
+                Employee Profile
+            </p>
+
+            <h1>
+                My Profile
+            </h1>
+
+            <p>
+                View your personal and job information.
+            </p>
+
+        </div>
+
+    </div>
 
 
+    <div class="employee-dashboard-card">
 
-            <!-- ================================================== -->
-            <!-- RECENT ATTENDANCE -->
-            <!-- ================================================== -->
+        <div class="employee-card-title">
 
-            <div class="history-card">
+            <div>
 
-                <div class="card-header">
+                <span class="employee-card-title-icon">
+                    👤
+                </span>
 
-                    <div>
+                <div>
 
-                        <p class="small-text">
-                            Attendance
-                        </p>
+                    <h2>
+                        Basic Information
+                    </h2>
 
-                        <h2>
-                            Recent History
-                        </h2>
-
-                    </div>
-
-                </div>
-
-
-                <div class="table-wrapper">
-
-                    <table>
-
-                        <thead>
-
-                            <tr>
-
-                                <th>
-                                    Date
-                                </th>
-
-                                <th>
-                                    Check In
-                                </th>
-
-                                <th>
-                                    Check Out
-                                </th>
-
-                                <th>
-                                    Location
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody id="attendanceHistory">
-                        </tbody>
-
-                    </table>
+                    <p>
+                        Personal details registered in the HRM system
+                    </p>
 
                 </div>
 
             </div>
 
+        </div>
 
 
-            <!-- ================================================== -->
-            <!-- LEAVE STATUS -->
-            <!-- ================================================== -->
-
-            <div class="history-card">
-
-                <div class="card-header">
-
-                    <div>
-
-                        <p class="small-text">
-                            Leave
-                        </p>
-
-                        <h2>
-                            My Leave Requests
-                        </h2>
-
-                    </div>
-
-                </div>
+        <div class="employee-profile-page-grid">
 
 
-                <div class="table-wrapper">
+            <div class="employee-profile-page-item">
 
-                    <table>
+                <span>
+                    Employee Name
+                </span>
 
-                        <thead>
+                <strong id="profilePageEmployeeName">
+                    -
+                </strong>
 
-                            <tr>
-
-                                <th>
-                                    Leave Type
-                                </th>
-
-                                <th>
-                                    From
-                                </th>
-
-                                <th>
-                                    To
-                                </th>
-
-                                <th>
-                                    Days
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                            </tr>
-
-                        </thead>
+            </div>
 
 
-                        <tbody id="employeeLeaveRequestsBody">
+            <div class="employee-profile-page-item">
 
-                            <tr>
+                <span>
+                    Employee ID
+                </span>
 
-                                <td colspan="5">
-                                    No leave requests found.
-                                </td>
+                <strong id="profilePageEmployeeId">
+                    -
+                </strong>
 
-                            </tr>
+            </div>
 
-                        </tbody>
 
-                    </table>
+            <div class="employee-profile-page-item">
 
-                </div>
+                <span>
+                    Email
+                </span>
+
+                <strong id="profilePageEmployeeEmail">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Phone Number
+                </span>
+
+                <strong id="profilePageEmployeePhone">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Date of Birth
+                </span>
+
+                <strong id="profilePageEmployeeDob">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    NID Number
+                </span>
+
+                <strong id="profilePageEmployeeNid">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Emergency Contact
+                </span>
+
+                <strong id="profilePageEmergencyContact">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Present Address
+                </span>
+
+                <strong id="profilePagePresentAddress">
+                    -
+                </strong>
 
             </div>
 
 
         </div>
 
-    </main>
+    </div>
+
+
+    <div class="employee-dashboard-card">
+
+        <div class="employee-card-title">
+
+            <div>
+
+                <span class="employee-card-title-icon">
+                    💼
+                </span>
+
+                <div>
+
+                    <h2>
+                        Job Information
+                    </h2>
+
+                    <p>
+                        Employment details
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="employee-profile-page-grid">
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Department
+                </span>
+
+                <strong id="profilePageDepartment">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Designation
+                </span>
+
+                <strong id="profilePageDesignation">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Office / Branch
+                </span>
+
+                <strong id="profilePageOffice">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Joining Date
+                </span>
+
+                <strong id="profilePageJoiningDate">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Employment Type
+                </span>
+
+                <strong id="profilePageEmploymentType">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Probation End Date
+                </span>
+
+                <strong id="profilePageProbationEndDate">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="employee-profile-page-item">
+
+                <span>
+                    Employment Status
+                </span>
+
+                <strong id="profilePageEmployeeStatus">
+                    -
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================== -->
+<!-- ATTENDANCE PAGE -->
+<!-- ================================================== -->
+
+<section
+    id="employeeAttendancePage"
+    class="employee-content-page"
+    style="display: none;"
+>
+
+    <div class="employee-page-heading">
+
+        <div>
+
+            <p class="dashboard-eyebrow">
+                Attendance
+            </p>
+
+            <h1>
+                My Attendance
+            </h1>
+
+            <p>
+                View your attendance history and daily records.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="employee-dashboard-card">
+
+        <div class="employee-card-title">
+
+            <div>
+
+                <span class="employee-card-title-icon">
+                    ▣
+                </span>
+
+                <div>
+
+                    <h2>
+                        Attendance History
+                    </h2>
+
+                    <p>
+                        Your recent check-in and check-out records
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+<div class="employee-attendance-filter">
+
+    <div class="employee-filter-field">
+        <label for="employeeAttendanceFromDate">
+            From Date
+        </label>
+
+        <input
+            type="date"
+            id="employeeAttendanceFromDate"
+        >
+    </div>
+
+    <div class="employee-filter-field">
+        <label for="employeeAttendanceToDate">
+            To Date
+        </label>
+
+        <input
+            type="date"
+            id="employeeAttendanceToDate"
+        >
+    </div>
+
+    <button
+        type="button"
+        id="employeeAttendanceFilterBtn"
+        class="employee-filter-btn"
+    >
+        Filter
+    </button>
+
+    <button
+        type="button"
+        id="employeeAttendanceResetBtn"
+        class="employee-filter-btn employee-filter-reset-btn"
+    >
+        Reset
+    </button>
+
+</div>
+
+        <div class="table-wrapper employee-table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Check In</th>
+                        <th>Check Out</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="employeeAttendancePageBody">
+
+                    <tr>
+                        <td colspan="5">
+                            Loading attendance...
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+<section
+    id="employeeSettingsPage"
+    class="employee-content-page"
+    style="display:none;"
+>
+
+    <div class="employee-page-heading">
+
+        <div>
+            <p class="dashboard-eyebrow">
+                Settings
+            </p>
+
+            <h1>
+                Account Settings
+            </h1>
+
+            <p>
+                Manage your account security and password.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="employee-dashboard-card">
+
+        <div class="employee-card-title">
+
+            <div>
+
+                <span class="employee-card-title-icon">
+                    ⚙
+                </span>
+
+                <div>
+                    <h2>
+                        Change Password
+                    </h2>
+
+                    <p>
+                        Update your account password securely.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+  <form id="employeeChangePasswordForm" class="employee-settings-form">
+
+    <div class="employee-filter-field">
+        <label for="employeeCurrentPassword">
+            Current Password
+        </label>
+
+        <input
+            type="password"
+            id="employeeCurrentPassword"
+            autocomplete="current-password"
+            required
+        >
+    </div>
+
+
+    <div class="employee-filter-field">
+        <label for="employeeNewPassword">
+            New Password
+        </label>
+
+        <input
+            type="password"
+            id="employeeNewPassword"
+            autocomplete="new-password"
+            minlength="6"
+            required
+        >
+    </div>
+
+
+    <div class="employee-filter-field">
+        <label for="employeeConfirmPassword">
+            Confirm New Password
+        </label>
+
+        <input
+            type="password"
+            id="employeeConfirmPassword"
+            autocomplete="new-password"
+            minlength="6"
+            required
+        >
+    </div>
+
+
+    <button
+        type="submit"
+        class="employee-filter-btn"
+    >
+        Change Password
+    </button>
+
+
+    <p id="employeePasswordChangeStatus"></p>
+
+</form>      
+
+    </div>
+
+</section>
+
+        </div>
+
+    </div>
+
+</main>
+
+<!-- ================================================== -->
+<!-- MY PROFILE PAGE -->
+<!-- ================================================== -->
 
 
 
@@ -1211,13 +2036,17 @@
 
 
         import {
-            getAuth,
-            signInWithEmailAndPassword,
-            signOut,
-            onAuthStateChanged
-        }
-        from
-        "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+    getAuth,
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    EmailAuthProvider,
+    reauthenticateWithCredential,
+    updatePassword
+}
+from
+"https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
         import {
@@ -1272,41 +2101,53 @@
             getFirestore(app);
 
 
-        window.firebaseAuth =
-            auth;
+      window.firebaseAuth =
+    auth;
 
-        window.firebaseDB =
-            db;
+window.firebaseDB =
+    db;
 
-        window.firebaseSignIn =
-            signInWithEmailAndPassword;
+window.firebaseSignIn =
+    signInWithEmailAndPassword;
 
-        window.firebaseSignOut =
-            signOut;
+window.firebaseSendPasswordResetEmail =
+    sendPasswordResetEmail;
 
-        window.firebaseOnAuthStateChanged =
-            onAuthStateChanged;
+window.firebaseSignOut =
+    signOut;
 
-        window.firebaseCollection =
-            collection;
+window.firebaseOnAuthStateChanged =
+    onAuthStateChanged;
 
-        window.firebaseAddDoc =
-            addDoc;
+window.firebaseEmailAuthProvider =
+    EmailAuthProvider;
 
-        window.firebaseGetDocs =
-            getDocs;
+window.firebaseReauthenticateWithCredential =
+    reauthenticateWithCredential;
 
-        window.firebaseQuery =
-            query;
+window.firebaseUpdatePassword =
+    updatePassword;
 
-        window.firebaseWhere =
-            where;
+window.firebaseCollection =
+    collection;
 
-        window.firebaseDoc =
-            doc;
+window.firebaseAddDoc =
+    addDoc;
 
-        window.firebaseUpdateDoc =
-            updateDoc;
+window.firebaseGetDocs =
+    getDocs;
+
+window.firebaseQuery =
+    query;
+
+window.firebaseWhere =
+    where;
+
+window.firebaseDoc =
+    doc;
+
+window.firebaseUpdateDoc =
+    updateDoc;
 
 
         const script =
