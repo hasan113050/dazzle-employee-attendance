@@ -72,36 +72,62 @@
 
 
             <div
-                id="adminProfileDropdown"
-                class="admin-profile-dropdown"
-            >
+    id="adminProfileDropdown"
+    class="admin-profile-dropdown"
+>
 
-                <button
-                    id="adminMyProfileBtn"
-                    type="button"
-                >
-                    👤 My Profile
-                </button>
+    <button
+        id="adminMyProfileBtn"
+        type="button"
+        class="admin-profile-dropdown-item"
+    >
+        <span class="admin-dropdown-icon">👤</span>
 
-                <button
-                    id="goEmployeePanelBtn"
-                    type="button"
-                    onclick="window.location.href='index.html'"
-                >
-                    👥 Employee Panel
-                </button>
+        <span class="admin-dropdown-text">
+            <strong>My Profile</strong>
+            <small>View your profile information</small>
+        </span>
 
-                <div class="admin-profile-divider"></div>
+        <span class="admin-dropdown-arrow">›</span>
+    </button>
 
-                <button
-                    id="adminLogoutBtn"
-                    type="button"
-                    class="admin-profile-logout"
-                >
-                    ↪ Logout
-                </button>
 
-            </div>
+    <button
+        id="goEmployeePanelBtn"
+        type="button"
+        class="admin-profile-dropdown-item"
+        onclick="window.location.href='index.html'"
+    >
+        <span class="admin-dropdown-icon">👥</span>
+
+        <span class="admin-dropdown-text">
+            <strong>Employee Panel</strong>
+            <small>Go to employee dashboard</small>
+        </span>
+
+        <span class="admin-dropdown-arrow">›</span>
+    </button>
+
+
+    <div class="admin-profile-divider"></div>
+
+
+    <button
+        id="adminLogoutBtn"
+        type="button"
+        class="admin-profile-dropdown-item admin-profile-logout"
+    >
+        <span class="admin-dropdown-icon logout-icon">↪</span>
+
+        <span class="admin-dropdown-text">
+            <strong>Logout</strong>
+            <small>Sign out of your account</small>
+        </span>
+
+        <span class="admin-dropdown-arrow">›</span>
+    </button>
+
+</div>
 
         </div>
 
@@ -4407,6 +4433,96 @@ document.body.appendChild(
 
     </script>
 
+<nav class="admin-mobile-bottom-nav">
+
+    <button
+        class="admin-mobile-nav-item active"
+        id="adminMobileDashboardBtn"
+        type="button"
+    >
+        <span>⌂</span>
+        Dashboard
+    </button>
+
+    <button
+        class="admin-mobile-nav-item"
+        id="adminMobileAttendanceBtn"
+        type="button"
+    >
+        <span>◷</span>
+        Attendance
+    </button>
+
+    <button
+        class="admin-mobile-nav-item"
+        id="adminMobileEmployeesBtn"
+        type="button"
+    >
+        <span>👥</span>
+        Employees
+    </button>
+
+    <button
+        class="admin-mobile-nav-item"
+        id="adminMobileLeaveBtn"
+        type="button"
+    >
+        <span>▣</span>
+        Leave
+    </button>
+
+    <button
+        class="admin-mobile-nav-item"
+        id="adminMobileMoreBtn"
+        type="button"
+    >
+        <span>•••</span>
+        More
+    </button>
+
+</nav>
+<div
+    class="admin-mobile-more-menu"
+    id="adminMobileMoreMenu"
+>
+
+    <button
+        class="admin-mobile-more-item"
+        id="adminMobileCreateEmployeeBtn"
+        type="button"
+    >
+        <span>＋</span>
+        Create Employee
+    </button>
+
+    <button
+        class="admin-mobile-more-item"
+        id="adminMobileDepartmentsBtn"
+        type="button"
+    >
+        <span>⌂</span>
+        Departments & Branches
+    </button>
+
+    <button
+        class="admin-mobile-more-item"
+        id="adminMobileShiftBtn"
+        type="button"
+    >
+        <span>⏱</span>
+        Shift & Weekly Off
+    </button>
+
+    <button
+        class="admin-mobile-more-item"
+        id="adminMobileSettingsBtn"
+        type="button"
+    >
+        <span>⚙</span>
+        Settings
+    </button>
+
+</div>
 
 </body>
 
