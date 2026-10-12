@@ -20,7 +20,7 @@
 </head>
 
 
-<body>
+<body style="visibility: hidden;">
 
 
     <!-- ================================================== -->
@@ -71,58 +71,86 @@
             </button>
 
 
-            <div
-                id="profileDropdown"
-                class="profile-dropdown"
-            >
+    <div
+    id="profileDropdown"
+    class="profile-dropdown"
+>
 
-                <button
-                    id="myProfileBtn"
-                    type="button"
-                >
-                    👤 My Profile
-                </button>
+    <button
+        id="myProfileBtn"
+        type="button"
+        class="employee-profile-dropdown-item"
+    >
+        <span class="employee-dropdown-icon">👤</span>
 
+        <span class="employee-dropdown-text">
+            <strong>My Profile</strong>
+            <small>View your profile information</small>
+        </span>
 
-                <button
-                    id="attendanceReportBtn"
-                    type="button"
-                >
-                    📅 Attendance Report
-                </button>
-
-
-                <!-- ADMIN ACCESS -->
-
-                <div
-                    id="adminAccess"
-                    class="admin-access"
-                    style="display: none;"
-                >
-
-                    <button
-                        id="adminDashboardBtn"
-                        type="button"
-                    >
-                        ⚙ Admin Panel
-                    </button>
-
-                </div>
+        <span class="employee-dropdown-arrow">›</span>
+    </button>
 
 
-                <div class="profile-dropdown-divider">
-                </div>
+    <button
+        id="attendanceReportBtn"
+        type="button"
+        class="employee-profile-dropdown-item"
+    >
+        <span class="employee-dropdown-icon">📅</span>
+
+        <span class="employee-dropdown-text">
+            <strong>Attendance Report</strong>
+            <small>View your attendance history</small>
+        </span>
+
+        <span class="employee-dropdown-arrow">›</span>
+    </button>
 
 
-                <button
-                    id="logoutBtn"
-                    type="button"
-                    class="profile-logout-btn"
-                >
-                    ↪ Logout
-                </button>
+    <div
+        id="adminAccess"
+        class="admin-access"
+        style="display: none;"
+    >
 
-            </div>
+        <button
+            id="adminDashboardBtn"
+            type="button"
+            class="employee-profile-dropdown-item"
+        >
+            <span class="employee-dropdown-icon">⚙</span>
+
+            <span class="employee-dropdown-text">
+                <strong>Admin Panel</strong>
+                <small>Open HRM administration</small>
+            </span>
+
+            <span class="employee-dropdown-arrow">›</span>
+        </button>
+
+    </div>
+
+
+    <div class="profile-dropdown-divider"></div>
+
+
+    <button
+        id="logoutBtn"
+        type="button"
+        class="employee-profile-dropdown-item profile-logout-btn"
+    >
+        <span class="employee-dropdown-icon logout-icon">↪</span>
+
+        <span class="employee-dropdown-text">
+            <strong>Logout</strong>
+            <small>Sign out of your account</small>
+        </span>
+
+        <span class="employee-dropdown-arrow">›</span>
+    </button>
+
+</div>    
 
         </div>
 
@@ -2163,6 +2191,88 @@ window.firebaseUpdateDoc =
 
     </script>
 
+<!-- ========================= -->
+<!-- MOBILE BOTTOM NAVIGATION -->
+<!-- ========================= -->
+
+<nav class="employee-mobile-bottom-nav">
+
+    <button
+        class="employee-mobile-nav-item active"
+        id="mobileDashboardBtn"
+        type="button"
+    >
+        <span>⌂</span>
+        Dashboard
+    </button>
+
+    <button
+        class="employee-mobile-nav-item"
+        id="mobileAttendanceBtn"
+        type="button"
+    >
+        <span>◷</span>
+        Attendance
+    </button>
+
+    <button
+        class="employee-mobile-nav-item"
+        id="mobileLeaveBtn"
+        type="button"
+    >
+        <span>▣</span>
+        Leave
+    </button>
+
+    <button
+        class="employee-mobile-nav-item"
+        id="mobileProfileBtn"
+        type="button"
+    >
+        <span>○</span>
+        Profile
+    </button>
+
+    <button
+        class="employee-mobile-nav-item"
+        id="mobileMoreBtn"
+        type="button"
+    >
+        <span>•••</span>
+        More
+    </button>
+
+</nav>
+
+
+<!-- ========================= -->
+<!-- MOBILE MORE MENU -->
+<!-- ========================= -->
+
+<div
+    class="employee-mobile-more-menu"
+    id="employeeMobileMoreMenu"
+>
+
+    <button
+        class="employee-mobile-more-item"
+        id="mobileSettingsBtn"
+        type="button"
+    >
+        <span>⚙</span>
+        Settings
+    </button>
+
+    <button
+        class="employee-mobile-more-item"
+        id="mobileAdminPanelBtn"
+        type="button"
+    >
+        <span>▦</span>
+        Admin Panel
+    </button>
+
+</div>
 
 </body>
 
