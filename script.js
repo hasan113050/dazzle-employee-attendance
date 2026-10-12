@@ -1030,6 +1030,19 @@ window.firebaseOnAuthStateChanged(
                 "active"
             );
 
+            const employeeMobileBottomNav =
+                document.querySelector(
+                    ".employee-mobile-bottom-nav"
+                );
+
+           if (
+    employeeMobileBottomNav
+) {
+    employeeMobileBottomNav.style.removeProperty(
+        "display"
+    );
+}
+
 
             if (
                 profileMenuWrapper
@@ -1280,35 +1293,53 @@ if (profilePageEmployeeStatus) {
                 /* ADMIN ROLE */
                 /* ========================= */
 
-                const roles =
-                    employee.roles ||
-                    [];
+         const roles =
+    employee.roles || [];
+
+const mobileAdminButton =
+    document.getElementById(
+        "mobileAdminPanelBtn"
+    );
+
+if (
+    roles.includes("admin")
+) {
+
+    if (adminAccess) {
+        adminAccess.style.display =
+            "block";
+    }
+
+    if (mobileAdminButton) {
+        mobileAdminButton.style.display =
+            "flex";
+    }
+
+} else {
+
+    if (adminAccess) {
+        adminAccess.style.display =
+            "none";
+    }
+
+    if (mobileAdminButton) {
+        mobileAdminButton.style.display =
+            "none";
+    }
+
+}       
 
 
-                if (
-                    roles.includes(
-                        "admin"
-                    )
-                ) {
+               displayToday();
 
-                    adminAccess.style.display =
-                        "block";
+await loadTodayAttendance();
 
-                } else {
+await loadAttendanceHistory();
 
-                    adminAccess.style.display =
-                        "none";
+await loadEmployeeLeaveRequests();
 
-                }
-
-
-                displayToday();
-
-                await loadTodayAttendance();
-
-                await loadAttendanceHistory();
-
-                await loadEmployeeLeaveRequests();
+document.body.style.visibility =
+    "visible";
 
 
             } catch (error) {
@@ -1326,7 +1357,8 @@ if (profilePageEmployeeStatus) {
 
 
         } else {
-
+document.body.style.visibility =
+    "visible";
             employee =
                 null;
 
@@ -1337,6 +1369,26 @@ if (profilePageEmployeeStatus) {
                 "active"
             );
 
+            const employeeMobileBottomNav =
+    document.querySelector(
+        ".employee-mobile-bottom-nav"
+    );
+
+const employeeMobileMoreMenu =
+    document.getElementById(
+        "employeeMobileMoreMenu"
+    );
+
+if (employeeMobileBottomNav) {
+    employeeMobileBottomNav.style.display =
+        "none";
+}
+
+if (employeeMobileMoreMenu) {
+    employeeMobileMoreMenu.classList.remove(
+        "active"
+    );
+}
 
             if (
                 profileMenuWrapper
@@ -3882,3 +3934,247 @@ if (employeeChangePasswordForm) {
         }
     );
 }
+
+// ========================================
+// MOBILE BOTTOM NAVIGATION — FIXED
+// ========================================
+
+const mobileDashboardBtn =
+    document.getElementById(
+        "mobileDashboardBtn"
+    );
+
+const mobileAttendanceBtn =
+    document.getElementById(
+        "mobileAttendanceBtn"
+    );
+
+const mobileLeaveBtn =
+    document.getElementById(
+        "mobileLeaveBtn"
+    );
+
+const mobileProfileBtn =
+    document.getElementById(
+        "mobileProfileBtn"
+    );
+
+const mobileMoreBtn =
+    document.getElementById(
+        "mobileMoreBtn"
+    );
+
+const mobileSettingsBtn =
+    document.getElementById(
+        "mobileSettingsBtn"
+    );
+
+const mobileAdminPanelBtn =
+    document.getElementById(
+        "mobileAdminPanelBtn"
+    );
+
+const employeeMobileMoreMenu =
+    document.getElementById(
+        "employeeMobileMoreMenu"
+    );
+
+
+function setActiveMobileNav(
+    activeButton
+) {
+
+    document
+        .querySelectorAll(
+            ".employee-mobile-nav-item"
+        )
+        .forEach(
+            button => {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    if (activeButton) {
+
+        activeButton.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+function closeMobileMoreMenu() {
+
+    employeeMobileMoreMenu
+        ?.classList
+        .remove(
+            "active"
+        );
+
+}
+
+
+// ========================================
+// DASHBOARD
+// ========================================
+
+mobileDashboardBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeMobileMoreMenu();
+
+        document
+            .getElementById(
+                "employeeDashboardNav"
+            )
+            ?.click();
+
+        setActiveMobileNav(
+            mobileDashboardBtn
+        );
+
+    }
+);
+
+
+// ========================================
+// ATTENDANCE
+// ========================================
+
+mobileAttendanceBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeMobileMoreMenu();
+
+        document
+            .getElementById(
+                "employeeAttendanceNav"
+            )
+            ?.click();
+
+        setActiveMobileNav(
+            mobileAttendanceBtn
+        );
+
+    }
+);
+
+
+// ========================================
+// LEAVE
+// Leave currently uses existing popup
+// ========================================
+
+mobileLeaveBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeMobileMoreMenu();
+
+        document
+            .getElementById(
+                "openLeaveRequestBtn"
+            )
+            ?.click();
+
+        setActiveMobileNav(
+            mobileLeaveBtn
+        );
+
+    }
+);
+
+
+// ========================================
+// MY PROFILE PAGE
+// ========================================
+
+mobileProfileBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeMobileMoreMenu();
+
+        document
+            .getElementById(
+                "employeeMyProfileNav"
+            )
+            ?.click();
+
+        setActiveMobileNav(
+            mobileProfileBtn
+        );
+
+    }
+);
+
+
+// ========================================
+// MORE
+// ========================================
+
+mobileMoreBtn?.addEventListener(
+    "click",
+    () => {
+
+        employeeMobileMoreMenu
+            ?.classList
+            .toggle(
+                "active"
+            );
+
+        setActiveMobileNav(
+            mobileMoreBtn
+        );
+
+    }
+);
+
+
+// ========================================
+// ADMIN PANEL
+// ========================================
+
+mobileAdminPanelBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeMobileMoreMenu();
+
+        window.location.href =
+            "admin.html";
+
+    }
+);
+
+
+// ========================================
+// SETTINGS
+// Temporary existing Settings trigger
+// ========================================
+
+mobileSettingsBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeMobileMoreMenu();
+
+        const existingSettingsButton =
+            document.querySelector(
+                '[id*="SettingsNav"], [id*="settingsNav"]'
+            );
+
+        existingSettingsButton
+            ?.click();
+
+    }
+);
