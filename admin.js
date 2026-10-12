@@ -274,10 +274,10 @@ function renderAttendanceTrendChart(
                                 attendanceCounts,
 
                             borderColor:
-                                "#1677ff",
+                                "#966E33",
 
                             backgroundColor:
-                                "rgba(22, 119, 255, 0.10)",
+                                "rgba(150, 110, 51, 0.12)",
 
                             borderWidth:
                                 2,
@@ -292,7 +292,16 @@ function renderAttendanceTrendChart(
                                 3,
 
                             pointHoverRadius:
-                                5
+                                5,
+
+                            pointBackgroundColor:
+                                "#966E33",
+
+                            pointBorderColor:
+                                "#ffffff",
+
+                            pointBorderWidth:
+                                2
                         }
                     ]
                 },
@@ -329,7 +338,7 @@ function renderAttendanceTrendChart(
 
                             grid: {
                                 color:
-                                    "#edf2f7"
+                                    "#eee5d8"
                             }
 
                         },
@@ -438,18 +447,21 @@ function renderDepartmentDistributionChart(
                                 values,
 
                             backgroundColor: [
-                                "#1677ff",
-                                "#22c55e",
-                                "#f59e0b",
-                                "#8b5cf6",
-                                "#ef4444",
-                                "#06b6d4",
-                                "#ec4899",
-                                "#64748b"
+                                "#966E33",
+                                "#B7894C",
+                                "#C9A66B",
+                                "#D8BC8A",
+                                "#7D5A2A",
+                                "#A77B3F",
+                                "#E5D3B3",
+                                "#6C5235"
                             ],
 
+                            borderColor:
+                                "#ffffff",
+
                             borderWidth:
-                                0,
+                                2,
 
                             hoverOffset:
                                 6
@@ -499,7 +511,7 @@ function renderDepartmentDistributionChart(
                                 },
 
                                 color:
-                                    "#64748b"
+                                    "#7D7164"
                             }
 
                         }
@@ -639,7 +651,13 @@ function renderWeeklyAttendanceChart(
                                 presentCounts,
 
                             backgroundColor:
-                                "#1677ff",
+                                "#966E33",
+
+                            borderColor:
+                                "#7D5A2A",
+
+                            borderWidth:
+                                1,
 
                             borderRadius:
                                 6,
@@ -682,7 +700,7 @@ function renderWeeklyAttendanceChart(
 
                             grid: {
                                 color:
-                                    "#edf2f7"
+                                    "#eee5d8"
                             }
 
                         },
@@ -795,13 +813,16 @@ function renderLeaveSummaryChart(
                             ],
 
                             backgroundColor: [
-                                "#22c55e",
-                                "#f59e0b",
-                                "#ef4444"
+                                "#966E33",
+                                "#C9A66B",
+                                "#6F4F24"
                             ],
 
+                            borderColor:
+                                "#ffffff",
+
                             borderWidth:
-                                0,
+                                2,
 
                             hoverOffset:
                                 6
@@ -851,7 +872,7 @@ function renderLeaveSummaryChart(
                                 },
 
                                 color:
-                                    "#64748b"
+                                    "#7D7164"
                             }
 
                         }
@@ -11390,3 +11411,248 @@ if (clearEmployeeSearchBtn) {
         }
     );
 }
+
+// ========================================
+// ADMIN MOBILE BOTTOM NAVIGATION
+// ========================================
+
+const adminMobileDashboardBtn =
+    document.getElementById(
+        "adminMobileDashboardBtn"
+    );
+
+const adminMobileAttendanceBtn =
+    document.getElementById(
+        "adminMobileAttendanceBtn"
+    );
+
+const adminMobileEmployeesBtn =
+    document.getElementById(
+        "adminMobileEmployeesBtn"
+    );
+
+const adminMobileLeaveBtn =
+    document.getElementById(
+        "adminMobileLeaveBtn"
+    );
+
+const adminMobileMoreBtn =
+    document.getElementById(
+        "adminMobileMoreBtn"
+    );
+
+
+function setActiveAdminMobileNav(
+    activeButton
+) {
+
+    document
+        .querySelectorAll(
+            ".admin-mobile-nav-item"
+        )
+        .forEach(
+            button => {
+
+                button.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+    if (activeButton) {
+
+        activeButton.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+adminMobileDashboardBtn?.addEventListener(
+    "click",
+    () => {
+
+        document
+            .getElementById("homeBtn")
+            ?.click();
+
+        setActiveAdminMobileNav(
+            adminMobileDashboardBtn
+        );
+
+    }
+);
+
+
+adminMobileAttendanceBtn?.addEventListener(
+    "click",
+    () => {
+
+        document
+            .getElementById(
+                "attendanceManagementBtn"
+            )
+            ?.click();
+
+        setActiveAdminMobileNav(
+            adminMobileAttendanceBtn
+        );
+
+    }
+);
+
+
+adminMobileEmployeesBtn?.addEventListener(
+    "click",
+    () => {
+
+        document
+            .getElementById(
+                "employeesBtn"
+            )
+            ?.click();
+
+        setActiveAdminMobileNav(
+            adminMobileEmployeesBtn
+        );
+
+    }
+);
+
+
+adminMobileLeaveBtn?.addEventListener(
+    "click",
+    () => {
+
+        document
+            .getElementById(
+                "leaveManagementBtn"
+            )
+            ?.click();
+
+        setActiveAdminMobileNav(
+            adminMobileLeaveBtn
+        );
+
+    }
+);
+const adminMobileMoreMenu =
+    document.getElementById(
+        "adminMobileMoreMenu"
+    );
+
+const adminMobileCreateEmployeeBtn =
+    document.getElementById(
+        "adminMobileCreateEmployeeBtn"
+    );
+
+const adminMobileDepartmentsBtn =
+    document.getElementById(
+        "adminMobileDepartmentsBtn"
+    );
+
+const adminMobileShiftBtn =
+    document.getElementById(
+        "adminMobileShiftBtn"
+    );
+
+const adminMobileSettingsBtn =
+    document.getElementById(
+        "adminMobileSettingsBtn"
+    );
+
+
+function closeAdminMobileMoreMenu() {
+
+    adminMobileMoreMenu
+        ?.classList
+        .remove(
+            "active"
+        );
+
+}
+
+
+adminMobileMoreBtn?.addEventListener(
+    "click",
+    () => {
+
+        adminMobileMoreMenu
+            ?.classList
+            .toggle(
+                "active"
+            );
+
+        setActiveAdminMobileNav(
+            adminMobileMoreBtn
+        );
+
+    }
+);
+
+
+adminMobileCreateEmployeeBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeAdminMobileMoreMenu();
+
+        document
+            .getElementById(
+                "createEmployeeBtn"
+            )
+            ?.click();
+
+    }
+);
+
+
+adminMobileDepartmentsBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeAdminMobileMoreMenu();
+
+        document
+            .getElementById(
+                "departmentsBranchesBtn"
+            )
+            ?.click();
+
+    }
+);
+
+
+adminMobileShiftBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeAdminMobileMoreMenu();
+
+        document
+            .getElementById(
+                "shiftWeeklyOffBtn"
+            )
+            ?.click();
+
+    }
+);
+
+
+adminMobileSettingsBtn?.addEventListener(
+    "click",
+    () => {
+
+        closeAdminMobileMoreMenu();
+
+        document
+            .getElementById(
+                "settingsBtn"
+            )
+            ?.click();
+
+    }
+);
