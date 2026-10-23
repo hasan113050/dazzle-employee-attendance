@@ -648,7 +648,7 @@ function renderWeeklyAttendanceChart(
                                 "Present",
 
                             data:
-                                presentCounts,
+                                                            presentCounts,
 
                             backgroundColor:
                                 "#966E33",
@@ -1297,8 +1297,7 @@ async function showPage(
                 if (
                     item.page
                 ) {
-
-                    item.page
+                                        item.page
                         .classList
                         .remove(
                             "active-page"
@@ -1335,7 +1334,10 @@ async function showPage(
 
         return;
     }
-
+localStorage.setItem(
+    "dazzleAdminActivePage",
+    pageName
+);
 
     if (
         selected.page
@@ -1409,14 +1411,24 @@ async function showPage(
     }
 
 
+ if (
+    pageName ===
+    "probation"
+) {
+
+    await loadEmployees();
+
+    updateProbationDashboard();
+
+}
+
+
     if (
         pageName ===
-        "probation"
+        "recruitment"
     ) {
 
-        await loadEmployees();
-
-        updateProbationDashboard();
+        await loadRecruitmentModule();
 
     }
 
@@ -1938,9 +1950,7 @@ function openEmployeeModal(
             )
             : "-"
     );
-
-
-    setText(
+        setText(
         "modalNid",
         employee.nid
     );
@@ -2587,8 +2597,7 @@ deleteEmployeeBtn.addEventListener(
             await window.adminDeleteDoc(
 
                 window.adminDoc(
-
-                    window.adminDB,
+                                        window.adminDB,
 
                     "employees",
 
@@ -3238,8 +3247,7 @@ function getProbationEndingSoonCount() {
         employee => {
 
             if (
-
-                employee.status !==
+                                employee.status !==
                 "active" ||
 
                 !employee.probationEndDate
@@ -3530,13 +3538,1145 @@ function updateAttendanceSummary(
 
 }
 
+let selectedProbationEmployeeId = null;
 
 function updateProbationDashboard() {
 
-    updateEmployeeBasedKPIs();
+    const tableBody =
+        byId("probationTableBody");
+
+    if (!tableBody) {
+        return;
+    }
+
+    const probationEmployees =
+    employees.filter(
+        employee =>
+            employee.probationEndDate &&
+            employee.probationStatus !==
+                "confirmed"
+    );
+
+
+const confirmedThisMonth =
+    employees.filter(
+        employee => {
+
+            if (
+                employee.probationStatus !==
+                    "confirmed" ||
+                !employee.confirmationDate
+            ) {
+                return false;
+            }
+
+
+            const confirmationDate =
+                new Date(
+                    employee.confirmationDate +
+                    "T00:00:00"
+                );
+
+            const now =
+                new Date();
+
+
+            return (
+                confirmationDate.getFullYear() ===
+                    now.getFullYear() &&
+                confirmationDate.getMonth() ===
+                    now.getMonth()
+            );
+
+        }
+    );
+
+const today = new Date();
+
+today.setHours(
+    0,
+    0,
+    0,
+    0
+);
+
+
+let onProbationCount = 0;
+let dueSoonCount = 0;
+let overdueCount = 0;
+
+
+probationEmployees.forEach(
+    employee => {
+
+        const endDate =
+            new Date(
+                employee.probationEndDate +
+                "T00:00:00"
+            );
+
+        const difference =
+            endDate.getTime() -
+            today.getTime();
+
+        const daysLeft =
+            Math.ceil(
+                difference /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        if (daysLeft < 0) {
+
+            overdueCount++;
+
+        } else if (daysLeft <= 30) {
+
+            dueSoonCount++;
+
+        } else {
+
+            onProbationCount++;
+
+        }
+
+    }
+);
+
+
+const totalCountElement =
+    byId("probationTotalCount");
+
+const dueSoonCountElement =
+    byId("probationDueSoonCount");
+
+const overdueCountElement =
+    byId("probationOverdueCount");
+
+const confirmedCountElement =
+    byId("probationConfirmedCount");
+
+
+if (totalCountElement) {
+
+    totalCountElement.textContent =
+        probationEmployees.length;
 
 }
 
+
+if (dueSoonCountElement) {
+
+    dueSoonCountElement.textContent =
+        dueSoonCount;
+
+}
+
+
+if (overdueCountElement) {
+
+    overdueCountElement.textContent =
+        overdueCount;
+
+}
+
+
+if (confirmedCountElement) {
+
+    confirmedCountElement.textContent =
+        confirmedThisMonth.length;
+
+}
+
+    if (probationEmployees.length === 0) {
+
+        tableBody.innerHTML = `
+            <tr class="probation-empty-row">
+                <td colspan="7">
+                    No probation employee data available.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    tableBody.innerHTML = "";
+
+probationEmployees.forEach(
+    employee => {
+
+        const today = new Date();
+
+        today.setHours(
+            0,
+            0,
+            0,
+            0
+        );
+
+        const endDate =
+            new Date(
+                employee.probationEndDate +
+                "T00:00:00"
+            );
+
+        const difference =
+            endDate.getTime() -
+            today.getTime();
+
+        const daysLeft =
+            Math.ceil(
+                difference /
+                (1000 * 60 * 60 * 24)
+            );
+
+
+        let statusText =
+            "On Probation";
+
+        let statusClass =
+            "active";
+
+
+        if (daysLeft < 0) {
+
+            statusText =
+                "Overdue";
+
+            statusClass =
+                "overdue";
+
+        } else if (daysLeft === 0) {
+
+            statusText =
+                "Due Today";
+
+            statusClass =
+                "due-soon";
+
+        } else if (daysLeft <= 30) {
+
+            statusText =
+                "Due Soon";
+
+            statusClass =
+                "due-soon";
+
+        }
+
+
+        let daysText =
+            `${daysLeft} days`;
+
+
+        if (daysLeft === 1) {
+
+            daysText =
+                "1 day";
+
+        } else if (daysLeft === 0) {
+
+            daysText =
+                "Today";
+
+        } else if (daysLeft < 0) {
+
+            daysText =
+                `${Math.abs(daysLeft)} days overdue`;
+
+        }
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+            <td>
+                ${employee.name || "—"}
+            </td>
+
+            <td>
+                ${employee.department || "—"}
+            </td>
+
+            <td>
+                ${employee.joiningDate || "—"}
+            </td>
+
+            <td>
+                ${employee.probationEndDate || "—"}
+            </td>
+
+            <td>
+                ${daysText}
+            </td>
+
+            <td>
+                <span class="probation-status ${statusClass}">
+                    ${statusText}
+                </span>
+            </td>
+
+            <td>
+            <button
+    type="button"
+    class="probation-action-btn"
+    data-employee-id="${employee.firestoreId || employee.id || ""}"
+>
+    Review
+</button>   
+            </td>
+        `;
+
+
+        tableBody.appendChild(row);
+
+    }
+);
+const reviewButtons =
+    tableBody.querySelectorAll(
+        ".probation-action-btn"
+    );
+
+
+reviewButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const employeeId =
+                    button.dataset.employeeId;
+
+                  selectedProbationEmployeeId =
+    employeeId;  
+
+                const employee =
+                    employees.find(
+                        item =>
+                            (
+                                item.firestoreId ||
+                                item.id
+                            ) === employeeId
+                    );
+
+
+                if (!employee) {
+                    return;
+                }
+
+
+                const modal =
+                    byId(
+                        "probationActionModal"
+                    );
+
+
+                if (!modal) {
+                    return;
+                }
+// Reset previous probation decision data
+
+document
+    .querySelectorAll(
+        'input[name="probationDecision"]'
+    )
+    .forEach(
+        input => {
+            input.checked = false;
+        }
+    );
+
+
+const confirmationDateInput =
+    byId("probationConfirmationDate");
+
+const extensionDateInput =
+    byId("probationExtensionDate");
+
+const extensionReasonInput =
+    byId("probationExtensionReason");
+
+const decisionNoteInput =
+    byId("probationDecisionNote");
+
+
+if (confirmationDateInput) {
+    confirmationDateInput.value = "";
+}
+
+
+if (extensionDateInput) {
+    extensionDateInput.value = "";
+}
+
+
+if (extensionReasonInput) {
+    extensionReasonInput.value = "";
+}
+
+
+if (decisionNoteInput) {
+    decisionNoteInput.value = "";
+}
+
+
+if (probationConfirmFields) {
+    probationConfirmFields.style.display = "none";
+}
+
+
+if (probationExtensionFields) {
+    probationExtensionFields.style.display = "none";
+}
+
+                const employeeName =
+                    byId(
+                        "probationModalEmployeeName"
+                    );
+
+                const employeeMeta =
+                    byId(
+                        "probationModalEmployeeMeta"
+                    );
+
+                const joiningDate =
+                    byId(
+                        "probationModalJoiningDate"
+                    );
+
+                const endDate =
+                    byId(
+                        "probationModalEndDate"
+                    );
+
+                const currentStatus =
+                    byId(
+                        "probationModalCurrentStatus"
+                    );
+
+
+                if (employeeName) {
+
+                    employeeName.textContent =
+                        employee.name ||
+                        "Employee";
+
+                }
+
+
+                if (employeeMeta) {
+
+                    employeeMeta.textContent =
+                        [
+                            employee.department,
+                            employee.designation
+                        ]
+                            .filter(Boolean)
+                            .join(" • ") ||
+                        "—";
+
+                }
+
+
+                if (joiningDate) {
+
+                    joiningDate.textContent =
+                        employee.joiningDate ||
+                        "—";
+
+                }
+
+
+                if (endDate) {
+
+                    endDate.textContent =
+                        employee.probationEndDate ||
+                        "—";
+
+                }
+
+
+                if (currentStatus) {
+
+    const today =
+        new Date();
+
+    today.setHours(
+        0,
+        0,
+        0,
+        0
+    );
+
+    const probationEndDate =
+        new Date(
+            employee.probationEndDate +
+            "T00:00:00"
+        );
+
+    const daysLeft =
+        Math.ceil(
+            (
+                probationEndDate.getTime() -
+                today.getTime()
+            ) /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    let modalStatus =
+        "On Probation";
+
+
+    if (daysLeft < 0) {
+
+        modalStatus =
+            "Overdue";
+
+    } else if (daysLeft === 0) {
+
+        modalStatus =
+            "Due Today";
+
+    } else if (daysLeft <= 30) {
+
+        modalStatus =
+            "Due Soon";
+
+    }
+
+
+    currentStatus.textContent =
+        modalStatus;
+
+}
+
+
+                modal.classList.add(
+                    "active"
+                );
+
+            }
+        );
+
+    }
+);
+
+const probationSearchInput =
+    byId("probationSearchInput");
+
+
+if (
+    probationSearchInput &&
+    !probationSearchInput.dataset.listenerAdded
+) {
+
+    probationSearchInput.dataset.listenerAdded =
+        "true";
+
+
+    probationSearchInput.addEventListener(
+        "input",
+        () => {
+
+            const searchText =
+                probationSearchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const rows =
+                tableBody.querySelectorAll(
+                    "tr:not(.probation-empty-row)"
+                );
+
+
+            rows.forEach(
+                row => {
+
+                    const rowText =
+                        row.textContent
+                            .toLowerCase();
+
+
+                    row.style.display =
+                        rowText.includes(
+                            searchText
+                        )
+                            ? ""
+                            : "none";
+
+                }
+            );
+
+        }
+    );
+
+}
+
+const probationStatusFilter =
+    byId("probationStatusFilter");
+
+
+if (
+    probationStatusFilter &&
+    !probationStatusFilter.dataset.listenerAdded
+) {
+
+    probationStatusFilter.dataset.listenerAdded =
+        "true";
+
+
+    probationStatusFilter.addEventListener(
+        "change",
+        () => {
+
+            const selectedStatus =
+                probationStatusFilter.value;
+
+  if (
+    probationStatusFilter.dataset.previousStatus ===
+        "confirmed" &&
+    selectedStatus !==
+        "confirmed"
+) {
+
+    probationStatusFilter.dataset.previousStatus =
+        selectedStatus;
+
+    updateProbationDashboard();
+
+    return;
+
+}
+
+
+probationStatusFilter.dataset.previousStatus =
+    selectedStatus;
+
+if (
+    selectedStatus ===
+    "confirmed"
+) {
+
+    const confirmedEmployees =
+        employees.filter(
+            employee =>
+                employee.probationStatus ===
+                "confirmed"
+        );
+
+
+    tableBody.innerHTML = "";
+
+
+    if (
+        confirmedEmployees.length === 0
+    ) {
+
+        tableBody.innerHTML = `
+            <tr class="probation-empty-row">
+                <td colspan="7">
+                    No confirmed employees found.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+
+    confirmedEmployees.forEach(
+        employee => {
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+                <td>
+                    ${employee.name || "—"}
+                </td>
+
+                <td>
+                    ${employee.department || "—"}
+                </td>
+
+                <td>
+                    ${employee.joiningDate || "—"}
+                </td>
+
+                <td>
+                    ${employee.confirmationDate || "—"}
+                </td>
+
+                <td>
+                    —
+                </td>
+
+                <td>
+                    <span class="probation-status confirmed">
+                        Confirmed
+                    </span>
+                </td>
+
+                <td>
+                    —
+                </td>
+            `;
+
+
+            tableBody.appendChild(row);
+
+        }
+    );
+
+
+    return;
+
+}
+
+            const rows =
+                tableBody.querySelectorAll(
+                    "tr:not(.probation-empty-row)"
+                );
+
+
+            rows.forEach(
+                row => {
+
+                    const statusElement =
+                        row.querySelector(
+                            ".probation-status"
+                        );
+
+
+                    if (!statusElement) {
+                        return;
+                    }
+
+
+                    const statusText =
+                        statusElement.textContent
+                            .trim()
+                            .toLowerCase();
+
+
+                    let shouldShow =
+                        true;
+
+
+                    if (
+                        selectedStatus ===
+                        "probation"
+                    ) {
+
+                        shouldShow =
+                            statusText ===
+                            "on probation";
+
+                    }
+
+
+                    if (
+                        selectedStatus ===
+                        "due_soon"
+                    ) {
+
+                        shouldShow =
+                            statusText ===
+                                "due soon" ||
+                            statusText ===
+                                "due today";
+
+                    }
+
+
+                    if (
+                        selectedStatus ===
+                        "overdue"
+                    ) {
+
+                        shouldShow =
+                            statusText ===
+                            "overdue";
+
+                    }
+
+
+                    if (
+                        selectedStatus ===
+                        "confirmed"
+                    ) {
+
+                        shouldShow =
+                            statusText ===
+                            "confirmed";
+
+                    }
+
+
+                    row.style.display =
+                        shouldShow
+                            ? ""
+                            : "none";
+
+                }
+            );
+
+        }
+    );
+
+}
+
+}
+
+const probationModal =
+    byId("probationActionModal");
+
+const closeProbationModalBtn =
+    byId("closeProbationModalBtn");
+
+const cancelProbationDecisionBtn =
+    byId("cancelProbationDecisionBtn");
+
+
+function closeProbationModal() {
+
+    if (!probationModal) {
+        return;
+    }
+
+    probationModal.classList.remove(
+        "active"
+    );
+
+}
+
+
+if (closeProbationModalBtn) {
+
+    closeProbationModalBtn.addEventListener(
+        "click",
+        closeProbationModal
+    );
+
+}
+
+
+if (cancelProbationDecisionBtn) {
+
+    cancelProbationDecisionBtn.addEventListener(
+        "click",
+        closeProbationModal
+    );
+
+}
+
+const probationDecisionInputs =
+    document.querySelectorAll(
+        'input[name="probationDecision"]'
+    );
+
+const probationConfirmFields =
+    byId("probationConfirmFields");
+
+const probationExtensionFields =
+    byId("probationExtensionFields");
+
+
+function updateProbationDecisionFields() {
+
+    const selectedDecision =
+        document.querySelector(
+            'input[name="probationDecision"]:checked'
+        );
+
+
+    if (probationConfirmFields) {
+
+        probationConfirmFields.style.display =
+            "none";
+
+    }
+
+
+    if (probationExtensionFields) {
+
+        probationExtensionFields.style.display =
+            "none";
+
+    }
+
+
+    if (!selectedDecision) {
+        return;
+    }
+
+
+    if (
+        selectedDecision.value ===
+        "confirm"
+    ) {
+
+        if (probationConfirmFields) {
+
+            probationConfirmFields.style.display =
+                "block";
+
+        }
+
+    }
+
+
+    if (
+        selectedDecision.value ===
+        "extend"
+    ) {
+
+        if (probationExtensionFields) {
+
+            probationExtensionFields.style.display =
+                "block";
+
+        }
+
+    }
+
+}
+
+
+probationDecisionInputs.forEach(
+    input => {
+
+        input.addEventListener(
+            "change",
+            updateProbationDecisionFields
+        );
+
+    }
+);
+
+
+updateProbationDecisionFields();
+
+const saveProbationDecisionBtn =
+    byId("saveProbationDecisionBtn");
+
+
+if (saveProbationDecisionBtn) {
+
+    saveProbationDecisionBtn.addEventListener(
+        "click",
+        async () => {
+
+            const selectedDecision =
+                document.querySelector(
+                    'input[name="probationDecision"]:checked'
+                );
+
+
+            if (!selectedDecision) {
+
+                alert(
+                    "Please select a decision."
+                );
+
+                return;
+
+            }
+
+
+           
+
+
+            const confirmationDate =
+                byId(
+                    "probationConfirmationDate"
+                )?.value;
+
+
+            const decisionNote =
+                byId(
+                    "probationDecisionNote"
+                )?.value.trim() || "";
+
+
+          if (
+    selectedDecision.value === "confirm" &&
+    !confirmationDate
+) {
+
+    alert(
+        "Please select the confirmation effective date."
+    );
+
+    return;
+
+} 
+
+
+            if (!selectedProbationEmployeeId) {
+
+                alert(
+                    "Employee could not be identified."
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                saveProbationDecisionBtn.disabled =
+                    true;
+
+                saveProbationDecisionBtn.textContent =
+                    "Saving...";
+
+
+           if (
+    selectedDecision.value ===
+    "confirm"
+) {
+
+    await window.adminUpdateDoc(
+        window.adminDoc(
+            window.adminDB,
+            "employees",
+            selectedProbationEmployeeId
+        ),
+        {
+            probationStatus:
+                "confirmed",
+
+            confirmationDate:
+                confirmationDate,
+
+            probationDecisionNote:
+                decisionNote,
+
+            confirmedAt:
+                new Date().toISOString(),
+
+            updatedAt:
+                new Date().toISOString()
+        }
+    );
+
+} else if (
+    selectedDecision.value ===
+    "extend"
+) {
+
+    const extensionDate =
+        byId(
+            "probationExtensionDate"
+        )?.value;
+
+    const extensionReason =
+        byId(
+            "probationExtensionReason"
+        )?.value;
+
+
+    if (!extensionDate) {
+
+        alert(
+            "Please select the new probation end date."
+        );
+
+        return;
+
+    }
+
+
+    if (!extensionReason) {
+
+        alert(
+            "Please select an extension reason."
+        );
+
+        return;
+
+    }
+
+
+    await window.adminUpdateDoc(
+        window.adminDoc(
+            window.adminDB,
+            "employees",
+            selectedProbationEmployeeId
+        ),
+        {
+            probationStatus:
+                "probation",
+
+            probationEndDate:
+                extensionDate,
+
+            probationExtensionReason:
+                extensionReason,
+
+            probationDecisionNote:
+                decisionNote,
+
+            probationExtendedAt:
+                new Date().toISOString(),
+
+            updatedAt:
+                new Date().toISOString()
+        }
+    );
+
+}  
+
+
+                alert(
+                    "Employee confirmed successfully."
+                );
+
+
+                closeProbationModal();
+
+
+                await loadEmployees();
+
+                updateProbationDashboard();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Probation confirmation failed:",
+                    error
+                );
+
+                alert(
+                    "Failed to confirm employee.\n\n" +
+                    error.message
+                );
+
+            } finally {
+
+                saveProbationDecisionBtn.disabled =
+                    false;
+
+                saveProbationDecisionBtn.textContent =
+                    "Save Decision";
+
+            }
+
+        }
+    );
+
+}
 
 // ========================================
 // ATTENDANCE FILTER
@@ -3888,7 +5028,7 @@ employeeForm.addEventListener(
 
 
             if (
-                duplicateEmployee
+                                duplicateEmployee
             ) {
 
                 employeeFormStatus.textContent =
@@ -4539,8 +5679,7 @@ async function updateLeaveStatus(
 
         );
 
-
-    if (
+        if (
         !request
     ) {
 
@@ -5132,9 +6271,16 @@ window.adminOnAuthStateChanged(
                 "visible";
 
 
-            await showPage(
-                "home"
-            );
+            const savedPage =
+    localStorage.getItem(
+        "dazzleAdminActivePage"
+    );
+
+await showPage(
+    pageMap[savedPage]
+        ? savedPage
+        : "home"
+);
 
 
         } catch (
@@ -5838,7 +6984,7 @@ function attachDepartmentActions() {
                         if (usedByEmployee) {
 
                             alert(
-                                "This department cannot be deleted because employees are currently assigned to it."
+                                                                "This department cannot be deleted because employees are currently assigned to it."
                             );
 
                             return;
@@ -6488,7 +7634,7 @@ function attachDesignationActions() {
                             employees.some(
                                 employee =>
                                     employee.designation ===
-                                    designation.name
+                                                                    designation.name
                             );
 
 
@@ -7138,7 +8284,7 @@ departmentsBranchesBtn.addEventListener(
     "click",
     async () => {
 
-        await loadOrganizationData();
+                await loadOrganizationData();
 
     }
 );
@@ -7788,7 +8934,7 @@ function attachShiftActions() {
 
                                     updatedAt:
                                         new Date()
-                                            .toISOString()
+                                                       .toISOString()
                                 }
                             );
 
@@ -8438,7 +9584,7 @@ weeklyOffForm.addEventListener(
 
 
             alert(
-                "Weekly off saved successfully."
+                                                             "Weekly off saved successfully."
             );
 
 
@@ -9088,7 +10234,7 @@ function attendanceMgmtDisplayTime(
     if (simpleTime) {
 
         return raw;
-    }
+            }
 
 
     const parsed =
@@ -9738,9 +10884,7 @@ function populateAttendanceManagementFilters() {
 
             option.textContent =
                 branch;
-
-
-            attendanceManageBranch
+                            attendanceManageBranch
                 .appendChild(
                     option
                 );
@@ -10387,8 +11531,6 @@ attendanceManageDepartment.addEventListener(
 
     }
 );
-
-
 attendanceManageBranch.addEventListener(
     "change",
     async () => {
@@ -11038,8 +12180,7 @@ saveAttendanceCorrectionBtn.addEventListener(
             alert(
                 "Attendance record not found."
             );
-
-            return;
+                        return;
         }
 
 
@@ -11656,3 +12797,1041 @@ adminMobileSettingsBtn?.addEventListener(
 
     }
 );
+// ========================================================
+// AI RECRUITMENT MODULE
+// ========================================================
+
+let recruitmentJobs = [];
+let recruitmentCandidates = [];
+let selectedRecruitmentCandidateId = null;
+let recruitmentLoadedOnce = false;
+
+const recruitmentEls = {
+    openCreateJobBtn: byId("openCreateJobBtn"),
+    syncBtn: byId("syncRecruitmentEmailBtn"),
+    jobModal: byId("createJobModal"),
+    closeJobModal: byId("closeCreateJobModal"),
+    cancelJobBtn: byId("cancelCreateJobBtn"),
+    jobForm: byId("recruitmentJobForm"),
+    jobId: byId("recruitmentJobId"),
+    jobTitle: byId("recruitmentJobTitle"),
+    department: byId("recruitmentJobDepartment"),
+    location: byId("recruitmentJobLocation"),
+    employmentType: byId("recruitmentEmploymentType"),
+    minScore: byId("recruitmentMinScore"),
+    reviewScore: byId("recruitmentReviewScore"),
+    description: byId("recruitmentJobDescription"),
+    mandatory: byId("recruitmentMandatoryCriteria"),
+    preferred: byId("recruitmentPreferredCriteria"),
+    jobFormStatus: byId("recruitmentJobFormStatus"),
+    jobsGrid: byId("recruitmentJobsGrid"),
+    candidatesBody: byId("recruitmentCandidatesTableBody"),
+    candidateSearch: byId("recruitmentCandidateSearch"),
+    jobFilter: byId("recruitmentJobFilter"),
+    statusFilter: byId("recruitmentStatusFilter"),
+
+        detailModal: byId("candidateDetailModal"),
+    closeDetailModal: byId("closeCandidateDetailModal"),
+    detailName: byId("candidateDetailName"),
+    detailSubtitle: byId("candidateDetailSubtitle"),
+    detailBody: byId("candidateDetailBody"),
+    viewCvBtn: byId("candidateViewCvBtn"),
+    rescreenBtn: byId("candidateRescreenBtn"),
+    shortlistBtn: byId("candidateShortlistBtn"),
+    notShortlistBtn: byId("candidateNotShortlistBtn"),
+    openJobsCount: byId("recruitmentOpenJobsCount"),
+    applicationsCount: byId("recruitmentApplicationsCount"),
+    recommendedCount: byId("recruitmentRecommendedCount"),
+    reviewCount: byId("recruitmentReviewCount"),
+    shortlistedCount: byId("recruitmentShortlistedCount"),
+    automationStatus: byId("recruitmentAutomationStatus"),
+    lastSync: byId("recruitmentLastSync"),
+    processedEmails: byId("recruitmentProcessedEmails")
+};
+
+function escapeRecruitmentHtml(value) {
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+const RECRUITMENT_API_BASE =
+    "https://dazzle-hrm-recruitment.hasanmehedi021996.workers.dev";
+
+async function recruitmentApiRequest(path, options = {}) {
+    const user = window.adminAuth?.currentUser;
+
+    if (!user) {
+        throw new Error("Admin authentication is required.");
+    }
+
+    const idToken = await user.getIdToken();
+
+    const response = await fetch(
+        `${RECRUITMENT_API_BASE}${path}`,
+        {
+            method: options.method || "GET",
+
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${idToken}`,
+                ...(options.headers || {})
+            },
+
+            body:
+                options.body !== undefined
+                    ? JSON.stringify(options.body)
+                    : undefined
+        }
+    );
+
+    const responseText = await response.text();
+
+    let data = {};
+
+    try {
+        data = responseText
+            ? JSON.parse(responseText)
+            : {};
+    } catch {
+        throw new Error(
+            `Recruitment server returned an invalid response. HTTP ${response.status}`
+        );
+    }
+
+    if (!response.ok || data.success === false) {
+ throw new Error(
+    [data.message, data.error]
+        .filter(Boolean)
+        .join(" | ") ||
+    `Recruitment request failed. HTTP ${response.status}`
+);
+    }
+
+    return data;
+}
+
+window.recruitmentApiRequest = recruitmentApiRequest;
+
+window.runRecruitmentCleanupDryRun = async function () {
+    try {
+        console.log("Starting recruitment cleanup dry run...");
+
+        const result = await recruitmentApiRequest(
+            "/api/recruitment/cleanup-non-cv",
+            {
+                method: "POST",
+                body: {
+                    dryRun: true
+                }
+            }
+        );
+
+        console.log(
+            "RECRUITMENT CLEANUP DRY RUN:",
+            result
+        );
+
+        alert(
+            `Cleanup Dry Run Complete\n\n` +
+            `Candidates scanned: ${result.scanned || 0}\n` +
+            `Clearly non-CV: ${result.clearlyNonCv || 0}\n` +
+            `Duplicate groups: ${result.duplicateGroups || 0}\n` +
+            `Duplicate records: ${result.duplicateRecordsToRemove || 0}\n` +
+            `Total would delete: ${result.totalWouldDelete || 0}\n\n` +
+            `Nothing has been deleted.`
+        );
+
+        return result;
+
+    } catch (error) {
+        console.error(
+            "CLEANUP DRY RUN ERROR:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Cleanup dry run failed."
+        );
+    }
+};
+
+window.runSmartDuplicateDryRun = async function () {
+    try {
+        console.log("Starting smart duplicate dry run...");
+
+        const dashboard = await recruitmentApiRequest(
+            "/api/recruitment/dashboard",
+            {
+                method: "GET"
+            }
+        );
+
+        const candidates = Array.isArray(dashboard.candidates)
+            ? dashboard.candidates
+            : [];
+
+        const normalize = (value) =>
+            String(value || "")
+                .toLowerCase()
+                .replace(/[_\-./\\()[\]{}]+/g, " ")
+                .replace(/\s+/g, " ")
+                .trim();
+
+        const normalizeEmail = (value) =>
+            String(value || "")
+                .trim()
+                .toLowerCase();
+
+        const duplicateMap = new Map();
+
+        for (const candidate of candidates) {
+            const email = normalizeEmail(candidate.email);
+
+            const filename = normalize(
+                candidate.cvFilename ||
+                candidate.cvFileName ||
+                ""
+            );
+
+            const subject = normalize(
+                candidate.subject || ""
+            );
+
+            if (!email) {
+                continue;
+            }
+
+            /*
+             * SAFE SMART DUPLICATE RULES
+             *
+             * Rule 1:
+             * Same email + same CV filename
+             *
+             * Rule 2:
+             * If filename is unavailable,
+             * same email + same subject
+             *
+             * We DO NOT classify candidates
+             * as duplicate using email alone.
+             */
+
+            let key = "";
+
+            if (filename) {
+                key = `email-file|${email}|${filename}`;
+            } else if (subject) {
+                key = `email-subject|${email}|${subject}`;
+            }
+
+            if (!key) {
+                continue;
+            }
+
+            if (!duplicateMap.has(key)) {
+                duplicateMap.set(key, []);
+            }
+
+            duplicateMap
+                .get(key)
+                .push(candidate);
+        }
+
+
+        const duplicateGroups = [];
+
+        let duplicateRecords = 0;
+
+
+        for (const [key, group] of duplicateMap.entries()) {
+            if (group.length < 2) {
+                continue;
+            }
+
+
+            /*
+             * Keep oldest candidate.
+             *
+             * This is only a DRY RUN.
+             * Nothing is being deleted.
+             */
+
+            const sorted = [...group].sort((a, b) => {
+                return String(a.createdAt || "")
+                    .localeCompare(
+                        String(b.createdAt || "")
+                    );
+            });
+
+
+            const keep = sorted[0];
+            const duplicates = sorted.slice(1);
+
+            duplicateRecords += duplicates.length;
+
+
+            duplicateGroups.push({
+                key,
+
+                keep: {
+                    id: keep.id,
+                    name: keep.name || "",
+                    email: keep.email || "",
+                    subject: keep.subject || "",
+                    filename:
+                        keep.cvFilename ||
+                        keep.cvFileName ||
+                        "",
+                    createdAt:
+                        keep.createdAt || ""
+                },
+
+                duplicates: duplicates.map(candidate => ({
+                    id: candidate.id,
+                    name: candidate.name || "",
+                    email: candidate.email || "",
+                    subject: candidate.subject || "",
+                    filename:
+                        candidate.cvFilename ||
+                        candidate.cvFileName ||
+                        "",
+                    createdAt:
+                        candidate.createdAt || ""
+                }))
+            });
+        }
+
+
+        const result = {
+            success: true,
+            dryRun: true,
+
+            scanned:
+                candidates.length,
+
+            duplicateGroups:
+                duplicateGroups.length,
+
+            duplicateRecords,
+
+            duplicates:
+                duplicateGroups
+        };
+
+
+        console.log(
+            "SMART DUPLICATE DRY RUN:",
+            result
+        );
+
+
+        console.log(
+            JSON.stringify(
+                duplicateGroups,
+                null,
+                2
+            )
+        );
+
+
+        alert(
+            `Smart Duplicate Dry Run Complete\n\n` +
+            `Candidates scanned: ${result.scanned}\n` +
+            `Duplicate groups: ${result.duplicateGroups}\n` +
+            `Duplicate records: ${result.duplicateRecords}\n\n` +
+            `Nothing has been deleted.`
+        );
+
+
+        return result;
+
+    } catch (error) {
+        console.error(
+            "SMART DUPLICATE DRY RUN ERROR:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Smart duplicate dry run failed."
+        );
+    }
+};
+
+function toDateText(value) {
+    if (!value) return "—";
+    const d = value?.toDate ? value.toDate() : new Date(value);
+    if (Number.isNaN(d.getTime())) return "—";
+    return d.toLocaleString("en-GB", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+}
+
+function splitCriteria(value) {
+    return String(value || "")
+        .split("\n")
+        .map(item => item.trim())
+        .filter(Boolean);
+}
+
+function openRecruitmentJobModal(job = null) {
+    recruitmentEls.jobForm?.reset();
+    if (recruitmentEls.jobFormStatus) recruitmentEls.jobFormStatus.textContent = "";
+    recruitmentEls.jobId.value = job?.id || "";
+    recruitmentEls.jobTitle.value = job?.title || "";
+    recruitmentEls.department.value = job?.department || "";
+    recruitmentEls.location.value = job?.location || "";
+    recruitmentEls.employmentType.value = job?.employmentType || "Full-time";
+    recruitmentEls.minScore.value = job?.recommendedScore ?? 80;
+    recruitmentEls.reviewScore.value = job?.reviewScore ?? 60;
+    recruitmentEls.description.value = job?.description || "";
+    recruitmentEls.mandatory.value = (job?.mandatoryCriteria || []).join("\n");
+    recruitmentEls.preferred.value = (job?.preferredCriteria || []).join("\n");
+    const title = byId("createJobModalTitle");
+    if (title) title.textContent = job ? "Edit Job Opening" : "Create Job Opening";
+    recruitmentEls.jobModal?.classList.add("active");
+}
+
+function closeRecruitmentJobModal() {
+    recruitmentEls.jobModal?.classList.remove("active");
+}
+
+function closeCandidateDetailModal() {
+    recruitmentEls.detailModal?.classList.remove("active");
+    selectedRecruitmentCandidateId = null;
+}
+
+function recruitmentStatusLabel(status) {
+    const labels = {
+        recommended: "AI Recommended",
+        review: "Needs Review",
+        needs_assignment: "Needs Assignment",
+        shortlisted: "Shortlisted",
+        not_shortlisted: "Not Shortlisted",
+        processing_failed: "Processing Failed",
+        processing: "Processing"
+    };
+    return labels[status] || status || "Pending";
+}
+
+function scoreClass(score) {
+    const n = Number(score || 0);
+    if (n >= 80) return "high";
+    if (n >= 60) return "medium";
+    return "low";
+}
+
+function renderRecruitmentSummary() {
+    const openJobs = recruitmentJobs.filter(job => job.status !== "closed").length;
+    recruitmentEls.openJobsCount.textContent = openJobs;
+    recruitmentEls.applicationsCount.textContent = recruitmentCandidates.length;
+    recruitmentEls.recommendedCount.textContent = recruitmentCandidates.filter(c => c.status === "recommended").length;
+    recruitmentEls.reviewCount.textContent = recruitmentCandidates.filter(c => ["review", "needs_assignment", "processing_failed"].includes(c.status)).length;
+    recruitmentEls.shortlistedCount.textContent = recruitmentCandidates.filter(c => c.status === "shortlisted").length;
+}
+
+function renderRecruitmentJobFilter() {
+    if (!recruitmentEls.jobFilter) return;
+    const current = recruitmentEls.jobFilter.value;
+    recruitmentEls.jobFilter.innerHTML = '<option value="">All Jobs</option>' + recruitmentJobs.map(job => `<option value="${escapeRecruitmentHtml(job.id)}">${escapeRecruitmentHtml(job.title)}</option>`).join("");
+    recruitmentEls.jobFilter.value = current;
+}
+
+function renderRecruitmentJobs() {
+    if (!recruitmentEls.jobsGrid) return;
+    if (!recruitmentJobs.length) {
+        recruitmentEls.jobsGrid.innerHTML = '<div class="candidate-empty">No job opening yet. Create a job first so incoming CVs can be matched against its requirements.</div>';
+        return;
+    }
+    recruitmentEls.jobsGrid.innerHTML = recruitmentJobs.map(job => {
+        const count = recruitmentCandidates.filter(c => c.jobId === job.id).length;
+        const status = job.status || "open";
+        return `<article class="recruitment-job-card">
+            <div class="recruitment-job-card-top"><div><h3>${escapeRecruitmentHtml(job.title)}</h3><p>${escapeRecruitmentHtml(job.department || "No department")} · ${escapeRecruitmentHtml(job.location || "Location not set")}</p></div><span class="job-status-pill ${status === "closed" ? "closed" : ""}">${escapeRecruitmentHtml(status)}</span></div>
+            <div class="job-card-meta"><span>${count} application${count === 1 ? "" : "s"}</span><span>Recommend ${Number(job.recommendedScore ?? 80)}+</span><span>Review ${Number(job.reviewScore ?? 60)}+</span></div>
+            <div class="job-card-actions"><button class="table-action-btn" data-job-action="edit" data-job-id="${job.id}">Edit</button><button class="table-action-btn" data-job-action="toggle" data-job-id="${job.id}">${status === "closed" ? "Reopen" : "Close Job"}</button></div>
+        </article>`;
+    }).join("");
+}
+
+function filteredRecruitmentCandidates() {
+    const search = (recruitmentEls.candidateSearch?.value || "").trim().toLowerCase();
+    const jobId = recruitmentEls.jobFilter?.value || "";
+    const status = recruitmentEls.statusFilter?.value || "";
+    return recruitmentCandidates.filter(c => {
+        const hay = `${c.name || ""} ${c.email || ""} ${c.jobTitle || ""}`.toLowerCase();
+        return (!search || hay.includes(search)) && (!jobId || c.jobId === jobId) && (!status || c.status === status);
+    });
+}
+
+function renderRecruitmentCandidates() {
+    if (!recruitmentEls.candidatesBody) return;
+    const rows = filteredRecruitmentCandidates();
+    if (!rows.length) {
+        recruitmentEls.candidatesBody.innerHTML = '<tr><td colspan="6"><div class="candidate-empty">No applications match this view.</div></td></tr>';
+        return;
+    }
+    recruitmentEls.candidatesBody.innerHTML = rows.map(c => {
+        const score = Number(c.aiScore ?? 0);
+        const scoreText = c.aiScore === null || c.aiScore === undefined ? "—" : `${score}%`;
+        return `<tr>
+            <td><div class="candidate-name-cell"><strong>${escapeRecruitmentHtml(c.name || "Unknown Candidate")}</strong><span>${escapeRecruitmentHtml(c.email || "No email")}</span></div></td>
+            <td>${escapeRecruitmentHtml(c.jobTitle || "Needs Assignment")}</td>
+            <td><span class="ai-score ${scoreClass(score)}">${scoreText}</span></td>
+            <td><span class="recruitment-status ${escapeRecruitmentHtml(c.status)}">${escapeRecruitmentHtml(recruitmentStatusLabel(c.status))}</span></td>
+            <td>${escapeRecruitmentHtml(toDateText(c.receivedAt || c.createdAt))}</td>
+            <td><button class="table-action-btn" data-candidate-id="${c.id}">Review</button></td>
+        </tr>`;
+    }).join("");
+}
+
+function renderAutomationState(state = {}) {
+    if (recruitmentEls.automationStatus) recruitmentEls.automationStatus.textContent = state.configured ? "Connected" : "Backend setup required";
+    if (recruitmentEls.lastSync) recruitmentEls.lastSync.textContent = toDateText(state.lastSyncAt);
+    if (recruitmentEls.processedEmails) recruitmentEls.processedEmails.textContent = Number(state.processedEmails || 0);
+}
+
+async function loadRecruitmentModule(force = false) {
+    if (recruitmentLoadedOnce && !force) {
+        renderRecruitmentSummary();
+        renderRecruitmentJobs();
+        renderRecruitmentCandidates();
+        return;
+    }
+
+    recruitmentPage?.classList.add("recruitment-loading");
+
+    try {
+        const result = await recruitmentApiRequest(
+            "/api/recruitment/dashboard"
+        );
+
+        recruitmentJobs =
+            result.jobs || [];
+
+        recruitmentCandidates =
+            result.candidates || [];
+
+        renderAutomationState(
+            result.automation || {}
+        );
+
+        renderRecruitmentSummary();
+        renderRecruitmentJobFilter();
+        renderRecruitmentJobs();
+        renderRecruitmentCandidates();
+
+        recruitmentLoadedOnce = true;
+
+    } catch (error) {
+        console.error(
+            "RECRUITMENT LOAD ERROR:",
+            error
+        );
+
+        if (recruitmentEls.candidatesBody) {
+            recruitmentEls.candidatesBody.innerHTML =
+                `<tr>
+                    <td colspan="6">
+                        Unable to load Recruitment.
+                        ${escapeRecruitmentHtml(error.message || "")}
+                    </td>
+                </tr>`;
+        }
+
+    } finally {
+        recruitmentPage?.classList.remove(
+            "recruitment-loading"
+        );
+    }
+}
+
+function findRecruitmentCandidate(id) {
+    return recruitmentCandidates.find(c => c.id === id);
+}
+
+function renderCandidateDetail(candidate) {
+    if (!candidate || !recruitmentEls.detailBody) return;
+    recruitmentEls.detailName.textContent = candidate.name || "Candidate";
+    recruitmentEls.detailSubtitle.textContent = `${candidate.jobTitle || "Needs Assignment"} · ${candidate.email || "No email"}`;
+    const matched = candidate.analysis?.matchedRequirements || [];
+    const strengths = candidate.analysis?.strengths || [];
+    const gaps = candidate.analysis?.gaps || [];
+    const jobOptions = recruitmentJobs.filter(j => j.status !== "closed" || j.id === candidate.jobId).map(job => `<option value="${job.id}" ${job.id === candidate.jobId ? "selected" : ""}>${escapeRecruitmentHtml(job.title)}</option>`).join("");
+    recruitmentEls.detailBody.innerHTML = `
+        <div class="candidate-score-hero">
+            <div class="candidate-score-ring ${scoreClass(candidate.aiScore)}"><strong>${candidate.aiScore ?? "—"}</strong><span>/100</span></div>
+            <div><span class="recruitment-status ${escapeRecruitmentHtml(candidate.status)}">${escapeRecruitmentHtml(recruitmentStatusLabel(candidate.status))}</span><h3>${escapeRecruitmentHtml(candidate.analysis?.recommendation || "HR Review")}</h3><p>${escapeRecruitmentHtml(candidate.analysis?.summary || candidate.processingError || "No AI summary available yet.")}</p></div>
+        </div>
+        <div class="candidate-detail-grid">
+            <div class="candidate-detail-box"><span>Email</span><strong>${escapeRecruitmentHtml(candidate.email || "—")}</strong></div>
+            <div class="candidate-detail-box"><span>Phone</span><strong>${escapeRecruitmentHtml(candidate.phone || "—")}</strong></div>
+            <div class="candidate-detail-box"><span>CV File</span><strong>${escapeRecruitmentHtml(candidate.cvFileName || "—")}</strong></div>
+            <div class="candidate-detail-box"><span>Received</span><strong>${escapeRecruitmentHtml(toDateText(candidate.receivedAt || candidate.createdAt))}</strong></div>
+        </div>
+        <div class="candidate-analysis-section"><h4>Assigned Job</h4><select class="candidate-assignment-select" id="candidateJobAssignment"><option value="">Needs Assignment</option>${jobOptions}</select></div>
+        <div class="candidate-analysis-section"><h4>Strengths</h4><div class="candidate-analysis-list">${strengths.length ? strengths.map(x => `<div class="candidate-analysis-item">${escapeRecruitmentHtml(x)}</div>`).join("") : '<div class="candidate-analysis-item">No strengths extracted.</div>'}</div></div>
+        <div class="candidate-analysis-section"><h4>Matched Requirements</h4><div class="candidate-analysis-list">${matched.length ? matched.map(x => `<div class="candidate-analysis-item"><strong>${escapeRecruitmentHtml(x.requirement || x)}</strong>${escapeRecruitmentHtml(x.evidence || "")}</div>`).join("") : '<div class="candidate-analysis-item">No matched requirements listed.</div>'}</div></div>
+        <div class="candidate-analysis-section"><h4>Gaps / Items for HR Review</h4><div class="candidate-analysis-list">${gaps.length ? gaps.map(x => `<div class="candidate-analysis-item">${escapeRecruitmentHtml(x)}</div>`).join("") : '<div class="candidate-analysis-item">No major gap identified.</div>'}</div></div>
+    `;
+    recruitmentEls.shortlistBtn.disabled = !candidate.jobId || candidate.status === "shortlisted";
+    recruitmentEls.notShortlistBtn.disabled = candidate.status === "not_shortlisted";
+}
+
+function openCandidateDetail(id) {
+    const candidate = findRecruitmentCandidate(id);
+    if (!candidate) return;
+    selectedRecruitmentCandidateId = id;
+    renderCandidateDetail(candidate);
+    recruitmentEls.detailModal?.classList.add("active");
+}
+
+async function refreshRecruitmentAndKeepCandidate(id = null) {
+    recruitmentLoadedOnce = false;
+    await loadRecruitmentModule(true);
+    if (id) {
+        const c = findRecruitmentCandidate(id);
+        if (c) {
+            selectedRecruitmentCandidateId = id;
+            renderCandidateDetail(c);
+        }
+    }
+}
+
+recruitmentEls.openCreateJobBtn?.addEventListener("click", () => openRecruitmentJobModal());
+recruitmentEls.closeJobModal?.addEventListener("click", closeRecruitmentJobModal);
+recruitmentEls.cancelJobBtn?.addEventListener("click", closeRecruitmentJobModal);
+recruitmentEls.closeDetailModal?.addEventListener("click", closeCandidateDetailModal);
+
+recruitmentEls.jobForm?.addEventListener("submit", async event => {
+    event.preventDefault();
+    const recommendedScore = Number(recruitmentEls.minScore.value || 80);
+    const reviewScore = Number(recruitmentEls.reviewScore.value || 60);
+    if (reviewScore >= recommendedScore) {
+        recruitmentEls.jobFormStatus.textContent = "Review score must be lower than recommended score.";
+        return;
+    }
+    const payload = {
+        id: recruitmentEls.jobId.value || null,
+        title: recruitmentEls.jobTitle.value.trim(),
+        department: recruitmentEls.department.value.trim(),
+        location: recruitmentEls.location.value.trim(),
+        employmentType: recruitmentEls.employmentType.value,
+        recommendedScore,
+        reviewScore,
+        description: recruitmentEls.description.value.trim(),
+        mandatoryCriteria: splitCriteria(recruitmentEls.mandatory.value),
+        preferredCriteria: splitCriteria(recruitmentEls.preferred.value)
+    };
+    try {
+        recruitmentEls.jobFormStatus.textContent = "Saving...";
+        await recruitmentApiRequest(
+    "/api/recruitment/jobs",
+    {
+        method: "POST",
+        body: {
+            title: payload.title,
+            department: payload.department,
+            location: payload.location,
+            employmentType: payload.employmentType,
+            description: payload.description,
+            mandatoryCriteria: payload.mandatoryCriteria,
+            preferredCriteria: payload.preferredCriteria,
+            recommendedThreshold: payload.recommendedScore,
+            reviewThreshold: payload.reviewScore
+        }
+    }
+);
+        closeRecruitmentJobModal();
+        await refreshRecruitmentAndKeepCandidate();
+    } catch (error) {
+        recruitmentEls.jobFormStatus.textContent = error.message || "Unable to save job.";
+    }
+});
+
+recruitmentEls.jobsGrid?.addEventListener("click", async event => {
+    const btn = event.target.closest("[data-job-action]");
+    if (!btn) return;
+    const job = recruitmentJobs.find(j => j.id === btn.dataset.jobId);
+    if (!job) return;
+    if (btn.dataset.jobAction === "edit") {
+        openRecruitmentJobModal(job);
+        return;
+    }
+    if (btn.dataset.jobAction === "toggle") {
+        try {
+await recruitmentApiRequest(
+    "/api/recruitment/jobs/status",
+    {
+        method: "PATCH",
+        body: {
+            jobId: job.id,
+            status:
+                job.status === "closed"
+                    ? "open"
+                    : "closed"
+        }
+    }
+);
+            await refreshRecruitmentAndKeepCandidate();
+        } catch (error) {
+            alert(error.message || "Unable to update job status.");
+        }
+    }
+});
+
+recruitmentEls.candidatesBody?.addEventListener("click", event => {
+    const btn = event.target.closest("[data-candidate-id]");
+    if (btn) openCandidateDetail(btn.dataset.candidateId);
+});
+
+[recruitmentEls.candidateSearch, recruitmentEls.jobFilter, recruitmentEls.statusFilter].forEach(el => {
+    el?.addEventListener(el?.tagName === "INPUT" ? "input" : "change", renderRecruitmentCandidates);
+});
+
+document.querySelectorAll(".recruitment-tab").forEach(tab => {
+    tab.addEventListener("click", () => {
+        document.querySelectorAll(".recruitment-tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".recruitment-panel").forEach(p => p.classList.remove("active"));
+        tab.classList.add("active");
+        const target = tab.dataset.recruitmentTab;
+        byId(`recruitment${target.charAt(0).toUpperCase()}${target.slice(1)}Panel`)?.classList.add("active");
+    });
+});
+
+recruitmentEls.syncBtn?.addEventListener("click", async () => {
+    const original = recruitmentEls.syncBtn.textContent;
+    try {
+        recruitmentEls.syncBtn.disabled = true;
+        recruitmentEls.syncBtn.textContent = "Syncing...";
+      const result = await recruitmentApiRequest(
+    "/api/recruitment/sync",
+    {
+        method: "POST"
+    }
+);
+        await refreshRecruitmentAndKeepCandidate();
+    alert(
+    `Inbox sync complete.\n\n` +
+    `${result.emailsFound || 0} email(s) found\n` +
+    `${result.cvAttachmentsFound || 0} CV attachment(s) detected\n` +
+    `${result.processed || 0} new candidate(s) added\n` +
+    `${result.duplicatesSkipped || 0} duplicate(s) skipped\n` +
+    `${result.failed || 0} failed`
+);
+    } catch (error) {
+        alert(error.message || "Email sync failed.");
+    } finally {
+        recruitmentEls.syncBtn.disabled = false;
+        recruitmentEls.syncBtn.textContent = original;
+    }
+});
+
+recruitmentEls.viewCvBtn?.addEventListener("click", async () => {
+    if (!selectedRecruitmentCandidateId) return;
+
+    const originalText = recruitmentEls.viewCvBtn.textContent;
+
+    // Open the window immediately from the user's click.
+    // This prevents Safari/Chrome from treating it as a blocked popup.
+    const cvWindow = window.open("", "_blank");
+
+    if (!cvWindow) {
+        alert("Unable to open a new tab. Please allow pop-ups for this website.");
+        return;
+    }
+
+    cvWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Loading CV...</title>
+        </head>
+        <body style="
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            text-align: center;
+        ">
+            <p>Loading CV...</p>
+        </body>
+        </html>
+    `);
+
+    try {
+        recruitmentEls.viewCvBtn.disabled = true;
+        recruitmentEls.viewCvBtn.textContent = "Opening CV...";
+
+        const user = window.adminAuth?.currentUser;
+
+        if (!user) {
+            throw new Error("Admin authentication is required.");
+        }
+
+        const idToken = await user.getIdToken();
+
+        const response = await fetch(
+            `${RECRUITMENT_API_BASE}/api/recruitment/candidates/cv?candidateId=${encodeURIComponent(selectedRecruitmentCandidateId)}`,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${idToken}`
+                }
+            }
+        );
+
+        if (!response.ok) {
+            const responseText = await response.text();
+
+            let errorData = {};
+
+            try {
+                errorData = responseText
+                    ? JSON.parse(responseText)
+                    : {};
+            } catch {
+                // Response was not JSON.
+            }
+
+            throw new Error(
+                [errorData.message, errorData.error]
+                    .filter(Boolean)
+                    .join(" | ") ||
+                `Unable to open CV. HTTP ${response.status}`
+            );
+        }
+
+        const blob = await response.blob();
+        const objectUrl = URL.createObjectURL(blob);
+
+        cvWindow.location.href = objectUrl;
+
+        setTimeout(() => {
+            URL.revokeObjectURL(objectUrl);
+        }, 60000);
+
+    } catch (error) {
+        console.error("VIEW CV ERROR:", error);
+
+        if (cvWindow && !cvWindow.closed) {
+            cvWindow.close();
+        }
+
+        alert(
+            error.message ||
+            "Unable to open CV."
+        );
+
+    } finally {
+        recruitmentEls.viewCvBtn.disabled = false;
+        recruitmentEls.viewCvBtn.textContent = originalText;
+    }
+});
+
+recruitmentEls.rescreenBtn?.addEventListener("click", async () => {
+    if (!selectedRecruitmentCandidateId) return;
+    const assignment = byId("candidateJobAssignment")?.value || "";
+    if (!assignment) {
+        alert("Select a job opening first.");
+        return;
+    }
+    try {
+        recruitmentEls.rescreenBtn.disabled = true;
+        recruitmentEls.rescreenBtn.textContent = "Screening...";
+        await recruitmentCallable("rescreenCandidate")({ candidateId: selectedRecruitmentCandidateId, jobId: assignment });
+        await refreshRecruitmentAndKeepCandidate(selectedRecruitmentCandidateId);
+    } catch (error) {
+        alert(error.message || "AI screening failed.");
+    } finally {
+        recruitmentEls.rescreenBtn.disabled = false;
+        recruitmentEls.rescreenBtn.textContent = "Run AI Again";
+    }
+});
+
+recruitmentEls.shortlistBtn?.addEventListener("click", async () => {
+    if (!selectedRecruitmentCandidateId) {
+        return;
+    }
+
+    const candidate =
+        recruitmentCandidates.find(
+            item =>
+                item.id === selectedRecruitmentCandidateId
+        );
+
+    if (!candidate) {
+        alert("Candidate not found.");
+        return;
+    }
+
+    const assignment =
+        recruitmentEls.candidateJobAssignment?.value ||
+        candidate.jobId ||
+        "";
+
+    if (!assignment) {
+        alert("Please assign this candidate to a job before shortlisting.");
+        return;
+    }
+
+    const confirmed = confirm(
+        `Shortlist ${candidate.name || "this candidate"}?\n\n` +
+        `A shortlist email will be sent to ${candidate.email || "the candidate"}.`
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    const originalText =
+        recruitmentEls.shortlistBtn.textContent;
+
+    try {
+        recruitmentEls.shortlistBtn.disabled = true;
+        recruitmentEls.shortlistBtn.textContent =
+            "Shortlisting...";
+
+        const result =
+            await recruitmentApiRequest(
+                "/api/recruitment/candidates/shortlist",
+                {
+                    method: "POST",
+                    body: {
+                        candidateId:
+                            selectedRecruitmentCandidateId
+                    }
+                }
+            );
+
+        alert(
+            result.message ||
+            "Candidate shortlisted successfully."
+        );
+
+       await refreshRecruitmentAndKeepCandidate(
+    selectedRecruitmentCandidateId
+);
+
+    } catch (error) {
+        console.error(
+            "SHORTLIST CANDIDATE ERROR:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Unable to shortlist candidate."
+        );
+
+    } finally {
+        recruitmentEls.shortlistBtn.disabled = false;
+        recruitmentEls.shortlistBtn.textContent =
+            originalText;
+    }
+});
+
+recruitmentEls.notShortlistBtn?.addEventListener("click", async () => {
+    if (!selectedRecruitmentCandidateId) {
+        return;
+    }
+
+    const candidate =
+        recruitmentCandidates.find(
+            item =>
+                item.id === selectedRecruitmentCandidateId
+        );
+
+    if (!candidate) {
+        alert("Candidate not found.");
+        return;
+    }
+
+    const confirmed = confirm(
+        `Mark ${candidate.name || "this candidate"} as Not Shortlisted?`
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    const originalText =
+        recruitmentEls.notShortlistBtn.textContent;
+
+    try {
+        recruitmentEls.notShortlistBtn.disabled = true;
+        recruitmentEls.notShortlistBtn.textContent =
+            "Updating...";
+
+        const result =
+            await recruitmentApiRequest(
+                "/api/recruitment/candidates/not-shortlisted",
+                {
+                    method: "PATCH",
+                    body: {
+                        candidateId:
+                            selectedRecruitmentCandidateId
+                    }
+                }
+            );
+
+        alert(
+            result.message ||
+            "Candidate marked as not shortlisted."
+        );
+
+     await refreshRecruitmentAndKeepCandidate(
+    selectedRecruitmentCandidateId
+);
+
+    } catch (error) {
+        console.error(
+            "NOT SHORTLISTED ERROR:",
+            error
+        );
+
+        alert(
+            error.message ||
+            "Unable to update candidate."
+        );
+
+    } finally {
+        recruitmentEls.notShortlistBtn.disabled = false;
+        recruitmentEls.notShortlistBtn.textContent =
+            originalText;
+    }
+});
+
+byId("candidateDetailBody")?.addEventListener("change", async event => {
+    if (event.target.id !== "candidateJobAssignment" || !selectedRecruitmentCandidateId) return;
+    const jobId = event.target.value;
+    if (!jobId) return;
+    try {
+       await recruitmentApiRequest(
+    "/api/recruitment/candidates/assign-job",
+    {
+        method: "PATCH",
+        body: {
+            candidateId: selectedRecruitmentCandidateId,
+            jobId
+        }
+    }
+);
+        await refreshRecruitmentAndKeepCandidate(selectedRecruitmentCandidateId);
+    } catch (error) {
+        alert(error.message || "Unable to assign job.");
+    }
+});
+
+byId("adminMobileRecruitmentBtn")?.addEventListener("click", () => {
+    closeAdminMobileMoreMenu();
+    byId("recruitmentBtn")?.click();
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closeRecruitmentJobModal();
+        closeCandidateDetailModal();
+    }
+});
+

@@ -650,6 +650,8 @@
 
         </div>
 
+                </div>
+
 
         <div class="dashboard-chart-placeholder">
 
@@ -658,8 +660,6 @@
 ></canvas>
 
         </div>
-
-    </div>
 
 
 
@@ -1298,7 +1298,7 @@
                                     checked
                                 >
 
-                                <span>
+                                     <span>
                                     Active
                                 </span>
 
@@ -1948,9 +1948,8 @@
                 </select>
 
             </div>
-
-
-            <div class="form-group">
+            
+                <div class="form-group">
 
                 <label for="attendanceRangeStatus">
                     Status
@@ -2596,9 +2595,8 @@
                     >
 
                 </div>
-
-
-                <div class="form-group">
+                
+                        <div class="form-group">
 
                     <label for="branchTypeInput">
                         Location Type
@@ -3248,7 +3246,8 @@
 
 
             <!-- ================================================== -->
-            <!-- PAYROLL -->
+             
+                    <!-- PAYROLL -->
             <!-- ================================================== -->
 
             <section
@@ -3375,65 +3374,399 @@
 
 
 
-            <!-- ================================================== -->
-            <!-- PROBATION -->
-            <!-- ================================================== -->
+<!-- ================================================== -->
+<!-- PROBATION -->
+<!-- ================================================== -->
 
-            <section
-                id="probationPage"
-                class="page-section"
-            >
+<section
+    id="probationPage"
+    class="page-section"
+>
 
-                <div class="page-heading">
+    <!-- PAGE HEADING -->
+
+    <div class="page-heading probation-page-heading">
+
+        <div>
+            <p class="page-eyebrow">
+                Employment Status
+            </p>
+
+            <h1>
+                Probation & Confirmation
+            </h1>
+
+            <p>
+                Monitor probation periods, confirmation due dates and employment status changes
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- SUMMARY -->
+
+    <div class="probation-summary-grid">
+
+        <div class="probation-summary-card">
+            <div class="probation-summary-icon">◌</div>
+
+            <div>
+                <span>On Probation</span>
+                <strong id="probationTotalCount">0</strong>
+                <small>Active probation employees</small>
+            </div>
+        </div>
+
+
+        <div class="probation-summary-card">
+            <div class="probation-summary-icon warning">!</div>
+
+            <div>
+                <span>Due Soon</span>
+                <strong id="probationDueSoonCount">0</strong>
+                <small>Confirmation due soon</small>
+            </div>
+        </div>
+
+
+        <div class="probation-summary-card">
+            <div class="probation-summary-icon danger">!</div>
+
+            <div>
+                <span>Overdue</span>
+                <strong id="probationOverdueCount">0</strong>
+                <small>Decision pending</small>
+            </div>
+        </div>
+
+
+        <div class="probation-summary-card">
+            <div class="probation-summary-icon success">✓</div>
+
+            <div>
+                <span>Confirmed</span>
+                <strong id="probationConfirmedCount">0</strong>
+                <small>Confirmed this month</small>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- EMPLOYEE LIST -->
+
+    <div class="admin-card probation-list-card">
+
+        <div class="probation-list-header">
+
+            <div>
+                <h2>Probation Employees</h2>
+
+                <p>
+                    Review probation status and take confirmation decisions
+                </p>
+            </div>
+
+            <div class="probation-list-tools">
+
+                <div class="probation-search-wrap">
+                    <span>⌕</span>
+
+                    <input
+                        type="search"
+                        id="probationSearchInput"
+                        placeholder="Search employee..."
+                        autocomplete="off"
+                    >
+                </div>
+
+
+                <select id="probationStatusFilter">
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="probation">
+                        On Probation
+                    </option>
+
+                    <option value="due_soon">
+                        Due Soon
+                    </option>
+
+                    <option value="overdue">
+                        Overdue
+                    </option>
+
+                    <option value="confirmed">
+                        Confirmed
+                    </option>
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="probation-table-wrap">
+
+            <table class="probation-table">
+
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Joining Date</th>
+                        <th>Probation End</th>
+                        <th>Days Left</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="probationTableBody">
+
+                    <tr class="probation-empty-row">
+                        <td colspan="7">
+                            No probation employee data available.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROBATION ACTION MODAL -->
+
+    <div
+        id="probationActionModal"
+        class="probation-modal"
+    >
+
+        <div class="probation-modal-content">
+
+            <div class="probation-modal-header">
+
+                <div>
+                    <span class="probation-modal-eyebrow">
+                        Employment Decision
+                    </span>
+
+                    <h2 id="probationModalEmployeeName">
+                        Employee
+                    </h2>
+
+                    <p id="probationModalEmployeeMeta">
+                        —
+                    </p>
+                </div>
+
+                <button
+                    type="button"
+                    id="closeProbationModalBtn"
+                    class="probation-modal-close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="probation-modal-body">
+
+                <!-- EMPLOYEE INFO -->
+
+                <div class="probation-detail-grid">
 
                     <div>
-                        <p class="page-eyebrow">
-                            Employment Status
-                        </p>
+                        <span>Joining Date</span>
+                        <strong id="probationModalJoiningDate">—</strong>
+                    </div>
 
-                        <h1>
-                            Probation & Confirmation
-                        </h1>
+                    <div>
+                        <span>Probation End</span>
+                        <strong id="probationModalEndDate">—</strong>
+                    </div>
 
-                        <p>
-                            Monitor probation periods, confirmation due dates and employment status changes
-                        </p>
+                    <div>
+                        <span>Current Status</span>
+                        <strong id="probationModalCurrentStatus">—</strong>
                     </div>
 
                 </div>
 
 
-                <div class="module-grid">
+                <!-- DECISION -->
 
-                    <div class="admin-card module-card">
-                        <span class="module-icon">◌</span>
-                        <h2>On Probation</h2>
-                        <p>
-                            View all employees currently serving probation.
-                        </p>
-                    </div>
+                <div class="probation-form-section">
 
-                    <div class="admin-card module-card">
-                        <span class="module-icon">!</span>
-                        <h2>Confirmation Due</h2>
-                        <p>
-                            See employees whose probation period is ending soon.
-                        </p>
-                    </div>
+                    <label>
+                        Decision
+                    </label>
 
-                    <div class="admin-card module-card">
-                        <span class="module-icon">✓</span>
-                        <h2>Confirm / Extend</h2>
-                        <p>
-                            Record confirmation decisions or probation extensions.
-                        </p>
+                    <div class="probation-decision-options">
+
+                        <label class="probation-decision-option">
+
+                            <input
+                                type="radio"
+                                name="probationDecision"
+                                value="confirm"
+                            >
+
+                            <span>
+                                <strong>Confirm Employee</strong>
+                                <small>
+                                    Complete probation and confirm employment
+                                </small>
+                            </span>
+
+                        </label>
+
+
+                        <label class="probation-decision-option">
+
+                            <input
+                                type="radio"
+                                name="probationDecision"
+                                value="extend"
+                            >
+
+                            <span>
+                                <strong>Extend Probation</strong>
+                                <small>
+                                    Extend the employee's probation period
+                                </small>
+                            </span>
+
+                        </label>
+
                     </div>
 
                 </div>
 
-            </section>
+
+                <!-- CONFIRM DATE -->
+
+                <div
+                    id="probationConfirmFields"
+                    class="probation-form-section probation-decision-fields"
+                >
+
+                    <label for="probationConfirmationDate">
+                        Confirmation Effective Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="probationConfirmationDate"
+                    >
+
+                </div>
 
 
+                <!-- EXTENSION -->
+
+                <div
+                    id="probationExtensionFields"
+                    class="probation-form-section probation-decision-fields"
+                >
+
+                    <label for="probationExtensionDate">
+                        New Probation End Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="probationExtensionDate"
+                    >
+
+
+                    <label for="probationExtensionReason">
+                        Extension Reason
+                    </label>
+
+                    <select id="probationExtensionReason">
+
+                        <option value="">
+                            Select reason
+                        </option>
+
+                        <option value="performance">
+                            Performance Review Required
+                        </option>
+
+                        <option value="attendance">
+                            Attendance Improvement Required
+                        </option>
+
+                        <option value="training">
+                            Additional Training Required
+                        </option>
+
+                        <option value="evaluation">
+                            More Evaluation Time Required
+                        </option>
+
+                        <option value="other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- NOTE -->
+
+                <div class="probation-form-section">
+
+                    <label for="probationDecisionNote">
+                        HR Note
+                    </label>
+
+                    <textarea
+                        id="probationDecisionNote"
+                        rows="4"
+                        placeholder="Add an internal note about this decision..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="probation-modal-footer">
+
+                <button
+                    type="button"
+                    id="cancelProbationDecisionBtn"
+                    class="secondary-btn"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    id="saveProbationDecisionBtn"
+                    class="primary-btn"
+                >
+                    Save Decision
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
             <!-- ================================================== -->
             <!-- DOCUMENTS -->
@@ -3499,61 +3832,86 @@
             <!-- RECRUITMENT -->
             <!-- ================================================== -->
 
-            <section
-                id="recruitmentPage"
-                class="page-section"
-            >
-
-                <div class="page-heading">
-
+            <section id="recruitmentPage" class="page-section">
+                <div class="page-heading recruitment-page-heading">
                     <div>
-                        <p class="page-eyebrow">
-                            Talent Acquisition
-                        </p>
-
-                        <h1>
-                            Recruitment & Joining
-                        </h1>
-
-                        <p>
-                            Manage candidates from selection through joining completion
-                        </p>
+                        <p class="page-eyebrow">Talent Acquisition</p>
+                        <h1>AI Recruitment</h1>
+                        <p>Receive CVs from recruitment email, match them with job requirements and manage HR shortlisting.</p>
                     </div>
-
+                    <div class="recruitment-heading-actions">
+                        <button type="button" class="secondary-action-btn" id="syncRecruitmentEmailBtn">↻ Sync Email Now</button>
+                        <button type="button" class="primary-action-btn" id="openCreateJobBtn">＋ Create Job Opening</button>
+                    </div>
                 </div>
 
-
-                <div class="module-grid">
-
-                    <div class="admin-card module-card">
-                        <span class="module-icon">✦</span>
-                        <h2>Candidates</h2>
-                        <p>
-                            Track shortlisted, interviewed and selected candidates.
-                        </p>
-                    </div>
-
-                    <div class="admin-card module-card">
-                        <span class="module-icon">✓</span>
-                        <h2>Joining Checklist</h2>
-                        <p>
-                            Track required steps before an employee can officially join duty.
-                        </p>
-                    </div>
-
-                    <div class="admin-card module-card">
-                        <span class="module-icon">✉</span>
-                        <h2>Permission Letter</h2>
-                        <p>
-                            Maintain official duty-joining permission records.
-                        </p>
-                    </div>
-
+                <div class="recruitment-notice">
+                    <strong>Human review required.</strong>
+                    AI scores job-related qualifications only. It does not make the final hiring decision. Shortlisting and selection remain with HR.
                 </div>
 
+                <div class="recruitment-summary-grid">
+                    <div class="recruitment-summary-card"><span>Open Jobs</span><strong id="recruitmentOpenJobsCount">0</strong></div>
+                    <div class="recruitment-summary-card"><span>Total Applications</span><strong id="recruitmentApplicationsCount">0</strong></div>
+                    <div class="recruitment-summary-card"><span>AI Recommended</span><strong id="recruitmentRecommendedCount">0</strong></div>
+                    <div class="recruitment-summary-card"><span>Needs Review</span><strong id="recruitmentReviewCount">0</strong></div>
+                    <div class="recruitment-summary-card"><span>Shortlisted</span><strong id="recruitmentShortlistedCount">0</strong></div>
+                </div>
+
+                <div class="recruitment-tabs" role="tablist">
+                    <button type="button" class="recruitment-tab active" data-recruitment-tab="candidates">Candidates</button>
+                    <button type="button" class="recruitment-tab" data-recruitment-tab="jobs">Job Openings</button>
+                    <button type="button" class="recruitment-tab" data-recruitment-tab="settings">Automation</button>
+                </div>
+
+                <div id="recruitmentCandidatesPanel" class="recruitment-panel active">
+                    <div class="admin-card recruitment-card">
+                        <div class="recruitment-toolbar">
+                            <div class="recruitment-search-wrap">
+                                <input type="search" id="recruitmentCandidateSearch" placeholder="Search candidate, email or job...">
+                            </div>
+                            <select id="recruitmentJobFilter"><option value="">All Jobs</option></select>
+                            <select id="recruitmentStatusFilter">
+                                <option value="">All Status</option>
+                                <option value="recommended">AI Recommended</option>
+                                <option value="review">Needs Review</option>
+                                <option value="needs_assignment">Needs Assignment</option>
+                                <option value="shortlisted">Shortlisted</option>
+                                <option value="not_shortlisted">Not Shortlisted</option>
+                                <option value="processing_failed">Processing Failed</option>
+                            </select>
+                        </div>
+                        
+                               <div class="recruitment-table-wrap">
+                            <table class="recruitment-table">
+                                <thead><tr><th>Candidate</th><th>Applied For</th><th>AI Match</th><th>Recommendation</th><th>Received</th><th>Action</th></tr></thead>
+                                <tbody id="recruitmentCandidatesTableBody"><tr><td colspan="6">Open Recruitment to load applications.</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="recruitmentJobsPanel" class="recruitment-panel">
+                    <div id="recruitmentJobsGrid" class="recruitment-jobs-grid"></div>
+                </div>
+
+                <div id="recruitmentSettingsPanel" class="recruitment-panel">
+                    <div class="admin-card recruitment-card recruitment-settings-card">
+                        <div>
+                            <h2>Email Automation</h2>
+                            <p>Cloud Functions checks the connected recruitment Gmail automatically. CV attachments are processed without manual downloading.</p>
+                        </div>
+                        <div class="automation-status-grid">
+                            <div><span>Automation</span><strong id="recruitmentAutomationStatus">Backend setup required</strong></div>
+                            <div><span>Last Sync</span><strong id="recruitmentLastSync">—</strong></div>
+                            <div><span>Processed Emails</span><strong id="recruitmentProcessedEmails">0</strong></div>
+                        </div>
+                        <div class="recruitment-settings-note">
+                            Gmail, OpenAI and Firebase secrets are configured outside the browser so no private key is exposed in this HRM frontend.
+                        </div>
+                    </div>
+                </div>
             </section>
-
-
 
             <!-- ================================================== -->
             <!-- EXIT MANAGEMENT -->
@@ -3755,6 +4113,47 @@
     </div>          
 
         <!-- ================================================== -->
+    <!-- RECRUITMENT MODALS -->
+    <!-- ================================================== -->
+
+    <div id="createJobModal" class="recruitment-modal">
+        <div class="recruitment-modal-dialog recruitment-modal-large">
+            <div class="recruitment-modal-header"><div><h2 id="createJobModalTitle">Create Job Opening</h2><p>Set the criteria AI should use for job-related screening.</p></div><button type="button" class="modal-close-btn" id="closeCreateJobModal">×</button></div>
+            <form id="recruitmentJobForm" class="recruitment-form">
+                <input type="hidden" id="recruitmentJobId">
+                <div class="recruitment-form-grid">
+                    <div class="input-group"><label for="recruitmentJobTitle">Job Title *</label><input id="recruitmentJobTitle" required placeholder="e.g. Customer Relationship Executive"></div>
+                    <div class="input-group"><label for="recruitmentJobDepartment">Department</label><input id="recruitmentJobDepartment" placeholder="e.g. Customer Experience"></div>
+                    <div class="input-group"><label for="recruitmentJobLocation">Location</label><input id="recruitmentJobLocation" placeholder="e.g. Chattogram"></div>
+                    <div class="input-group"><label for="recruitmentEmploymentType">Employment Type</label><select id="recruitmentEmploymentType"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select></div>
+                    <div class="input-group"><label for="recruitmentMinScore">Recommended Score</label><input id="recruitmentMinScore" type="number" min="1" max="100" value="80"></div>
+                    <div class="input-group"><label for="recruitmentReviewScore">Review Score</label><input id="recruitmentReviewScore" type="number" min="1" max="100" value="60"></div>
+                </div>
+                <div class="input-group"><label for="recruitmentJobDescription">Job Description *</label><textarea id="recruitmentJobDescription" rows="7" required placeholder="Paste the complete job description here..."></textarea></div>
+                <div class="recruitment-form-grid two-col">
+                    <div class="input-group"><label for="recruitmentMandatoryCriteria">Mandatory Criteria</label><textarea id="recruitmentMandatoryCriteria" rows="6" placeholder="One requirement per line"></textarea><small>Use only job-related requirements. Do not add age, gender, religion, marital status or similar personal characteristics.</small></div>
+                    <div class="input-group"><label for="recruitmentPreferredCriteria">Preferred Criteria</label><textarea id="recruitmentPreferredCriteria" rows="6" placeholder="One preference per line"></textarea></div>
+                </div>
+                <div class="recruitment-form-actions"><button type="button" class="secondary-action-btn" id="cancelCreateJobBtn">Cancel</button><button type="submit" class="primary-action-btn" id="saveRecruitmentJobBtn">Save Job Opening</button></div>
+                <div id="recruitmentJobFormStatus" class="message"></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="candidateDetailModal" class="recruitment-modal">
+        <div class="recruitment-modal-dialog recruitment-modal-large">
+            <div class="recruitment-modal-header"><div><h2 id="candidateDetailName">Candidate</h2><p id="candidateDetailSubtitle">Application details</p></div><button type="button" class="modal-close-btn" id="closeCandidateDetailModal">×</button></div>
+            <div id="candidateDetailBody" class="candidate-detail-body"></div>
+            <div class="candidate-modal-actions">
+                <button type="button" class="secondary-action-btn" id="candidateViewCvBtn">View CV</button>
+                <button type="button" class="secondary-action-btn" id="candidateRescreenBtn">Run AI Again</button>
+                <button type="button" class="danger-outline-btn" id="candidateNotShortlistBtn">Not Shortlisted</button>
+                <button type="button" class="primary-action-btn" id="candidateShortlistBtn">Shortlist & Send Email</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================================================== -->
     <!-- EMPLOYEE MODAL -->
     <!-- ================================================== -->
 
@@ -3832,9 +4231,8 @@
                         <span>NID Number</span>
                         <strong id="modalNid">-</strong>
                     </div>
-
-
-                    <div class="employee-detail-item">
+                    
+                           <div class="employee-detail-item">
                         <span>Emergency Contact</span>
                         <strong id="modalEmergencyContact">-</strong>
                     </div>
@@ -4182,8 +4580,8 @@
 
 
             <div class="employee-modal-body">
-
-                <div class="employee-detail-grid">
+                
+                           <div class="employee-detail-grid">
 
 
                     <div class="employee-detail-item">
@@ -4294,6 +4692,13 @@
         from
         "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+        import {
+            getFunctions,
+            httpsCallable
+        }
+        from
+        "https://www.gstatic.com/firebasejs/12.19.0/firebase-functions.js";
+
 
         const firebaseConfig = {
 
@@ -4336,6 +4741,12 @@
         const db =
             getFirestore(
                 app
+            );
+
+        const functions =
+            getFunctions(
+                app,
+                "us-central1"
             );
 
 
@@ -4396,6 +4807,12 @@
 
         window.adminWhere =
             where;
+
+        window.adminFunctions =
+            functions;
+
+        window.adminHttpsCallable =
+            httpsCallable;
 
 
   const chartScript =
@@ -4481,6 +4898,7 @@ document.body.appendChild(
     </button>
 
 </nav>
+
 <div
     class="admin-mobile-more-menu"
     id="adminMobileMoreMenu"
@@ -4515,6 +4933,15 @@ document.body.appendChild(
 
     <button
         class="admin-mobile-more-item"
+        id="adminMobileRecruitmentBtn"
+        type="button"
+    >
+        <span>✦</span>
+        Recruitment
+    </button>
+
+    <button
+        class="admin-mobile-more-item"
         id="adminMobileSettingsBtn"
         type="button"
     >
@@ -4526,4 +4953,3 @@ document.body.appendChild(
 
 </body>
 
-</html>
