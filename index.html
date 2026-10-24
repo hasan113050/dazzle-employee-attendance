@@ -2077,16 +2077,17 @@ from
 "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 
-        import {
-            getFirestore,
-            collection,
-            addDoc,
-            getDocs,
-            query,
-            where,
-            doc,
-            updateDoc
-        }
+      import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    getDoc,
+    query,
+    where,
+    doc,
+    updateDoc
+}  
         from
         "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
@@ -2165,6 +2166,9 @@ window.firebaseAddDoc =
 window.firebaseGetDocs =
     getDocs;
 
+    window.firebaseGetDoc =
+    getDoc;
+    
 window.firebaseQuery =
     query;
 

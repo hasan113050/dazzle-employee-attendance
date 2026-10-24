@@ -134,6 +134,9 @@ const editStatus = byId("editStatus");
 // ========================================
 
 let employees = [];
+let currentAdminAccess = null;
+
+
 let leaveRequests = [];
 
 let selectedEmployeeId = null;
@@ -141,6 +144,35 @@ let selectedEmployeeId = null;
 let editMode = false;
 
 let currentAdminEmployee = null;
+
+function isFullAdmin() {
+
+    return (
+        currentAdminAccess?.role ===
+        "admin"
+    );
+}
+
+
+function hasAdminPermission(
+    permission
+) {
+
+    if (isFullAdmin()) {
+        return true;
+    }
+
+    return (
+        currentAdminAccess?.role ===
+            "moderator" &&
+        currentAdminAccess?.active ===
+            true &&
+        currentAdminAccess
+            ?.permissions
+            ?.[permission] ===
+            true
+    );
+}
 
 
 // ========================================
@@ -1270,22 +1302,1231 @@ const pageMap = {
     },
 
 
-    settings: {
+   settings: {
+
+    button:
+        settingsBtn,
+
+    page:
+        settingsPage
+
+    },
+
+
+    rolesPermissions: {
 
         button:
-            settingsBtn,
+            null,
 
         page:
-            settingsPage
+            document.getElementById(
+                "rolesPermissionsPage"
+            )
 
     }
 
 };
 
+const pagePermissionMap = {
+
+    home:
+        "dashboard",
+
+    attendanceManagement:
+        "attendance",
+
+    employees:
+        "employees",
+
+    createEmployee:
+        "employees",
+
+    departmentsBranches:
+        "organization",
+
+    shiftWeeklyOff:
+        "shifts",
+
+    leaveManagement:
+        "leave",
+
+    probation:
+        "probation",
+
+    performance:
+        "performance",
+
+    payroll:
+        "payroll",
+
+    recruitment:
+        "recruitment",
+
+    documents:
+        "documents",
+
+    exitManagement:
+        "exit",
+
+    reports:
+        "reports",
+
+    settings:
+        "settings"
+};
+
+const rolesPermissionsCard =
+    document.getElementById(
+        "rolesPermissionsCard"
+    );
+
+
+if (
+    rolesPermissionsCard
+) {
+
+    rolesPermissionsCard.addEventListener(
+        "click",
+        () => {
+
+            showPage(
+                "rolesPermissions"
+            );
+
+        }
+        
+    );
+
+
+    rolesPermissionsCard.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter" ||
+                event.key === " "
+            ) {
+
+                event.preventDefault();
+
+                showPage(
+                    "rolesPermissions"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+// ========================================
+// MODERATOR MODAL
+// ========================================
+
+const addModeratorBtn =
+    document.getElementById(
+        "addModeratorBtn"
+    );
+
+const moderatorModal =
+    document.getElementById(
+        "moderatorModal"
+    );
+
+const moderatorForm =
+    document.getElementById(
+        "moderatorForm"
+    );
+
+const closeModeratorModalBtn =
+    document.getElementById(
+        "closeModeratorModalBtn"
+    );
+
+const cancelModeratorBtn =
+    document.getElementById(
+        "cancelModeratorBtn"
+    );
+
+const moderatorSelectAllPermissions =
+    document.getElementById(
+        "moderatorSelectAllPermissions"
+    );
+
+
+function openModeratorModal() {
+
+    if (
+        !moderatorModal
+    ) {
+        return;
+    }
+
+    moderatorForm?.reset();
+
+    const editingModeratorId =
+    document.getElementById(
+        "editingModeratorId"
+    );
+
+if (editingModeratorId) {
+    editingModeratorId.value = "";
+}
+
+const submitButton =
+    moderatorForm?.querySelector(
+        'button[type="submit"]'
+    );
+
+if (submitButton) {
+    submitButton.textContent =
+        "Create Moderator";
+}
+
+const modalTitle =
+    moderatorModal?.querySelector(
+        ".moderator-modal-header h2"
+    );
+
+if (modalTitle) {
+    modalTitle.textContent =
+        "Add Moderator";
+}
+
+
+
+
+    moderatorModal
+        .classList
+        .add(
+            "active"
+        );
+
+    moderatorModal.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+}
+
+
+function closeModeratorModal() {
+
+    if (
+        !moderatorModal
+    ) {
+        return;
+    }
+
+    moderatorModal
+        .classList
+        .remove(
+            "active"
+        );
+
+    moderatorModal.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+}
+
+
+addModeratorBtn?.addEventListener(
+    "click",
+    openModeratorModal
+);
+
+
+closeModeratorModalBtn?.addEventListener(
+    "click",
+    closeModeratorModal
+);
+
+
+cancelModeratorBtn?.addEventListener(
+    "click",
+    closeModeratorModal
+);
+
+
+moderatorModal?.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            moderatorModal
+        ) {
+            closeModeratorModal();
+        }
+
+    }
+);
+
+
+// SELECT ALL PERMISSIONS
+
+moderatorSelectAllPermissions?.addEventListener(
+    "change",
+    event => {
+
+        const permissionCheckboxes =
+            document.querySelectorAll(
+                'input[name="moderatorPermission"]'
+            );
+
+        permissionCheckboxes.forEach(
+            checkbox => {
+
+                checkbox.checked =
+                    event.target.checked;
+
+            }
+        );
+
+    }
+);
+
+// ========================================
+// MODERATOR EMPLOYEE SEARCH
+// ========================================
+
+const moderatorEmployeeSearch =
+    document.getElementById(
+        "moderatorEmployeeSearch"
+    );
+
+const moderatorEmployeeSearchResults =
+    document.getElementById(
+        "moderatorEmployeeSearchResults"
+    );
+
+const moderatorEmployeeId =
+    document.getElementById(
+        "moderatorEmployeeId"
+    );
+
+const selectedModeratorEmployee =
+    document.getElementById(
+        "selectedModeratorEmployee"
+    );
+
+const selectedModeratorInitials =
+    document.getElementById(
+        "selectedModeratorInitials"
+    );
+
+const selectedModeratorName =
+    document.getElementById(
+        "selectedModeratorName"
+    );
+
+const selectedModeratorDesignation =
+    document.getElementById(
+        "selectedModeratorDesignation"
+    );
+
+const selectedModeratorEmail =
+    document.getElementById(
+        "selectedModeratorEmail"
+    );
+
+const clearModeratorEmployeeBtn =
+    document.getElementById(
+        "clearModeratorEmployeeBtn"
+    );
+
+
+function getModeratorEmployeeInitials(name = "") {
+
+    return name
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .map(part =>
+            part.charAt(0).toUpperCase()
+        )
+        .join("") || "--";
+
+}
+
+
+function selectModeratorEmployee(employee) {
+
+    const employeeId =
+        employee.firestoreId ||
+        employee.id ||
+        "";
+
+    const employeeName =
+        employee.name ||
+        employee.fullName ||
+        "Unnamed Employee";
+
+    const employeeEmail =
+        employee.email ||
+        "";
+
+    const employeeDesignation =
+        employee.designation ||
+        "Employee";
+
+
+    moderatorEmployeeId.value =
+        employeeId;
+
+    moderatorEmployeeSearch.value =
+        employeeName;
+
+
+    selectedModeratorInitials.textContent =
+        getModeratorEmployeeInitials(
+            employeeName
+        );
+
+    selectedModeratorName.textContent =
+        employeeName;
+
+    selectedModeratorDesignation.textContent =
+        employeeDesignation;
+
+    selectedModeratorEmail.textContent =
+        employeeEmail;
+
+
+    selectedModeratorEmployee.hidden =
+        false;
+
+    moderatorEmployeeSearchResults
+        .classList
+        .remove("active");
+
+    moderatorEmployeeSearchResults.innerHTML =
+        "";
+
+}
+
+
+function clearSelectedModeratorEmployee() {
+
+    moderatorEmployeeId.value =
+        "";
+
+    moderatorEmployeeSearch.value =
+        "";
+
+    selectedModeratorEmployee.hidden =
+        true;
+
+    moderatorEmployeeSearchResults.innerHTML =
+        "";
+
+    moderatorEmployeeSearchResults
+        .classList
+        .remove("active");
+
+}
+
+
+moderatorEmployeeSearch?.addEventListener(
+    "input",
+    () => {
+
+        const query =
+            moderatorEmployeeSearch
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        moderatorEmployeeId.value =
+            "";
+
+        selectedModeratorEmployee.hidden =
+            true;
+
+
+        if (
+            query.length < 1
+        ) {
+
+            moderatorEmployeeSearchResults
+                .classList
+                .remove("active");
+
+            moderatorEmployeeSearchResults.innerHTML =
+                "";
+
+            return;
+        }
+
+
+        const matches =
+            employees
+                .filter(employee => {
+
+                    const name =
+                        String(
+                            employee.name ||
+                            employee.fullName ||
+                            ""
+                        ).toLowerCase();
+
+                    const email =
+                        String(
+                            employee.email ||
+                            ""
+                        ).toLowerCase();
+
+                    const employeeId =
+                        String(
+                            employee.employeeId ||
+                            employee.employeeID ||
+                            employee.id ||
+                            ""
+                        ).toLowerCase();
+
+
+                    return (
+                        name.includes(query) ||
+                        email.includes(query) ||
+                        employeeId.includes(query)
+                    );
+
+                })
+                .slice(0, 8);
+
+
+        if (
+            matches.length === 0
+        ) {
+
+            moderatorEmployeeSearchResults.innerHTML =
+                `
+                    <div class="moderator-search-empty">
+                        No matching employee found.
+                    </div>
+                `;
+
+            moderatorEmployeeSearchResults
+                .classList
+                .add("active");
+
+            return;
+        }
+
+
+        moderatorEmployeeSearchResults.innerHTML =
+            matches
+                .map((employee, index) => {
+
+                    const name =
+                        employee.name ||
+                        employee.fullName ||
+                        "Unnamed Employee";
+
+                    const email =
+                        employee.email ||
+                        "";
+
+                    const designation =
+                        employee.designation ||
+                        "Employee";
+
+                    const employeeCode =
+                        employee.employeeId ||
+                        employee.employeeID ||
+                        employee.id ||
+                        "";
+
+
+                    return `
+                        <button
+                            type="button"
+                            class="moderator-search-result-item"
+                            data-moderator-result-index="${index}"
+                        >
+                            <span class="moderator-search-result-avatar">
+                                ${getModeratorEmployeeInitials(name)}
+                            </span>
+
+                            <span class="moderator-search-result-info">
+
+                                <strong>
+                                    ${name}
+                                </strong>
+
+                                <span>
+                                    ${designation}
+                                    ${employeeCode ? ` • ${employeeCode}` : ""}
+                                </span>
+
+                                <small>
+                                    ${email}
+                                </small>
+
+                            </span>
+                        </button>
+                    `;
+
+                })
+                .join("");
+
+
+        moderatorEmployeeSearchResults
+            .classList
+            .add("active");
+
+
+        moderatorEmployeeSearchResults
+            .querySelectorAll(
+                "[data-moderator-result-index]"
+            )
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const index =
+                            Number(
+                                button.dataset
+                                    .moderatorResultIndex
+                            );
+
+                        selectModeratorEmployee(
+                            matches[index]
+                        );
+
+                    }
+                );
+
+            });
+
+    }
+);
+
+
+clearModeratorEmployeeBtn?.addEventListener(
+    "click",
+    () => {
+
+        clearSelectedModeratorEmployee();
+
+        moderatorEmployeeSearch?.focus();
+
+    }
+);
+
+// ========================================
+// LOAD MODERATORS
+// ========================================
+let loadedModerators = [];
+async function loadModerators() {
+
+    const tableBody =
+        document.getElementById(
+            "moderatorsTableBody"
+        );
+
+    if (!tableBody) {
+        return;
+    }
+
+
+    tableBody.innerHTML = `
+        <tr>
+            <td colspan="5">
+                Loading moderators...
+            </td>
+        </tr>
+    `;
+
+
+    try {
+
+        const snapshot =
+            await window.adminGetDocs(
+
+                window.adminCollection(
+                    window.adminDB,
+                    "admins"
+                )
+
+            );
+
+
+      loadedModerators = [];
+
+const moderators = loadedModerators;
+
+
+        snapshot.forEach(
+            documentSnapshot => {
+
+                const data =
+                    documentSnapshot.data();
+
+
+                if (
+                    data.role !==
+                    "moderator"
+                ) {
+                    return;
+                }
+
+
+                moderators.push({
+                    uid:
+                        documentSnapshot.id,
+
+                    ...data
+                });
+
+            }
+        );
+
+
+        if (
+            moderators.length === 0
+        ) {
+
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        No moderators found.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+
+        tableBody.innerHTML =
+            moderators
+                .map(
+                    moderator => {
+
+                        const permissions =
+                            Object
+                                .entries(
+                                    moderator.permissions ||
+                                    {}
+                                )
+                                .filter(
+                                    ([, allowed]) =>
+                                        allowed === true
+                                )
+                                .map(
+                                    ([permission]) =>
+                                        permission
+                                );
+
+
+                        const permissionText =
+                            permissions.length
+                                ? permissions
+                                    .map(
+                                        permission =>
+                                            permission
+                                                .replace(
+                                                    /([A-Z])/g,
+                                                    " $1"
+                                                )
+                                                .replace(
+                                                    /^./,
+                                                    char =>
+                                                        char.toUpperCase()
+                                                )
+                                    )
+                                    .join(", ")
+                                : "No access";
+
+
+                        const statusText =
+                            moderator.active
+                                ? "Active"
+                                : "Inactive";
+
+
+                        return `
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        ${moderator.name || "—"}
+                                    </strong>
+
+                                    <br>
+
+                                    <small>
+                                        ${moderator.email || "—"}
+                                    </small>
+                                </td>
+
+
+                                <td>
+                                    ${moderator.employeeId || "—"}
+                                </td>
+
+
+                                <td>
+                                    ${permissionText}
+                                </td>
+
+
+                                <td>
+                                    <span
+                                        class="moderator-status ${
+                                            moderator.active
+                                                ? "active"
+                                                : "inactive"
+                                        }"
+                                    >
+                                        ${statusText}
+                                    </span>
+                                </td>
+
+
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="secondary-btn"
+                                        data-moderator-uid="${moderator.uid}"
+                                    >
+                                        Manage
+                                    </button>
+                                </td>
+
+                            </tr>
+                        `;
+
+                    }
+                )
+                .join("");
+
+
+    } catch (error) {
+
+        console.error(
+            "Failed to load moderators:",
+            error
+        );
+
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Failed to load moderators.
+                </td>
+            </tr>
+        `;
+
+    }
+
+    const manageButtons =
+    tableBody.querySelectorAll(
+        "[data-moderator-uid]"
+    );
+
+manageButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                const uid =
+                    button.dataset
+                        .moderatorUid;
+
+                openModeratorForEdit(
+                    uid
+                );
+
+            }
+        );
+
+    }
+);
+
+}
+
+function openModeratorForEdit(uid) {
+
+    const moderator =
+        loadedModerators.find(
+            item =>
+                item.uid === uid
+        );
+
+    if (!moderator) {
+
+        alert(
+            "Moderator information could not be found."
+        );
+
+        return;
+    }
+
+    console.log(
+        "Selected moderator:",
+        moderator
+    );
+    const editingModeratorId =
+    document.getElementById(
+        "editingModeratorId"
+    );
+
+if (editingModeratorId) {
+    editingModeratorId.value =
+        moderator.uid;
+}
+
+
+if (moderatorEmployeeId) {
+    moderatorEmployeeId.value =
+        moderator.uid;
+}
+
+if (moderatorEmployeeSearch) {
+    moderatorEmployeeSearch.value =
+        moderator.name || "";
+}
+
+
+selectedModeratorInitials.textContent =
+    getModeratorEmployeeInitials(
+        moderator.name || ""
+    );
+
+selectedModeratorName.textContent =
+    moderator.name ||
+    "Employee";
+
+selectedModeratorDesignation.textContent =
+    "Moderator";
+
+selectedModeratorEmail.textContent =
+    moderator.email ||
+    "";
+
+selectedModeratorEmployee.hidden =
+    false;
+const moderatorStatus =
+    document.getElementById(
+        "moderatorStatus"
+    );
+
+if (moderatorStatus) {
+
+    moderatorStatus.value =
+        moderator.active
+            ? "active"
+            : "inactive";
+
+}
+
+document
+    .querySelectorAll(
+        'input[name="moderatorPermission"]'
+    )
+    .forEach(
+        checkbox => {
+
+            checkbox.checked =
+                moderator.permissions?.[
+                    checkbox.value
+                ] === true;
+
+        }
+    );
+
+    const submitButton =
+    moderatorForm?.querySelector(
+        'button[type="submit"]'
+    );
+
+if (submitButton) {
+    submitButton.textContent =
+        "Save Changes";
+}
+
+const modalTitle =
+    moderatorModal?.querySelector(
+        ".moderator-modal-header h2"
+    );
+
+if (modalTitle) {
+    modalTitle.textContent =
+        "Manage Moderator";
+}
+
+moderatorModal.classList.add(
+    "active"
+);
+
+moderatorModal.setAttribute(
+    "aria-hidden",
+    "false"
+);
+}
+
+// ========================================
+// MODERATOR FORM VALIDATION
+// ========================================
+
+moderatorForm?.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        // SELECTED EMPLOYEE
+
+const editingModeratorUid =
+    document
+        .getElementById(
+            "editingModeratorId"
+        )
+        ?.value
+        ?.trim();
+
+        const selectedEmployeeId =
+            moderatorEmployeeId
+                ?.value
+                ?.trim();
+
+
+        if (
+            !selectedEmployeeId
+        ) {
+            alert(
+                "Please select an employee first."
+            );
+
+            return;
+        }
+
+
+        const selectedEmployee =
+            employees.find(
+                employee => {
+
+                    const employeeFirestoreId =
+                        String(
+                            employee.firestoreId ||
+                            employee.id ||
+                            ""
+                        );
+
+                    return (
+                        employeeFirestoreId ===
+                        selectedEmployeeId
+                    );
+
+                }
+            );
+
+
+        if (
+            !selectedEmployee
+        ) {
+            alert(
+                "Selected employee could not be found. Please select the employee again."
+            );
+
+            return;
+        }
+
+
+        // EMPLOYEE INFORMATION
+
+        const name =
+            selectedEmployee.name ||
+            selectedEmployee.fullName ||
+            "";
+
+        const email =
+            selectedEmployee.email ||
+            "";
+
+        const employeeId =
+    selectedEmployee.employeeId ||
+    "";
+
+const employeeUid =
+    editingModeratorUid ||
+    selectedEmployee.uid ||
+    selectedEmployee.firestoreId ||
+    "";
+
+
+        if (
+            !email
+        ) {
+            alert(
+                "This employee does not have an email address."
+            );
+
+            return;
+        }
+
+
+        // STATUS
+
+        const status =
+            document
+                .getElementById(
+                    "moderatorStatus"
+                )
+                ?.value ||
+            "active";
+
+
+        // SELECTED PERMISSIONS
+
+        const selectedPermissions =
+            Array.from(
+                document.querySelectorAll(
+                    'input[name="moderatorPermission"]:checked'
+                )
+            ).map(
+                checkbox =>
+                    checkbox.value
+            );
+
+
+        if (
+            selectedPermissions.length === 0
+        ) {
+            alert(
+                "Please select at least one module permission."
+            );
+
+            return;
+        }
+
+
+        // PREPARE PERMISSIONS
+
+        const permissions = {};
+
+        selectedPermissions.forEach(
+            permission => {
+
+                permissions[
+                    permission
+                ] = true;
+
+            }
+        );
+
+
+        // PREPARE MODERATOR DATA
+
+      const moderatorData = {
+    uid: employeeUid,
+    employeeId,
+    name,
+    email,
+
+    role: "moderator",
+
+    active:
+        status ===
+        "active",
+
+    permissions
+};
+
+
+       try {
+
+    if (
+        !employeeUid
+    ) {
+        alert(
+            "Firebase UID was not found for this employee."
+        );
+
+        return;
+    }
+
+
+    await window.adminSetDoc(
+
+        window.adminDoc(
+            window.adminDB,
+            "admins",
+            employeeUid
+        ),
+
+        moderatorData
+
+    );
+
+
+   alert(
+    editingModeratorUid
+        ? "Moderator access updated successfully."
+        : "Moderator access created successfully."
+);
+
+
+closeModeratorModal();
+
+await loadModerators();
+
+
+} catch (error) {
+
+    console.error(
+        "Failed to create moderator:",
+        error
+    );
+
+
+    alert(
+        "Failed to create moderator access. Please try again."
+    );
+
+}
+
+    }
+);
 
 async function showPage(
     pageName
 ) {
+    // Roles & Permissions is Full Admin only
+if (
+    pageName === "rolesPermissions" &&
+    !isFullAdmin()
+) {
+    return;
+}
+
+
+// Check Moderator page permission
+const requiredPermission =
+    pagePermissionMap[
+        pageName
+    ];
+
+if (
+    !isFullAdmin() &&
+    requiredPermission &&
+    !hasAdminPermission(
+        requiredPermission
+    )
+) {
+    return;
+}
 
     Object
         .values(
@@ -1388,6 +2629,16 @@ localStorage.setItem(
 
     }
 
+    if (
+    pageName ===
+    "departmentsBranches"
+) {
+
+    await loadDepartments();
+
+    await loadBranches();
+
+}
 
     if (
         pageName ===
@@ -1422,6 +2673,10 @@ localStorage.setItem(
 
 }
 
+if (pageName === "rolesPermissions") {
+    await loadEmployees();
+    await loadModerators();
+}
 
     if (
         pageName ===
@@ -1473,6 +2728,65 @@ Object
 
         }
     );
+
+    function applyAdminModulePermissions() {
+
+    // Full Admin sees everything
+    if (isFullAdmin()) {
+
+        Object
+            .values(pageMap)
+            .forEach(item => {
+
+                if (item.button) {
+                    item.button.style.display =
+                        "";
+                }
+
+            });
+
+        return;
+    }
+
+
+    // Moderator sees only assigned modules
+    Object
+        .entries(pageMap)
+        .forEach(([pageName, item]) => {
+
+            if (!item.button) {
+                return;
+            }
+
+            const permission =
+                pagePermissionMap[
+                    pageName
+                ];
+
+            const allowed =
+                permission &&
+                hasAdminPermission(
+                    permission
+                );
+
+            item.button.style.display =
+                allowed
+                    ? ""
+                    : "none";
+        });
+
+
+    // Roles & Permissions is Admin-only
+    const rolesPermissionsCard =
+        document.getElementById(
+            "rolesPermissionsCard"
+        );
+
+    if (rolesPermissionsCard) {
+        rolesPermissionsCard.style.display =
+            "none";
+    }
+}
 
 
 // ========================================
@@ -6221,37 +7535,89 @@ window.adminOnAuthStateChanged(
                 };
 
 
-            const roles =
-                employee.roles ||
-                [];
+         const roles =
+    employee.roles ||
+    [];
 
 
-            if (
-                !roles.includes(
-                    "admin"
-                )
-            ) {
-
-                alert(
-                    "You do not have permission to access the Admin Panel."
-                );
+const isAdminUser =
+    roles.includes(
+        "admin"
+    );
 
 
-                await window.adminSignOut(
-                    window.adminAuth
-                );
+let moderatorAccess =
+    null;
 
 
-                window.location.href =
-                    "index.html";
+if (!isAdminUser) {
+
+    const moderatorAccessDoc =
+        await window.adminGetDoc(
+            window.adminDoc(
+                window.adminDB,
+                "admins",
+                user.uid
+            )
+        );
 
 
-                return;
+    if (
+        moderatorAccessDoc.exists()
+    ) {
+        moderatorAccess =
+            moderatorAccessDoc.data();
+    }
 
-            }
+}
+
+
+const isActiveModerator =
+    moderatorAccess?.role ===
+        "moderator" &&
+    moderatorAccess?.active ===
+        true;
+
+        if (isAdminUser) {
+
+    currentAdminAccess = {
+        role: "admin",
+        active: true,
+        permissions: {}
+    };
+
+} else {
+
+    currentAdminAccess =
+        moderatorAccess;
+
+}
+
+applyAdminModulePermissions();
+
+if (
+    !isAdminUser &&
+    !isActiveModerator
+) {
+
+    alert(
+        "You do not have permission to access the Admin Panel."
+    );
+
+    await window.adminSignOut(
+        window.adminAuth
+    );
+
+    window.location.href =
+        "index.html";
+
+    return;
+}
 
 
             // Save current admin profile
+
+
 
             currentAdminEmployee =
                 employee;
@@ -6271,16 +7637,66 @@ window.adminOnAuthStateChanged(
                 "visible";
 
 
-            const savedPage =
+const savedPage =
     localStorage.getItem(
         "dazzleAdminActivePage"
     );
 
-await showPage(
+let pageToOpen =
     pageMap[savedPage]
         ? savedPage
-        : "home"
-);
+        : "home";
+
+
+// Moderator হলে saved page-এর
+// permission আছে কি না check করবে
+if (!isFullAdmin()) {
+
+    const savedPermission =
+        pagePermissionMap[
+            pageToOpen
+        ];
+
+    const savedPageAllowed =
+        pageToOpen !==
+            "rolesPermissions" &&
+        savedPermission &&
+        hasAdminPermission(
+            savedPermission
+        );
+
+
+    // Saved page allowed না হলে
+    // প্রথম permitted page খুঁজবে
+    if (!savedPageAllowed) {
+
+        pageToOpen =
+            Object
+                .keys(
+                    pagePermissionMap
+                )
+                .find(
+                    pageName =>
+                        pageMap[
+                            pageName
+                        ] &&
+                        hasAdminPermission(
+                            pagePermissionMap[
+                                pageName
+                            ]
+                        )
+                );
+    }
+}
+
+
+if (pageToOpen) {
+
+    await showPage(
+        pageToOpen
+    );
+
+}
 
 
         } catch (
@@ -6291,6 +7707,8 @@ await showPage(
                 "ADMIN SECURITY ERROR:",
                 error
             );
+
+
 
 
             alert(

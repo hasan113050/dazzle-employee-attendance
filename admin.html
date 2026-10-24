@@ -4095,18 +4095,466 @@
                         </p>
                     </div>
 
-                    <div class="admin-card module-card">
-                        <span class="module-icon">🔒</span>
-                        <h2>Roles & Permissions</h2>
-                        <p>
-                            Manage admin access and future role-based permissions.
-                        </p>
-                    </div>
+ <div
+    class="admin-card module-card"
+    id="rolesPermissionsCard"
+    role="button"
+    tabindex="0"
+    onclick="showPage('rolesPermissions')"
+>
+    <span class="module-icon">🔒</span>
+
+    <h2>
+        Roles & Permissions
+    </h2>
+
+    <p>
+        Manage moderators and control individual access permissions.
+    </p>
+</div>
 
                 </div>
 
             </section>
 
+      <!-- ================================================== -->
+<!-- ROLES & PERMISSIONS -->
+<!-- ================================================== -->
+
+<section
+    id="rolesPermissionsPage"
+    class="page-section"
+>
+
+    <div class="page-heading">
+
+        <div>
+            <p class="page-eyebrow">
+                Access Control
+            </p>
+
+            <h1>
+                Roles & Permissions
+            </h1>
+
+            <p>
+                Manage moderators and control access to HRM modules
+            </p>
+        </div>
+
+        <button
+            type="button"
+            id="addModeratorBtn"
+            class="primary-btn page-heading-action"
+        >
+            + Add Moderator
+        </button>
+
+    </div>
+
+
+    <div class="admin-card">
+
+        <div class="section-title">
+
+            <div>
+                <h2>
+                    Moderator Management
+                </h2>
+
+                <p>
+                    Create moderators and manage their individual access permissions
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Moderator</th>
+                        <th>Email</th>
+                        <th>Access</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="moderatorsTableBody">
+
+                    <tr>
+                        <td colspan="5">
+                            No moderators found.
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>      
+
+<!-- ================================================== -->
+<!-- ADD / EDIT MODERATOR MODAL -->
+<!-- ================================================== -->
+
+<div
+    id="moderatorModal"
+    class="moderator-modal"
+    aria-hidden="true"
+>
+    <div class="moderator-modal-dialog">
+
+        <!-- MODAL HEADER -->
+        <div class="moderator-modal-header">
+
+            <div>
+                <p class="page-eyebrow">
+                    Access Control
+                </p>
+
+                <h2 id="moderatorModalTitle">
+                    Add Moderator
+                </h2>
+
+                <p>
+                    Create a moderator and choose which HRM modules they can access.
+                </p>
+            </div>
+
+            <button
+                type="button"
+                id="closeModeratorModalBtn"
+                class="modal-close-btn"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- MODERATOR FORM -->
+        <form id="moderatorForm">
+
+            <input
+                type="hidden"
+                id="editingModeratorId"
+            >
+
+
+            <!-- BASIC INFORMATION -->
+            <div class="moderator-form-section">
+
+                <div class="section-title">
+                    <div>
+                        <h3>Moderator Information</h3>
+                        <p>
+                            Enter the moderator's account information.
+                        </p>
+                    </div>
+                </div>
+
+
+                <div class="moderator-form-grid">
+
+                   <!-- EMPLOYEE SEARCH -->
+<div class="input-group moderator-employee-search-group">
+
+    <label for="moderatorEmployeeSearch">
+        Select Employee *
+    </label>
+
+    <div class="moderator-search-wrapper">
+
+        <input
+            type="text"
+            id="moderatorEmployeeSearch"
+            placeholder="Search by name, employee ID or email"
+            autocomplete="off"
+        >
+
+        <div
+            id="moderatorEmployeeSearchResults"
+            class="moderator-employee-search-results"
+        ></div>
+
+    </div>
+
+    <input
+        type="hidden"
+        id="moderatorEmployeeId"
+    >
+
+</div>
+
+
+<!-- SELECTED EMPLOYEE -->
+<div
+    id="selectedModeratorEmployee"
+    class="selected-moderator-employee"
+    hidden
+>
+    <div class="selected-moderator-avatar">
+        <span id="selectedModeratorInitials">
+            --
+        </span>
+    </div>
+
+    <div class="selected-moderator-info">
+
+        <strong id="selectedModeratorName">
+            Employee Name
+        </strong>
+
+        <span id="selectedModeratorDesignation">
+            Designation
+        </span>
+
+        <small id="selectedModeratorEmail">
+            employee@email.com
+        </small>
+
+    </div>
+
+    <button
+        type="button"
+        id="clearModeratorEmployeeBtn"
+        class="selected-moderator-clear"
+        aria-label="Remove selected employee"
+    >
+        ×
+    </button>
+</div>
+
+
+                
+
+
+                    <div class="input-group">
+                        <label for="moderatorStatus">
+                            Status
+                        </label>
+
+                        <select id="moderatorStatus">
+                            <option value="active">
+                                Active
+                            </option>
+
+                            <option value="inactive">
+                                Inactive
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACCESS PERMISSIONS -->
+            <div class="moderator-form-section">
+
+                <div class="section-title moderator-permission-heading">
+
+                    <div>
+                        <h3>Module Access</h3>
+
+                        <p>
+                            Select the modules this moderator is allowed to manage.
+                        </p>
+                    </div>
+
+                    <label class="moderator-select-all">
+                        <input
+                            type="checkbox"
+                            id="moderatorSelectAllPermissions"
+                        >
+                        <span>Select All</span>
+                    </label>
+
+                </div>
+
+
+                <div class="moderator-permission-grid">
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="dashboard"
+                        >
+                        <span>Dashboard</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="employees"
+                        >
+                        <span>Employees</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="attendance"
+                        >
+                        <span>Attendance</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="leave"
+                        >
+                        <span>Leave Management</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="organization"
+                        >
+                        <span>Departments & Branches</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="shifts"
+                        >
+                        <span>Shift & Weekly Off</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="probation"
+                        >
+                        <span>Probation</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="performance"
+                        >
+                        <span>Performance</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="payroll"
+                        >
+                        <span>Payroll</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="recruitment"
+                        >
+                        <span>Recruitment</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="documents"
+                        >
+                        <span>Documents</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="exit"
+                        >
+                        <span>Exit Management</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="reports"
+                        >
+                        <span>Reports</span>
+                    </label>
+
+
+                    <label class="moderator-permission-card">
+                        <input
+                            type="checkbox"
+                            name="moderatorPermission"
+                            value="settings"
+                        >
+                        <span>Settings</span>
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+            <div class="moderator-modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelModeratorBtn"
+                    class="secondary-btn"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    id="saveModeratorBtn"
+                    class="primary-btn"
+                >
+                    Create Moderator
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
 
         </main>
 
@@ -4681,6 +5129,7 @@
             getFirestore,
             collection,
             getDocs,
+            getDoc,
             addDoc,
             doc,
             setDoc,
@@ -4786,6 +5235,9 @@
 
         window.adminGetDocs =
             getDocs;
+
+            window.adminGetDoc =
+    getDoc;
 
         window.adminAddDoc =
             addDoc;

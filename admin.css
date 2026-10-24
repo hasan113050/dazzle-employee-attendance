@@ -9191,3 +9191,463 @@ table thead th {
     }
 
 }
+
+#rolesPermissionsCard {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#rolesPermissionsCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(150, 110, 51, 0.16);
+}
+
+#rolesPermissionsCard:active {
+    transform: translateY(0);
+}
+
+/* ==================================================
+   ROLES & PERMISSIONS — MODERATOR MODAL
+================================================== */
+
+.moderator-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(31, 24, 16, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.moderator-modal.active {
+    display: flex;
+}
+
+.moderator-modal-dialog {
+    width: min(920px, 100%);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+
+    background: #ffffff;
+    border: 1px solid rgba(150, 110, 51, 0.18);
+    border-radius: 20px;
+
+    box-shadow: 0 24px 70px rgba(44, 32, 18, 0.22);
+}
+
+.moderator-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 26px 28px 22px;
+
+    border-bottom: 1px solid rgba(150, 110, 51, 0.14);
+}
+
+.moderator-modal-header h2 {
+    margin: 3px 0 5px;
+
+    color: #2d2419;
+    font-size: 24px;
+}
+
+.moderator-modal-header > div > p:last-child {
+    margin: 0;
+    color: #776b5c;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.moderator-modal-header .modal-close-btn {
+    flex: 0 0 auto;
+}
+
+#moderatorForm {
+    padding: 26px 28px 28px;
+}
+
+.moderator-form-section + .moderator-form-section {
+    margin-top: 30px;
+}
+
+.moderator-form-section .section-title {
+    margin-bottom: 18px;
+}
+
+.moderator-form-section .section-title h3 {
+    margin: 0 0 5px;
+
+    color: #33291d;
+    font-size: 17px;
+}
+
+.moderator-form-section .section-title p {
+    margin: 0;
+
+    color: #827666;
+    font-size: 13px;
+}
+
+.moderator-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+/* PERMISSIONS */
+
+.moderator-permission-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.moderator-select-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #6f522c;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.moderator-select-all input {
+    width: 17px;
+    height: 17px;
+
+    accent-color: #966E33;
+    cursor: pointer;
+}
+
+.moderator-permission-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.moderator-permission-card {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    min-height: 54px;
+    padding: 13px 15px;
+
+    background: #fbf8f3;
+    border: 1px solid #e8dfd2;
+    border-radius: 12px;
+
+    color: #463a2b;
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.moderator-permission-card:hover {
+    background: #fffdf9;
+    border-color: rgba(150, 110, 51, 0.55);
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 5px 14px rgba(150, 110, 51, 0.09);
+}
+
+.moderator-permission-card:has(input:checked) {
+    background: rgba(150, 110, 51, 0.09);
+    border-color: #966E33;
+}
+
+.moderator-permission-card input {
+    flex: 0 0 auto;
+
+    width: 17px;
+    height: 17px;
+
+    accent-color: #966E33;
+    cursor: pointer;
+}
+
+
+/* ACTION BUTTONS */
+
+.moderator-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+
+    margin-top: 30px;
+    padding-top: 22px;
+
+    border-top: 1px solid rgba(150, 110, 51, 0.14);
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .moderator-modal {
+        align-items: flex-end;
+
+        padding: 12px;
+    }
+
+    .moderator-modal-dialog {
+        max-height: calc(100vh - 24px);
+
+        border-radius: 18px;
+    }
+
+    .moderator-modal-header {
+        padding: 20px 18px 17px;
+    }
+
+    #moderatorForm {
+        padding: 20px 18px 22px;
+    }
+
+    .moderator-form-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .moderator-permission-heading {
+        align-items: flex-start;
+    }
+
+    .moderator-permission-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .moderator-modal-actions {
+        position: sticky;
+        bottom: 0;
+
+        margin-left: -18px;
+        margin-right: -18px;
+        margin-bottom: -22px;
+
+        padding: 14px 18px 18px;
+
+        background: #ffffff;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .moderator-permission-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .moderator-modal-actions button {
+        flex: 1;
+    }
+}
+
+/* ==================================================
+   MODERATOR — EMPLOYEE SEARCH
+================================================== */
+
+.moderator-employee-search-group {
+    position: relative;
+}
+
+.moderator-search-wrapper {
+    position: relative;
+}
+
+.moderator-employee-search-results {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+
+    z-index: 20;
+
+    display: none;
+
+    max-height: 260px;
+    overflow-y: auto;
+
+    background: #ffffff;
+    border: 1px solid #e5dacb;
+    border-radius: 12px;
+
+    box-shadow: 0 12px 30px rgba(45, 36, 25, 0.14);
+}
+
+.moderator-employee-search-results.active {
+    display: block;
+}
+
+.moderator-search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    width: 100%;
+    padding: 12px 14px;
+
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #f0e9df;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+.moderator-search-result-item:last-child {
+    border-bottom: 0;
+}
+
+.moderator-search-result-item:hover {
+    background: #fbf8f3;
+}
+
+.moderator-search-result-avatar,
+.selected-moderator-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 40px;
+
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    background: rgba(150, 110, 51, 0.12);
+    color: #966E33;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.moderator-search-result-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    min-width: 0;
+}
+
+.moderator-search-result-info strong {
+    color: #33291d;
+    font-size: 13px;
+}
+
+.moderator-search-result-info span {
+    color: #786b5b;
+    font-size: 12px;
+}
+
+.moderator-search-result-info small {
+    color: #9a8d7c;
+    font-size: 11px;
+}
+
+.moderator-search-empty {
+    padding: 18px;
+
+    color: #857766;
+    font-size: 13px;
+    text-align: center;
+}
+
+
+/* SELECTED EMPLOYEE */
+
+.selected-moderator-employee {
+    position: relative;
+
+    align-items: center;
+    gap: 12px;
+
+    min-height: 72px;
+    padding: 12px 44px 12px 14px;
+
+    background: rgba(150, 110, 51, 0.07);
+    border: 1px solid rgba(150, 110, 51, 0.32);
+    border-radius: 12px;
+}
+
+.selected-moderator-employee:not([hidden]) {
+    display: flex;
+}
+
+.selected-moderator-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    min-width: 0;
+}
+
+.selected-moderator-info strong {
+    color: #33291d;
+    font-size: 14px;
+}
+
+.selected-moderator-info span {
+    color: #6e5b43;
+    font-size: 12px;
+}
+
+.selected-moderator-info small {
+    color: #8b7c6b;
+    font-size: 11px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.selected-moderator-clear {
+    position: absolute;
+    top: 50%;
+    right: 13px;
+
+    width: 28px;
+    height: 28px;
+
+    transform: translateY(-50%);
+
+    background: #ffffff;
+    border: 1px solid #e2d7c8;
+    border-radius: 50%;
+
+    color: #7b6b57;
+    font-size: 18px;
+    line-height: 1;
+
+    cursor: pointer;
+}
+
+.selected-moderator-clear:hover {
+    border-color: #966E33;
+    color: #966E33;
+}

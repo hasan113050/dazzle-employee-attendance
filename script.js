@@ -1296,13 +1296,46 @@ if (profilePageEmployeeStatus) {
          const roles =
     employee.roles || [];
 
+    let moderatorAccess =
+    null;
+
+if (
+    !roles.includes("admin")
+) {
+
+    const moderatorDoc =
+        await window.firebaseGetDoc(
+            window.firebaseDoc(
+                window.firebaseDB,
+                "admins",
+                user.uid
+            )
+        );
+
+    if (
+        moderatorDoc.exists()
+    ) {
+        moderatorAccess =
+            moderatorDoc.data();
+    }
+}
+
+const hasAdminPanelAccess =
+    roles.includes("admin") ||
+    (
+        moderatorAccess?.role ===
+            "moderator" &&
+        moderatorAccess?.active ===
+            true
+    );
+
 const mobileAdminButton =
     document.getElementById(
         "mobileAdminPanelBtn"
     );
 
 if (
-    roles.includes("admin")
+    hasAdminPanelAccess
 ) {
 
     if (adminAccess) {
